@@ -34,7 +34,7 @@ public class HungryFragment extends Fragment {
 
         mTabHost = (FragmentTabHost)getActivity().findViewById(R.id.hungryTabHost);
         mTabHost.setup(getActivity(), getActivity().getSupportFragmentManager(), R.id.hungry_tabs_container);
-
+//dan
 
         mTabHost.addTab(mTabHost.newTabSpec("HungryMapFragment").setIndicator("HungryMap"),
                 HungryMapFragment.class, null);
