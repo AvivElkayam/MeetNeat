@@ -1,22 +1,28 @@
 package app.meantneat.com.meetneat;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TabHost;
 
 
-public class MainTabActivity extends ActionBarActivity {
+public class MainTabActivity extends FragmentActivity {
 private FragmentTabHost mTabHost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tab);
         initTabs();
+
     }
+
 
 
     @Override

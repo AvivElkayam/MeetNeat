@@ -18,21 +18,20 @@ public class HungryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        View view = inflater.inflate(R.layout.hungry_fragment_layout,container,false);
-
-        return view;
+        View v = inflater.inflate(R.layout.hungry_fragment_layout,container,false);
+        return initTabs(v);
+        //return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initTabs();
 
-    }
-    private void initTabs()
+
+
+
+    private View initTabs(View v)
     {
 
-        mTabHost = (FragmentTabHost)getActivity().findViewById(R.id.hungryTabHost);
+        mTabHost = (FragmentTabHost)v.findViewById(R.id.hungryTabHost);
+
         mTabHost.setup(getActivity(), getActivity().getSupportFragmentManager(), R.id.hungry_tabs_container);
 //dan
 
@@ -58,6 +57,7 @@ public class HungryFragment extends Fragment {
 
             }
         });
+        return mTabHost;
         // mTabHost.setCurrentTab(getIntent().getIntExtra("tab",0));
     }
 }
