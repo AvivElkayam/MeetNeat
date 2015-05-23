@@ -7,7 +7,7 @@ import android.graphics.Bitmap;
  */
 public class Dish {
 
-    private int eventId;
+    private String eventId;
     private String name;
     private String descriprion;
 
