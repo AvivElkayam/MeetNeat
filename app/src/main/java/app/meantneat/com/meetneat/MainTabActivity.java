@@ -13,12 +13,13 @@ import android.view.View;
 import android.widget.TabHost;
 
 
-public class MainTabActivity extends FragmentActivity {
+public class MainTabActivity extends ActionBarActivity {
 private FragmentTabHost mTabHost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tab);
+
         initTabs();
 
     }

@@ -2,8 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-<TextView
-    android:layout_width="fill_parent"
-    android:layout_height="40dp"
-    android:text="chef"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/chef_fragment_events_list_view"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="8" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:text="add event"
+        android:id="@+id/chef_fragment_add_event_button"
+        android:layout_weight="1" />
 </LinearLayout>
