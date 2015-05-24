@@ -37,7 +37,7 @@ public class HungryFragment extends Fragment {
 
         mTabHost.addTab(mTabHost.newTabSpec("HungryMapFragment").setIndicator("HungryMap"),
                 HungryMapFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("HungryListFragment").setIndicator("HungryList"),HungryListFragment.class,null);
+        mTabHost.addTab(mTabHost.newTabSpec("HungryListFragment").setIndicator("HungryList"),HungryMenuFragment.class,null);
 
         for(int i=0;i<mTabHost.getTabWidget().getChildCount();i++)
         {

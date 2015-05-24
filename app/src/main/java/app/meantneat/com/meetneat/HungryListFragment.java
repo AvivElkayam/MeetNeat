@@ -14,7 +14,7 @@ import android.widget.TabHost;
  * Created by mac on 5/17/15.
  */
 public class HungryListFragment extends Fragment {
-    FragmentTabHost mTabHost;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
