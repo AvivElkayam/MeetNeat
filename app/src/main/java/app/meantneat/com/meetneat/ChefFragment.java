@@ -78,6 +78,16 @@ public class ChefFragment extends Fragment
     private void initViews()
     {
         addEvent =(Button)getActivity().findViewById(R.id.chef_fragment_add_event_button);
+        addEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.mainTabHostContainer,new AddEventFragment(), "add_event")
+                                // Add this transaction to the back stack
+                        .addToBackStack("add_event")
+                        .commit();
+            }
+        });
         eventArrayList = new ArrayList<>();
         Event event1 = new Event("חומוס פול","21.2.2015","22:00",4);
         Event event2 = new Event("קובה סלק","17.2.2015","19:00",3);

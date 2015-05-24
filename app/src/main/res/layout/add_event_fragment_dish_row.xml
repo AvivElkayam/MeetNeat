@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="fill_parent"
+    android:layout_height="80dp">
+
+    <ImageView
+        android:layout_width="84dp"
+        android:layout_height="fill_parent"
+        android:id="@+id/add_fragment_fragment_dish_row_image_view"
+        android:background="@android:drawable/ic_menu_gallery" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="New Text"
+        android:id="@+id/add_fragment_fragment_dish_row_title_text_view"
+        android:gravity="left|center_vertical"
+        android:layout_marginLeft="5dp" />
+</LinearLayout>
