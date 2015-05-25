@@ -7,6 +7,9 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -20,11 +23,13 @@ import org.w3c.dom.Text;
 import java.io.File;
 import java.util.ArrayList;
 
+import app.meantneat.com.meetneat.Model.MyModel;
+
 /**
  * Created by mac on 5/17/15.
  */
 public class ChefFragment extends Fragment
-{   private Button addEvent;
+{
     private ArrayList<Event> eventArrayList;
     private ListView eventsListView;
     private EventRowListAdapter eventsArrayAdapter;
@@ -65,6 +70,7 @@ public class ChefFragment extends Fragment
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
         initViews();
     }
 
@@ -72,22 +78,11 @@ public class ChefFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         View view = inflater.inflate(R.layout.chef_fragment_layout,container,false);
-
         return view;
     }
     private void initViews()
     {
-        addEvent =(Button)getActivity().findViewById(R.id.chef_fragment_add_event_button);
-        addEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.mainTabHostContainer,new AddEventFragment(), "add_event")
-                                // Add this transaction to the back stack
-                        .addToBackStack("add_event")
-                        .commit();
-            }
-        });
+
         eventArrayList = new ArrayList<>();
         Event event1 = new Event("חומוס פול","21.2.2015","22:00",4);
         Event event2 = new Event("קובה סלק","17.2.2015","19:00",3);
@@ -97,9 +92,31 @@ public class ChefFragment extends Fragment
         eventArrayList.add(event2);
         eventArrayList.add(event3);
         eventArrayList.add(event4);
-
         eventsListView =(ListView)getActivity().findViewById(R.id.chef_fragment_events_list_view);
         eventsArrayAdapter = new EventRowListAdapter();
         eventsListView.setAdapter(eventsArrayAdapter);
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        inflater.inflate(R.menu.chef_fragment_menu, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.chef_fragment_menu_add_button)
+        {
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mainTabHostContainer,new AddEventFragment(), "add_event")
+                            // Add this transaction to the back stack
+                    .addToBackStack("add_event")
+                    .commit();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

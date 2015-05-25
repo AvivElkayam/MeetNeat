@@ -69,13 +69,13 @@ public class HungryMenuFragment extends Fragment {
     {
 
         dishesArrayList = new ArrayList<>();
-        Dish dish1 = new Dish("зеоес фем","щма ргт",22,7,true,false,null);
-        Dish dish2 = new Dish("чебд смч","щма ргт",18,1,true,false,null);
-        Dish dish3 = new Dish("оечфх ъаймргй","зшйу ащ",26,9,true,true,null);
+        Dish dish1 = new Dish("ss","ss",22,7,true,false,null);
+       // Dish dish2 = new Dish("пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ","пїЅпїЅпїЅ пїЅпїЅпїЅ",18,1,true,false,null);
+        //Dish dish3 = new Dish("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ","пїЅпїЅпїЅпїЅ пїЅпїЅ",26,9,true,true,null);
 
         dishesArrayList.add(dish1);
-        dishesArrayList.add(dish2);
-        dishesArrayList.add(dish3);
+        //dishesArrayList.add(dish2);
+        //dishesArrayList.add(dish3);
 
 
         dishesListView =(ListView)getActivity().findViewById(R.id.hungry_menu_fragment_events_list_view);

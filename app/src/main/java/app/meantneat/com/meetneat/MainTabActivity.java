@@ -12,6 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TabHost;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.util.List;
+
 
 public class MainTabActivity extends ActionBarActivity {
 private FragmentTabHost mTabHost;
@@ -21,6 +29,8 @@ private FragmentTabHost mTabHost;
         setContentView(R.layout.activity_main_tab);
 
         initTabs();
+
+
 
     }
 
@@ -41,9 +51,9 @@ private FragmentTabHost mTabHost;
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -73,8 +83,9 @@ private FragmentTabHost mTabHost;
                     mTabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#E0E0E0")); //unselected
                 }
                 mTabHost.getTabWidget().getChildAt(mTabHost.getCurrentTab()).setBackgroundColor(Color.BLUE);
-
             }
+
+
         });
         // mTabHost.setCurrentTab(getIntent().getIntExtra("tab",0));
     }

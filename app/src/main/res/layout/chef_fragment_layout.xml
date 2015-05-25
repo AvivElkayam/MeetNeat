@@ -10,10 +10,4 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="8" />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:text="add event"
-        android:id="@+id/chef_fragment_add_event_button"
-        android:layout_weight="1" />
 </LinearLayout>
