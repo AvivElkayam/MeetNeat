@@ -5,7 +5,7 @@ package app.meantneat.com.meetneat.Model;
  */
 public class ParseModel implements MyModel.ModelInterface {
     @Override
-    public void LoginToSpray(String userName, String password) {
+    public void LoginToMeetNeat(String userName, String password) {
 
     }
 }

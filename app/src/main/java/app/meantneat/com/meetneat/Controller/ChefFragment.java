@@ -1,9 +1,6 @@
-package app.meantneat.com.meetneat;
+package app.meantneat.com.meetneat.Controller;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,17 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.io.File;
 import java.util.ArrayList;
 
-import app.meantneat.com.meetneat.Model.MyModel;
+import app.meantneat.com.meetneat.Event;
+import app.meantneat.com.meetneat.R;
 
 /**
  * Created by mac on 5/17/15.
@@ -33,11 +26,12 @@ public class ChefFragment extends Fragment
     private ArrayList<Event> eventArrayList;
     private ListView eventsListView;
     private EventRowListAdapter eventsArrayAdapter;
+    View view;
     public class EventRowListAdapter extends ArrayAdapter<Event>
     {
         public EventRowListAdapter()
         {
-            super(getActivity(),R.layout.chef_fragment_list_view_row, eventArrayList);
+            super(getActivity(), R.layout.chef_fragment_list_view_row, eventArrayList);
 
         }
 
@@ -77,7 +71,8 @@ public class ChefFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        View view = inflater.inflate(R.layout.chef_fragment_layout,container,false);
+        if(view==null)
+            view = inflater.inflate(R.layout.chef_fragment_layout,container,false);
         return view;
     }
     private void initViews()
@@ -109,7 +104,7 @@ public class ChefFragment extends Fragment
         if(item.getItemId()==R.id.chef_fragment_menu_add_button)
         {
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.mainTabHostContainer,new AddEventFragment(), "add_event")
+                    .replace(R.id.chef_fragment_container,new AddEventFragment(), "add_event")
                             // Add this transaction to the back stack
                     .addToBackStack("add_event")
                     .commit();

@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="app.meantneat.com.meetneat.AddEventFragment"
+    tools:context="app.meantneat.com.meetneat.Controller.AddEventFragment"
     android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
@@ -14,7 +14,7 @@
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:id="@+id/imageView2"
+            android:id="@+id/add_event_fragment_event_image_view"
             android:background="@android:drawable/ic_menu_gallery" />
 
         <LinearLayout
@@ -94,7 +94,7 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="247dp"
+        android:layout_height="220dp"
         android:orientation="vertical"
         android:background="#55000000">
 
@@ -108,7 +108,7 @@
             <ImageView
                 android:layout_width="120dp"
                 android:layout_height="fill_parent"
-                android:id="@+id/imageView3"
+                android:id="@+id/add_event_fragment"
                 android:background="@android:mipmap/sym_def_app_icon" />
 
             <LinearLayout
@@ -116,29 +116,32 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
 
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/add_event_fragment_title_edit_text"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/add_event_fragment_dish_title_text_view"
                     android:layout_gravity="center_horizontal"
-                    android:text="title" />
+                    android:text="title"
+                    android:layout_weight="1" />
 
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:inputType="number"
                     android:ems="10"
-                    android:id="@+id/add_event_fragment_price_edit_text"
-                    android:text="price" />
+                    android:id="@+id/add_event_fragment_dish_price_text_view"
+                    android:text="price"
+                    android:layout_weight="1" />
 
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:inputType="number"
                     android:ems="10"
-                    android:id="@+id/add_event_fragment_dishes_left_edit_text"
+                    android:id="@+id/add_event_fragment_dish_dishes_left_text_view"
                     android:layout_gravity="center_horizontal"
-                    android:text="dishes left" />
+                    android:text="dishes left"
+                    android:layout_weight="1" />
             </LinearLayout>
         </LinearLayout>
 
@@ -151,7 +154,7 @@
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:id="@+id/add_event_fragment_description_edit_text"
+                android:id="@+id/add_event_fragment_dish_description_text_view"
                 android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
@@ -162,4 +165,10 @@
         android:id="@+id/add_event_fragment_list_view"
         android:layout_gravity="center_vertical"
         android:layout_weight="1" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:text="New Button"
+        android:id="@+id/button2" />
 </LinearLayout>

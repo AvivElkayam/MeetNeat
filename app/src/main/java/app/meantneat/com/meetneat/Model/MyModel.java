@@ -21,6 +21,6 @@ public class MyModel {
     }
     public  interface ModelInterface
     {
-        public  void LoginToSpray(String userName, String password);
+        public  void LoginToMeetNeat(String userName, String password);
     }
 }

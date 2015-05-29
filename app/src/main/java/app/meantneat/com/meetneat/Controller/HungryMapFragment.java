@@ -1,4 +1,4 @@
-package app.meantneat.com.meetneat;
+package app.meantneat.com.meetneat.Controller;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -6,10 +6,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import android.support.v4.app.FragmentTabHost;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
+
+import app.meantneat.com.meetneat.R;
 //import com.google.android.gms.maps.*;
 //import com.google.android.gms.maps.model.*;
 
@@ -20,10 +23,23 @@ import android.widget.TabHost;
  */
 
  public class HungryMapFragment extends Fragment{ //implements OnMapReadyCallback {
+
+    private static View view;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        View view = inflater.inflate(R.layout.hungry_map_fragment,container,false);
+
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null)
+                parent.removeView(view);
+        }
+        try {
+            view = inflater.inflate(R.layout.hungry_map_fragment, container, false);
+        } catch (InflateException e) {
+        /* map is already there, just return view as it is */
+        }
+
 
         return view;
     }

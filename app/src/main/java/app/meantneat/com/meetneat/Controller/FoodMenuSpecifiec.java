@@ -1,8 +1,10 @@
-package app.meantneat.com.meetneat;
+package app.meantneat.com.meetneat.Controller;
 
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
+
+import app.meantneat.com.meetneat.Dish;
 
 /**
  * Created by DanltR on 18/05/2015.

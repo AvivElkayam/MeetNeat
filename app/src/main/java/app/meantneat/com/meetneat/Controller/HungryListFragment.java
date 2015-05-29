@@ -1,4 +1,4 @@
-package app.meantneat.com.meetneat;
+package app.meantneat.com.meetneat.Controller;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
 
+import app.meantneat.com.meetneat.R;
+
 /**
  * Created by mac on 5/17/15.
  */
@@ -18,7 +20,7 @@ public class HungryListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        View view = inflater.inflate(R.layout.hungry_list_fragment,container,false);
+        View view = inflater.inflate(R.layout.hungry_menu_fragment,container,false);
 
         return view;
     }

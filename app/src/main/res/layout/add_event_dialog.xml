@@ -11,7 +11,7 @@
         <ImageView
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:id="@+id/imageView4"
+            android:id="@+id/add_dish_dialog_image_view"
             android:src="@android:drawable/ic_menu_gallery"
             android:layout_gravity="center_vertical" />
 
@@ -23,7 +23,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText2"
+                android:id="@+id/add_dish_dialog_title_edit_text"
                 android:text="title" />
 
             <EditText
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/editText3"
+                android:id="@+id/add_dish_dialog_price_edit_text"
                 android:text="price" />
 
             <EditText
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/editText4"
+                android:id="@+id/add_dish_dialog_dishes_left_edit_text"
                 android:text="dishes left" />
 
         </LinearLayout>
@@ -48,7 +48,13 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        android:id="@+id/editText5"
+        android:id="@+id/add_dish_dialog_decription_edit_text"
         android:layout_gravity="center_horizontal"
         android:text="description" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:text="Add Dish"
+        android:id="@+id/button" />
 </LinearLayout>

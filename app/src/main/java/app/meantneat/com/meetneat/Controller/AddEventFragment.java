@@ -1,31 +1,41 @@
-package app.meantneat.com.meetneat;
+package app.meantneat.com.meetneat.Controller;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
+
+import app.meantneat.com.meetneat.Dish;
+import app.meantneat.com.meetneat.R;
 
 
 public class AddEventFragment extends Fragment {
+    static final int REQUEST_IMAGE_CAPTURE = 1;
     private TextView startingTimeTextView,startingDateTextView,endingTimeTextView,endingDateTextView;
-    private EditText titleEditText,priceEditText,quantityEditText,descriptionEditText;
+    private TextView dishTitleTextView,dishPriceTextView,dishQuantityTextView,dishDescriptionTextView;
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
     private int startingYear,startingMonth,startingDay,startingHour,startingMinute;
@@ -36,11 +46,16 @@ public class AddEventFragment extends Fragment {
     private ArrayList<Dish> dishArrayList;
     private ListView eventsListView;
     private DishRowListAdapter eventsArrayAdapter;
+    private Dialog addDishDialog;
+    //add dish dialog views
+    private EditText addDishTitleEditText,addDishPriceEditText,addDishDishesLeftEditText,addDishDescriptionEditText;
+    private ImageView addDishImageView,eventImageView;
+    //
     public class DishRowListAdapter extends ArrayAdapter<Dish>
     {
         public DishRowListAdapter()
         {
-            super(getActivity(),R.layout.add_event_fragment_dish_row, dishArrayList);
+            super(getActivity(), R.layout.add_event_fragment_dish_row, dishArrayList);
 
         }
 
@@ -64,10 +79,10 @@ public class AddEventFragment extends Fragment {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    titleEditText.setText(title);
-                    priceEditText.setText(Double.toString(dish.getPrice()));
-                    quantityEditText.setText(Double.toString(dish.getQuantity()));
-                    descriptionEditText.setText(description);
+                    dishTitleTextView.setText(title);
+                    dishPriceTextView.setText(Double.toString(dish.getPrice()));
+                    dishQuantityTextView.setText(Double.toString(dish.getQuantity()));
+                    dishDescriptionTextView.setText(description);
                 }
             });
             return itemView;
@@ -93,7 +108,9 @@ public class AddEventFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
         initViews();
+        buildAddDishDiaglog();
     }
 
     @Override
@@ -112,10 +129,10 @@ private void initViews()
     endingTimeTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_ending_time_label);
     endingDateTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_ending_date_label);
 
-    titleEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_title_edit_text);
-    priceEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_price_edit_text);
-    quantityEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_dishes_left_edit_text);
-    descriptionEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_description_edit_text);
+    dishTitleTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_title_text_view);
+    dishPriceTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_price_text_view);
+    dishQuantityTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_dishes_left_text_view);
+    dishDescriptionTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_description_text_view);
 
     startingDateTextView.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -179,6 +196,13 @@ private void initViews()
             timePickerDialog.show();
         }
     });
+    eventImageView = (ImageView)getActivity().findViewById(R.id.add_event_fragment_event_image_view);
+    eventImageView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            dispatchTakePictureIntent();;
+        }
+    });
     initListView();
 
 }
@@ -215,4 +239,44 @@ private void initViews()
         inflater.inflate(R.menu.chef_fragment_menu, menu);
         super.onCreateOptionsMenu(menu,inflater);
     }
+    private void buildAddDishDiaglog()
+    {
+        addDishDialog = new Dialog(getActivity());
+        addDishDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        addDishDialog.setContentView(R.layout.add_event_dialog);
+        addDishTitleEditText = (EditText)addDishDialog.findViewById(R.id.add_dish_dialog_title_edit_text);
+        addDishPriceEditText = (EditText)addDishDialog.findViewById(R.id.add_dish_dialog_price_edit_text);
+        addDishDishesLeftEditText = (EditText)addDishDialog.findViewById(R.id.add_dish_dialog_dishes_left_edit_text);
+        addDishDescriptionEditText = (EditText)addDishDialog.findViewById(R.id.add_dish_dialog_decription_edit_text);
+        addDishImageView = (ImageView)addDishDialog.findViewById(R.id.add_dish_dialog_image_view);
+
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.chef_fragment_menu_add_button)
+        {
+            addDishDialog.show();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            eventImageView.setImageBitmap(imageBitmap);
+        }
+    }
+
+
 }
