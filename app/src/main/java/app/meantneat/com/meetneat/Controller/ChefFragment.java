@@ -104,9 +104,9 @@ public class ChefFragment extends Fragment
         if(item.getItemId()==R.id.chef_fragment_menu_add_button)
         {
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.chef_fragment_container,new AddEventFragment(), "add_event")
+                    .replace(R.id.chef_fragment_container,new AddDishEventFragment(), "add_dish_event")
                             // Add this transaction to the back stack
-                    .addToBackStack("add_event")
+                    .addToBackStack("add_dish_event")
                     .commit();
         }
 

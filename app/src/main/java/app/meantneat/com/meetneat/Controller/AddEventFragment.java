@@ -121,6 +121,23 @@ public class AddEventFragment extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
+    private void getEventDetailsFromBundle()
+    {
+
+
+
+        startingYear = getArguments().getInt("year");
+        startingMonth = getArguments().getInt("month");
+        startingDay = getArguments().getInt("day");
+        startingHour = getArguments().getInt("starting_hour");
+        startingMinute = getArguments().getInt("starting_minute");
+        endingHour = getArguments().getInt("ending_hour");
+        endingMinute = getArguments().getInt("ending_minute");
+        startingDateTextView.setText(startingDay+"."+"."+startingMonth+"."+startingYear);
+        startingTimeTextView.setText(startingHour+":"+startingMinute);
+        endingTimeTextView.setText(endingHour+":"+endingMinute);
+
+    }
 private void initViews()
 {
     calendar=Calendar.getInstance();
@@ -204,6 +221,7 @@ private void initViews()
         }
     });
     initListView();
+    getEventDetailsFromBundle();
 
 }
 
