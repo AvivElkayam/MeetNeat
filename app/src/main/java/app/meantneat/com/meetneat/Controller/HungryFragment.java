@@ -22,10 +22,10 @@ import app.meantneat.com.meetneat.R;
  * Created by mac on 5/17/15.
  */
 public class HungryFragment extends Fragment {
-    FragmentTabHost mTabHost;
+
     public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter {
         final int PAGE_COUNT = 2;
-        private String tabTitles[] = new String[] { "Tab1", "Tab2" };
+        private String tabTitles[] = new String[] { "Map", "Top Rated" };
 
         public SampleFragmentPagerAdapter(FragmentManager fm) {
             super(fm);

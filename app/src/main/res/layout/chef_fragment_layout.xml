@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/chef_fragment_container">
+    android:orientation="vertical">
 
-    <ListView
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/chef_view_pager_tabs"
+        app:pstsShouldExpand="true"
+        app:pstsTextAllCaps="true"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/chef_fragment_events_list_view"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="8" />
+        android:layout_height="48dp">
+    </com.astuetz.PagerSlidingTabStrip>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/chef_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white" />
 
 </LinearLayout>

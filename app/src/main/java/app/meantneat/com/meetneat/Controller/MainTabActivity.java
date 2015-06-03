@@ -1,7 +1,6 @@
 package app.meantneat.com.meetneat.Controller;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.ActionBarActivity;
@@ -10,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TabHost;
 
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
@@ -107,7 +105,7 @@ private FragmentTabHost mTabHost;
 //
 //        mTabHost.addTab(mTabHost.newTabSpec("HungryFragment").setIndicator("Hungry"),
 //                HungryFragment.class, null);
-//        mTabHost.addTab(mTabHost.newTabSpec("ChefFragment").setIndicator("Chef"),ChefFragment.class,null);
+//        mTabHost.addTab(mTabHost.newTabSpec("ChefEventDishesFragment").setIndicator("Chef"),ChefEventDishesFragment.class,null);
 //
 //        for(int i=0;i<mTabHost.getTabWidget().getChildCount();i++)
 //        {

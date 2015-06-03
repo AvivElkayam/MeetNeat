@@ -24,7 +24,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -32,7 +33,10 @@ import app.meantneat.com.meetneat.Dish;
 import app.meantneat.com.meetneat.R;
 
 
-public class AddEventFragment extends Fragment {
+public class EditEventDishesFragment extends Fragment {
+
+    FloatingActionButton addNewDish;
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private TextView startingTimeTextView,startingDateTextView,endingTimeTextView,endingDateTextView;
     private TextView dishTitleTextView,dishPriceTextView,dishQuantityTextView,dishDescriptionTextView;
@@ -88,13 +92,13 @@ public class AddEventFragment extends Fragment {
             return itemView;
         }
     }
-    public static AddEventFragment newInstance(String param1, String param2) {
-        AddEventFragment fragment = new AddEventFragment();
+    public static EditEventDishesFragment newInstance(String param1, String param2) {
+        EditEventDishesFragment fragment = new EditEventDishesFragment();
 
         return fragment;
     }
 
-    public AddEventFragment() {
+    public EditEventDishesFragment() {
         // Required empty public constructor
     }
 
@@ -110,6 +114,12 @@ public class AddEventFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
         initViews();
+        addNewDish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addDishDialog.show();
+            }
+        });
         buildAddDishDiaglog();
     }
 
@@ -117,6 +127,7 @@ public class AddEventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_event_fragment, container, false);
+
 
         // Inflate the layout for this fragment
         return view;
@@ -140,6 +151,7 @@ public class AddEventFragment extends Fragment {
     }
 private void initViews()
 {
+    addNewDish= (FloatingActionButton) getActivity().findViewById(R.id.add_event_fragment_add_new_dish_button);
     calendar=Calendar.getInstance();
     startingTimeTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_starting_time_label);
     startingDateTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_starting_date_label);

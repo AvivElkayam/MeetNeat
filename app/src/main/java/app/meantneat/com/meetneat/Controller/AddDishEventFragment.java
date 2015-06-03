@@ -57,7 +57,7 @@ public class AddDishEventFragment extends Fragment {
                 bundle.putString("location",location.getText().toString());
                 bundle.putString("apartment_number",apartmentNumber.getText().toString());
                 //set Fragmentclass Arguments
-                AddEventFragment fragment=new AddEventFragment();
+                EditEventDishesFragment fragment=new EditEventDishesFragment();
                 fragment.setArguments(bundle);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.chef_fragment_container,fragment, "add_event")
