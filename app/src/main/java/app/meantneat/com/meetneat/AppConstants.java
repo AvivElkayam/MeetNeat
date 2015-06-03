@@ -7,8 +7,8 @@ public class AppConstants {
     //USER TABLE
     public static String USER = "User";
     public static String USER_ID = "objectId";
-    public static String USER_NAME = "username";
-    public static String USER_EMAIL = "email";
+    public static String USER_EMAIL = "username";
+    public static String USER_NICK_NAME = "nick_name";
     public static String USER_RATING = "rating";
     public static String USER_DESCRIPTION = "description";
     public static String USER_PHONE = "phone";

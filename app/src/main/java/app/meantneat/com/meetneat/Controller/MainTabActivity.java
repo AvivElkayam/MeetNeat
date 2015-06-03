@@ -1,5 +1,6 @@
 package app.meantneat.com.meetneat.Controller;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TabHost;
 
+import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 
 
@@ -21,6 +23,13 @@ private FragmentTabHost mTabHost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(!MyModel.getInstance().getModel().currentUserConnected())
+        {
+           Intent intent = new Intent(this,SignInActivity.class);
+           startActivity(intent);
+            finish();
+        }
+
         setContentView(R.layout.activity_main_tab);
         chefFragment = new ChefFragment();
         hungryFragment = new HungryFragment();
