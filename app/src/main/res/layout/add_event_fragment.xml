@@ -166,9 +166,4 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="1" />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:text="New Button"
-        android:id="@+id/button2" />
 </LinearLayout>

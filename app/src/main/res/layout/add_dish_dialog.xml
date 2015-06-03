@@ -55,6 +55,6 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:text="Add Dish"
-        android:id="@+id/button" />
+        android:text="Next"
+        android:id="@+id/add_dish_dialog_next_button_id" />
 </LinearLayout>

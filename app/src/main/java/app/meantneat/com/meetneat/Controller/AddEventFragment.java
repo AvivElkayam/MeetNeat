@@ -18,12 +18,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.ViewSwitcher;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,9 +50,14 @@ public class AddEventFragment extends Fragment {
     private ListView eventsListView;
     private DishRowListAdapter eventsArrayAdapter;
     private Dialog addDishDialog;
+    View v1,v2,v3;
     //add dish dialog views
+    private LinearLayout dialogBoxLayoutContainer;
+    private Button nextButton,backButton;
     private EditText addDishTitleEditText,addDishPriceEditText,addDishDishesLeftEditText,addDishDescriptionEditText;
     private ImageView addDishImageView,eventImageView;
+    private String dishTitle,dishPrice,dishDescription,dishQuantity;
+    int dialogBoxIndex=1;
     //
     public class DishRowListAdapter extends ArrayAdapter<Dish>
     {
@@ -227,10 +235,10 @@ private void initViews()
 
     private void initListView() {
         dishArrayList = new ArrayList<>();
-        dishArrayList.add(new Dish("פרגית במחבת","מנה טעימה ומשביעה עם טעמים עשירים",34,7,true,true,null));
-        dishArrayList.add(new Dish("שניצל דה דיינר","שניצל קלאסי עם רוטב טעים",27.90,9,true,true,null));
-        dishArrayList.add(new Dish("סלט פלחים","מבחר ירקות העונה חתוכים גס",19,10,true,true,null));
-        dishArrayList.add(new Dish("שרימפס חמאה ושום","מנת שרימפס קלאסי עם רוטב מנצח",46.90,9,true,true,null));
+//        dishArrayList.add(new Dish("פרגית במחבת","מנה טעימה ומשביעה עם טעמים עשירים",34,7,true,true,null));
+//        dishArrayList.add(new Dish("שניצל דה דיינר","שניצל קלאסי עם רוטב טעים",27.90,9,true,true,null));
+//        dishArrayList.add(new Dish("סלט פלחים","מבחר ירקות העונה חתוכים גס",19,10,true,true,null));
+//        dishArrayList.add(new Dish("שרימפס חמאה ושום","מנת שרימפס קלאסי עם רוטב מנצח",46.90,9,true,true,null));
 
         dishRowListAdapter = new DishRowListAdapter();
         dishesListView = (ListView)getActivity().findViewById(R.id.add_event_fragment_list_view);
@@ -261,15 +269,77 @@ private void initViews()
     {
         addDishDialog = new Dialog(getActivity());
         addDishDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        addDishDialog.setContentView(R.layout.add_event_dialog);
-        addDishTitleEditText = (EditText)addDishDialog.findViewById(R.id.add_dish_dialog_title_edit_text);
-        addDishPriceEditText = (EditText)addDishDialog.findViewById(R.id.add_dish_dialog_price_edit_text);
-        addDishDishesLeftEditText = (EditText)addDishDialog.findViewById(R.id.add_dish_dialog_dishes_left_edit_text);
-        addDishDescriptionEditText = (EditText)addDishDialog.findViewById(R.id.add_dish_dialog_decription_edit_text);
-        addDishImageView = (ImageView)addDishDialog.findViewById(R.id.add_dish_dialog_image_view);
+        addDishDialog.setContentView(R.layout.add_dish_dialog_box_layout);
+        nextButton = (Button)addDishDialog.findViewById(R.id.add_dish_dialog_next_button_id);
+        dialogBoxLayoutContainer = (LinearLayout)addDishDialog.findViewById(R.id.add_dish_dialog_box_linear_layout_id);
+        nextButton = (Button)addDishDialog.findViewById(R.id.add_dish_dialog_box_next_button_id);
+        backButton = (Button)addDishDialog.findViewById(R.id.add_dish_dialog_box_back_button_id);
+        buildDialogBoxPhases();
+
+//        addDishTitleEditText = (EditText)addDishDialog.findViewById(R.id.add_dish_dialog_title_edit_text);
+//        addDishPriceEditText = (EditText)addDishDialog.findViewById(R.id.add_dish_dialog_price_edit_text);
+//        addDishDishesLeftEditText = (EditText)addDishDialog.findViewById(R.id.add_dish_dialog_dishes_left_edit_text);
+//        addDishDescriptionEditText = (EditText)addDishDialog.findViewById(R.id.add_dish_dialog_decription_edit_text);
+//        addDishImageView = (ImageView)addDishDialog.findViewById(R.id.add_dish_dialog_image_view);
 
     }
+    private void buildDialogBoxPhases()
+    {
+        v1 = getActivity().getLayoutInflater().inflate(R.layout.add_dish_phase_one,dialogBoxLayoutContainer,false);
+        addDishTitleEditText = (EditText)v1.findViewById(R.id.add_dish_phase_one_title_edit_text_id);
+        addDishDescriptionEditText = (EditText)v1.findViewById(R.id.add_dish_phase_one_description_edit_text_id);
+        v2 = getActivity().getLayoutInflater().inflate(R.layout.add_dish_phase_two,dialogBoxLayoutContainer,false);
+        addDishPriceEditText = (EditText)v2.findViewById(R.id.add_dish_phase_two_price_edit_text_id);
+        v3 = getActivity().getLayoutInflater().inflate(R.layout.add_dish_phase_three,dialogBoxLayoutContainer,false);
+        addDishDishesLeftEditText = (EditText)v3.findViewById(R.id.add_dish_phase_three_quantity_edit_text_id);
+        dialogBoxLayoutContainer.addView(v1);
+        dialogBoxLayoutContainer.addView(v2);
+        dialogBoxLayoutContainer.addView(v3);
 
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (dialogBoxIndex)
+                {
+                    case 1:
+                    {
+                        dialogBoxIndex=2;
+                        v1.setVisibility(View.GONE);
+                        v2.setVisibility(View.VISIBLE);
+                        v3.setVisibility(View.GONE);
+                        backButton.setVisibility(View.VISIBLE);
+                        dishDescription=addDishDescriptionEditText.getText().toString();
+                        dishTitle = addDishTitleEditText.getText().toString();
+                        break;
+                    }
+                    case 2:
+                    {
+                        dialogBoxIndex=3;
+                        v1.setVisibility(View.GONE);
+                        v2.setVisibility(View.GONE);
+                        v3.setVisibility(View.VISIBLE);
+                        backButton.setVisibility(View.VISIBLE);
+                        dishPrice = addDishPriceEditText.getText().toString();
+                        break;
+                    }
+                    case 3:
+                    {
+                        dishQuantity = addDishDishesLeftEditText.getText().toString();
+//                        dialogBoxIndex=1;
+//                        v1.setVisibility(View.VISIBLE);
+//                        v2.setVisibility(View.GONE);
+//                        v3.setVisibility(View.GONE);
+//                        backButton.setVisibility(View.GONE);
+                        dishArrayList.add(new Dish(dishTitle,dishDescription,Double.parseDouble(dishPrice),Double.parseDouble(dishQuantity),true,true,null));
+                        dishRowListAdapter.notifyDataSetChanged();
+                        addDishDialog.dismiss();
+
+                        break;
+                    }
+                }
+            }
+        });
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
