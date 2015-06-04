@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import app.meantneat.com.meetneat.Event;
+import app.meantneat.com.meetneat.EventDishes;
 import app.meantneat.com.meetneat.R;
 
 /**
@@ -23,15 +23,15 @@ import app.meantneat.com.meetneat.R;
  */
 public class ChefEventDishesFragment extends Fragment
 {
-    private ArrayList<Event> eventArrayList;
+    private ArrayList<EventDishes> eventDishesArrayList;
     private ListView eventsListView;
     private EventRowListAdapter eventsArrayAdapter;
     View view;
-    public class EventRowListAdapter extends ArrayAdapter<Event>
+    public class EventRowListAdapter extends ArrayAdapter<EventDishes>
     {
         public EventRowListAdapter()
         {
-            super(getActivity(), R.layout.chef_event_dishes_fragment_list_view_row, eventArrayList);
+            super(getActivity(), R.layout.chef_event_dishes_fragment_list_view_row, eventDishesArrayList);
 
         }
 
@@ -43,11 +43,11 @@ public class ChefEventDishesFragment extends Fragment
             {
                 itemView = getActivity().getLayoutInflater().inflate(R.layout.chef_event_dishes_fragment_list_view_row,parent,false);
             }
-            Event event = eventArrayList.get(position);
-            String time = event.getTime();
-            String date = event.getDate();
-            String dishesLeft = "Dishes left: "+event.getDishesLeft();
-            String title = event.getTitle();
+            EventDishes eventDishes = eventDishesArrayList.get(position);
+            String time = eventDishes.getTime();
+            String date = eventDishes.getDate();
+            String dishesLeft = "Dishes left: "+ eventDishes.getDishesLeft();
+            String title = eventDishes.getTitle();
 
 
             TextView titleTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_title_text_view);
@@ -78,16 +78,16 @@ public class ChefEventDishesFragment extends Fragment
     private void initViews()
     {
 
-        eventArrayList = new ArrayList<>();
-        Event event1 = new Event("חומוס פול","21.2.2015","22:00",4);
-        Event event2 = new Event("קובה סלק","17.2.2015","19:00",3);
-        Event event3 = new Event("מוקפץ תאילנדי","17.2.2015","14:00",8);
-        Event event4 = new Event("ספגטי בולונז","17.2.2015","19:00",5);
-        eventArrayList.add(event1);
-        eventArrayList.add(event2);
-        eventArrayList.add(event3);
-        eventArrayList.add(event4);
-        eventsListView =(ListView)getActivity().findViewById(R.id.chef_fragment_events_list_view);
+        eventDishesArrayList = new ArrayList<>();
+        EventDishes eventDishes1 = new EventDishes("חומוס פול","21.2.2015","22:00",4);
+        EventDishes eventDishes2 = new EventDishes("קובה סלק","17.2.2015","19:00",3);
+        EventDishes eventDishes3 = new EventDishes("מוקפץ תאילנדי","17.2.2015","14:00",8);
+        EventDishes eventDishes4 = new EventDishes("ספגטי בולונז","17.2.2015","19:00",5);
+        eventDishesArrayList.add(eventDishes1);
+        eventDishesArrayList.add(eventDishes2);
+        eventDishesArrayList.add(eventDishes3);
+        eventDishesArrayList.add(eventDishes4);
+        eventsListView =(ListView)getActivity().findViewById(R.id.chef_events_dishes_list_view);
         eventsArrayAdapter = new EventRowListAdapter();
         eventsListView.setAdapter(eventsArrayAdapter);
     }
@@ -104,7 +104,7 @@ public class ChefEventDishesFragment extends Fragment
         if(item.getItemId()==R.id.chef_fragment_menu_add_button)
         {
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.chef_fragment_container,new AddDishEventFragment(), "add_dish_event")
+                    .replace(R.id.chef_event_dishes_fragment_container,new AddDishEventFragment(), "add_dish_event")
                             // Add this transaction to the back stack
                     .addToBackStack("add_dish_event")
                     .commit();

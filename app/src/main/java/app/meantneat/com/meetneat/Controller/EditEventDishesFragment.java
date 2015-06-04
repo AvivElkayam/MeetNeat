@@ -84,7 +84,7 @@ public class EditEventDishesFragment extends Fragment {
             String dishesLeft = "Dishes left: "+dish.getQuantity();
             final String description = dish.getDescriprion();
 
-//
+
             TextView titleTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_title_text_view);
             titleTextView.setText(title);
             itemView.setOnClickListener(new View.OnClickListener() {

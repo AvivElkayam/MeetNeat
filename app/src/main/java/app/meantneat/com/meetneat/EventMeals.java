@@ -2,23 +2,22 @@ package app.meantneat.com.meetneat;
 
 import java.util.ArrayList;
 
-/**
- * Created by mac on 5/23/15.
- */
-public class Event {
+
+public class EventMeals {
     private String title;
     private String date;
     private String time;
-    private int dishesLeft;
+    private int mealsLeft;
+    private int totalMeals;
     private String eventId;
-    private ArrayList<Dish> eventsDishes;
-    public Event(String title, String date, String time, int dishesLeft) {
+    //array of photos - ArrayList...
+    public EventMeals(String title, String date, String time, int totalDishes,int dishesLeft) {
         this.title = title;
         this.date = date;
         this.time = time;
-        this.dishesLeft = dishesLeft;
-        eventsDishes = new ArrayList<>();
-    }
+        this.mealsLeft = dishesLeft;
+        this.totalMeals = totalDishes;
+     }
 
     public String getTitle() {
         return title;
@@ -45,10 +44,18 @@ public class Event {
     }
 
     public int getDishesLeft() {
-        return dishesLeft;
+        return mealsLeft;
     }
 
-    public void setDishesLeft(int dishesLeft) {
-        this.dishesLeft = dishesLeft;
+    public void setDishesLeft(int mealsLeft) {
+        this.mealsLeft = mealsLeft;
+    }
+
+    public int getTotalDishes() {
+        return totalMeals;
+    }
+
+    public void setTotalDishes(int totalMeals) {
+        this.totalMeals = totalMeals;
     }
 }

@@ -15,14 +15,14 @@ public class AppConstants {
     public static String USER_PRICE_MIN = "min_price";
     public static String USER_PRICE_MAX = "max_price";
     //EVENT_DISHES TABLE
-    public static String EVENT_DISHES = "Event Dishes";
+    public static String EVENT_DISHES = "EventDishes";
     public static String EVENT_DISHES_ID = "objectId";
     public static String EVENT_DISHES_START_DATE = "start_date";
     public static String EVENT_DISHES_END_DATE = "end_date";
     public static String EVENT_DISHES_CHEF_ID = "chef_id";
     public static String EVENT_DISHES_LOCATION = "location";
     //EVENT_MEALS TABLE
-    public static String EVENT_MEALS = "Event Dishes";
+    public static String EVENT_MEALS = "EventMeals";
     public static String EVENT_MEALS_ID = "objectId";
     public static String EVENT_MEALS_START_DATE = "start_date";
     public static String EVENT_MEALS_END_DATE = "end_date";
