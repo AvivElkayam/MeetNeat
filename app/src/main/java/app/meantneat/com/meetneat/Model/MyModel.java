@@ -4,7 +4,8 @@ import javax.security.auth.callback.Callback;
 
 import app.meantneat.com.meetneat.Controller.EditEventDishesFragment;
 import app.meantneat.com.meetneat.Controller.SignInActivity;
-import app.meantneat.com.meetneat.Event;
+
+import app.meantneat.com.meetneat.EventDishes;
 
 /**
  * Created by mac on 5/25/15.
@@ -28,7 +29,7 @@ public class MyModel {
         public void LoginToMeetNeat(String userName, String password);
         public void signUpToMeetNeat(String userName,String email,String password,SignInActivity.SignUpCallback callback);
         public boolean currentUserConnected();
-        public void addNewEventToServer(Event event,EditEventDishesFragment.SaveToServerCallback callback);
+        public void addNewEventDishesToServer(EventDishes event,EditEventDishesFragment.SaveToServerCallback callback);
     }
 
 }

@@ -63,7 +63,7 @@ public class AddDishEventFragment extends Fragment {
                     EditEventDishesFragment fragment = new EditEventDishesFragment();
                     fragment.setArguments(bundle);
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.chef_fragment_container, fragment, "add_event")
+                            .replace(R.id.chef_event_dishes_fragment_container, fragment, "add_event")
                             .commit();
                 }
                 else

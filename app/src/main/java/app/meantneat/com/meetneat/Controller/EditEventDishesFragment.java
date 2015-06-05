@@ -34,7 +34,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import app.meantneat.com.meetneat.Dish;
-import app.meantneat.com.meetneat.Event;
+
+import app.meantneat.com.meetneat.EventDishes;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 
@@ -414,7 +415,7 @@ private void initViews()
     private void wrapAllDataToEventAndUpdateServer()
     {
         String title = eventTitleEditText.getText().toString();
-        Event event = new Event(title
+        EventDishes event = new EventDishes(title
                 ,startingHour
                 ,startingMinute
                 ,endingHour
@@ -426,7 +427,7 @@ private void initViews()
                 apartmentNumber,
                 "",
                 dishArrayList);
-        MyModel.getInstance().getModel().addNewEventToServer(event,new SaveToServerCallback() {
+        MyModel.getInstance().getModel().addNewEventDishesToServer(event,new SaveToServerCallback() {
             @Override
             public void onResult() {
                 Toast.makeText(getActivity(),"Event Saved",Toast.LENGTH_SHORT).show();

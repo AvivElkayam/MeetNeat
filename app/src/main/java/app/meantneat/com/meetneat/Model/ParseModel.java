@@ -15,7 +15,8 @@ import app.meantneat.com.meetneat.AppConstants;
 import app.meantneat.com.meetneat.Controller.EditEventDishesFragment;
 import app.meantneat.com.meetneat.Controller.SignInActivity;
 import app.meantneat.com.meetneat.Dish;
-import app.meantneat.com.meetneat.Event;
+
+import app.meantneat.com.meetneat.EventDishes;
 
 /**
  * Created by mac on 5/25/15.
@@ -54,7 +55,7 @@ public class ParseModel implements MyModel.ModelInterface {
     }
 
     @Override
-    public void addNewEventToServer(final Event event, final EditEventDishesFragment.SaveToServerCallback callback) {
+    public void addNewEventDishesToServer(final EventDishes event, final EditEventDishesFragment.SaveToServerCallback callback) {
         //save event first
         final ParseObject eventObject = new ParseObject(AppConstants.EVENT_DISHES);
         Date startingDate = new Date(event.getEventYear(),event.getEventMonth(),event.getEventDay(),event.getStartingHour(),event.getStartingMinute());
