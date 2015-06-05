@@ -44,7 +44,7 @@ public class ChefFragment extends Fragment {
                 }
                 case 1:
                 {
-                    return new HungryListFragment();
+                    return new ChefEventMealsFragment();
                 }
 
 

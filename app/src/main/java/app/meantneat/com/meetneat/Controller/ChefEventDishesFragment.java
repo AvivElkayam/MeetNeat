@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import app.meantneat.com.meetneat.Event;
+import app.meantneat.com.meetneat.EventDishes;
 import app.meantneat.com.meetneat.R;
 
 /**
@@ -23,15 +23,15 @@ import app.meantneat.com.meetneat.R;
  */
 public class ChefEventDishesFragment extends Fragment
 {
-    private ArrayList<Event> eventArrayList;
+    private ArrayList<EventDishes> eventDishesArrayList;
     private ListView eventsListView;
     private EventRowListAdapter eventsArrayAdapter;
     View view;
-    public class EventRowListAdapter extends ArrayAdapter<Event>
+    public class EventRowListAdapter extends ArrayAdapter<EventDishes>
     {
         public EventRowListAdapter()
         {
-            super(getActivity(), R.layout.chef_event_dishes_fragment_list_view_row, eventArrayList);
+            super(getActivity(), R.layout.chef_event_dishes_fragment_list_view_row, eventDishesArrayList);
 
         }
 
@@ -48,6 +48,11 @@ public class ChefEventDishesFragment extends Fragment
 //            String date = event.getDate();
 //            String dishesLeft = "Dishes left: "+event.getDishesLeft();
             String title = event.getTitle();
+            EventDishes eventDishes = eventDishesArrayList.get(position);
+            String time = eventDishes.getTime();
+            String date = eventDishes.getDate();
+            String dishesLeft = "Dishes left: "+ eventDishes.getDishesLeft();
+            String title = eventDishes.getTitle();
 
 
             TextView titleTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_title_text_view);
@@ -104,7 +109,7 @@ public class ChefEventDishesFragment extends Fragment
         if(item.getItemId()==R.id.chef_fragment_menu_add_button)
         {
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.chef_fragment_container,new AddDishEventFragment(), "add_dish_event")
+                    .replace(R.id.chef_event_dishes_fragment_container,new AddDishEventFragment(), "add_dish_event")
                             // Add this transaction to the back stack
                     .addToBackStack("add_dish_event")
                     .commit();

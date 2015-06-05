@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by mac on 5/23/15.
  */
-public class Event {
+public class EventDishes {
     private String title;
 //    private String date;
 //    private String time;
@@ -14,6 +14,7 @@ public class Event {
     String location,apartmentNumber;
     private String eventId;
     private ArrayList<Dish> eventsDishes;
+    public EventDishes(String title, String date, String time, int dishesLeft) {
 
     public Event(String title, int startingHour, int startingMinute, int endingHour, int endingMinute, int eventYear, int eventMonth, int eventDay, String location, String apartmentNumber, String eventId, ArrayList<Dish> eventsDishes) {
         this.title = title;

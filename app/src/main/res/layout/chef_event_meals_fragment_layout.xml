@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/chef_event_dishes_fragment_container">
+    android:id="@+id/chef_event_meals_fragment_container">
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/chef_events_dishes_list_view"
+        android:id="@+id/chef_events_meals_list_view"
         android:layout_gravity="center_horizontal"
         android:layout_weight="8" />
 
