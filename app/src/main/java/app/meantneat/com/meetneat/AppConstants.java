@@ -15,14 +15,16 @@ public class AppConstants {
     public static String USER_PRICE_MIN = "min_price";
     public static String USER_PRICE_MAX = "max_price";
     //EVENT_DISHES TABLE
-    public static String EVENT_DISHES = "Event Dishes";
+    public static String EVENT_DISHES = "EventDishes";
     public static String EVENT_DISHES_ID = "objectId";
     public static String EVENT_DISHES_START_DATE = "start_date";
     public static String EVENT_DISHES_END_DATE = "end_date";
     public static String EVENT_DISHES_CHEF_ID = "chef_id";
     public static String EVENT_DISHES_LOCATION = "location";
+    public static String EVENT_DISHES_APARTMENT_NUMBER = "apartment_number";
+
     //EVENT_MEALS TABLE
-    public static String EVENT_MEALS = "Event Dishes";
+    public static String EVENT_MEALS = "EventMeals";
     public static String EVENT_MEALS_ID = "objectId";
     public static String EVENT_MEALS_START_DATE = "start_date";
     public static String EVENT_MEALS_END_DATE = "end_date";
@@ -43,7 +45,7 @@ public class AppConstants {
     public static String DISH_IS_TAKE_AWAY = "is_take_away";
     public static String DISH_IS_TO_SIT = "is_to_sit";
     //DISHES_OREDERS
-    public static String DISHES_ORDER = "Dishes Orders";
+    public static String DISHES_ORDER = "DishesOrders";
     public static String DISHES_ORDER_ID = "objectId";
     public static String DISHES_ORDER_USER_ID = "user_id";
     public static String DISHES_ORDER_DISH_ID = "dish_id";
@@ -53,7 +55,7 @@ public class AppConstants {
     public static String DISHES_ORDER_IS_TO_SIT = "is_to_sit";
     public static String DISHES_ORDER_ARRIVAL_TIME = "arrival_time";
     //MEALS_OREDERS
-    public static String MEALS_ORDER = "Meals Orders";
+    public static String MEALS_ORDER = "MealsOrders";
     public static String MEALS_ORDER_ID = "objectId";
     public static String MEALS_ORDER_USER_ID = "user_id";
     public static String MEALS_ORDER_EVENT_ID = "event_id";

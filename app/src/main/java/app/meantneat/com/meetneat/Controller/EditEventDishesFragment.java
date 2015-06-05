@@ -26,12 +26,16 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import app.meantneat.com.meetneat.Dish;
+import app.meantneat.com.meetneat.Event;
+import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 
 
@@ -45,6 +49,7 @@ public class EditEventDishesFragment extends Fragment {
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
     private int startingYear,startingMonth,startingDay,startingHour,startingMinute;
+    private EditText eventTitleEditText;
     private int endingYear,endingMonth,endingDay,endingHour,endingMinute;
     private Calendar calendar;
     private ListView dishesListView;
@@ -52,7 +57,9 @@ public class EditEventDishesFragment extends Fragment {
     private ArrayList<Dish> dishArrayList;
     private ListView eventsListView;
     private DishRowListAdapter eventsArrayAdapter;
+    private Button createEventButton;
     private Dialog addDishDialog;
+    private String apartmentNumber,location;
     View v1,v2,v3;
     //add dish dialog views
     private LinearLayout dialogBoxLayoutContainer;
@@ -154,10 +161,15 @@ public class EditEventDishesFragment extends Fragment {
         startingDateTextView.setText(startingDay+"."+"."+startingMonth+"."+startingYear);
         startingTimeTextView.setText(startingHour+":"+startingMinute);
         endingTimeTextView.setText(endingHour+":"+endingMinute);
+        //addDishTitleEditText.setText(getArguments().getString("title"));
+        apartmentNumber = getArguments().getString("apartment_number");
+        location = getArguments().getString("location");
 
     }
 private void initViews()
 {
+    createEventButton = (Button)getActivity().findViewById(R.id.add_event_fragment_add_event_button_id);
+    eventTitleEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_title_edit_text_id);
     addNewDish= (FloatingActionButton) getActivity().findViewById(R.id.add_event_fragment_add_new_dish_button);
     calendar=Calendar.getInstance();
     startingTimeTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_starting_time_label);
@@ -239,6 +251,12 @@ private void initViews()
             dispatchTakePictureIntent();;
         }
     });
+    createEventButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            wrapAllDataToEventAndUpdateServer();
+        }
+    });
     initListView();
     getEventDetailsFromBundle();
 
@@ -314,37 +332,54 @@ private void initViews()
                 {
                     case 1:
                     {
-                        dialogBoxIndex=2;
-                        v1.setVisibility(View.GONE);
-                        v2.setVisibility(View.VISIBLE);
-                        v3.setVisibility(View.GONE);
-                        backButton.setVisibility(View.VISIBLE);
+
                         dishDescription=addDishDescriptionEditText.getText().toString();
                         dishTitle = addDishTitleEditText.getText().toString();
+                        if(dishDescription.equals("") || dishTitle.equals(""))
+                        {
+                            Toast.makeText(getActivity(),"Please fill in details",Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            dialogBoxIndex = 2;
+                            v1.setVisibility(View.GONE);
+                            v2.setVisibility(View.VISIBLE);
+                            v3.setVisibility(View.GONE);
+                            backButton.setVisibility(View.VISIBLE);
+                        }
                         break;
                     }
                     case 2:
                     {
-                        dialogBoxIndex=3;
-                        v1.setVisibility(View.GONE);
-                        v2.setVisibility(View.GONE);
-                        v3.setVisibility(View.VISIBLE);
-                        backButton.setVisibility(View.VISIBLE);
                         dishPrice = addDishPriceEditText.getText().toString();
+                        if(dishPrice.equals(""))
+                        {
+                            Toast.makeText(getActivity(),"Please fill in details",Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            dialogBoxIndex = 3;
+                            v1.setVisibility(View.GONE);
+                            v2.setVisibility(View.GONE);
+                            v3.setVisibility(View.VISIBLE);
+                            backButton.setVisibility(View.VISIBLE);
+                        }
                         break;
                     }
                     case 3:
                     {
                         dishQuantity = addDishDishesLeftEditText.getText().toString();
-//                        dialogBoxIndex=1;
-//                        v1.setVisibility(View.VISIBLE);
-//                        v2.setVisibility(View.GONE);
-//                        v3.setVisibility(View.GONE);
-//                        backButton.setVisibility(View.GONE);
-                        dishArrayList.add(new Dish(dishTitle,dishDescription,Double.parseDouble(dishPrice),Double.parseDouble(dishQuantity),true,true,null));
-                        dishRowListAdapter.notifyDataSetChanged();
-                        addDishDialog.dismiss();
 
+                        if(dishQuantity.equals(""))
+                        {
+                            Toast.makeText(getActivity(),"Please fill in details",Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            dishArrayList.add(new Dish(dishTitle, dishDescription, Double.parseDouble(dishPrice), Double.parseDouble(dishQuantity), true, true, null));
+                            dishRowListAdapter.notifyDataSetChanged();
+                            addDishDialog.dismiss();
+                        }
                         break;
                     }
                 }
@@ -376,6 +411,31 @@ private void initViews()
             eventImageView.setImageBitmap(imageBitmap);
         }
     }
-
+    private void wrapAllDataToEventAndUpdateServer()
+    {
+        String title = eventTitleEditText.getText().toString();
+        Event event = new Event(title
+                ,startingHour
+                ,startingMinute
+                ,endingHour
+                ,endingMinute,
+                startingYear,
+                startingMonth,
+                startingDay,
+                location,
+                apartmentNumber,
+                "",
+                dishArrayList);
+        MyModel.getInstance().getModel().addNewEventToServer(event,new SaveToServerCallback() {
+            @Override
+            public void onResult() {
+                Toast.makeText(getActivity(),"Event Saved",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    public interface SaveToServerCallback
+    {
+        public void onResult();
+    }
 
 }

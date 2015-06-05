@@ -13,6 +13,7 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:id="@+id/add_dish_phase_three_quantity_edit_text_id" />
+        android:id="@+id/add_dish_phase_three_quantity_edit_text_id"
+        android:inputType="number"/>
 
 </LinearLayout>

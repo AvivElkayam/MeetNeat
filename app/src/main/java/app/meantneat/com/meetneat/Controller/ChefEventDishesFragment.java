@@ -44,20 +44,20 @@ public class ChefEventDishesFragment extends Fragment
                 itemView = getActivity().getLayoutInflater().inflate(R.layout.chef_event_dishes_fragment_list_view_row,parent,false);
             }
             Event event = eventArrayList.get(position);
-            String time = event.getTime();
-            String date = event.getDate();
-            String dishesLeft = "Dishes left: "+event.getDishesLeft();
+//            String time = event.getTime();
+//            String date = event.getDate();
+//            String dishesLeft = "Dishes left: "+event.getDishesLeft();
             String title = event.getTitle();
 
 
             TextView titleTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_title_text_view);
             titleTextView.setText(title);
             TextView dateTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_date_text_view);
-            dateTextView.setText(date);
+            //dateTextView.setText(date);
             TextView timeTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_time_text_view);
-            timeTextView.setText(time);
+            //timeTextView.setText(time);
             TextView dishesLeftTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_dishes_left_text_view);
-            dishesLeftTextView.setText(dishesLeft);
+            //dishesLeftTextView.setText(dishesLeft);
             return itemView;
         }
     }
@@ -79,14 +79,14 @@ public class ChefEventDishesFragment extends Fragment
     {
 
         eventArrayList = new ArrayList<>();
-        Event event1 = new Event("חומוס פול","21.2.2015","22:00",4);
-        Event event2 = new Event("קובה סלק","17.2.2015","19:00",3);
-        Event event3 = new Event("מוקפץ תאילנדי","17.2.2015","14:00",8);
-        Event event4 = new Event("ספגטי בולונז","17.2.2015","19:00",5);
-        eventArrayList.add(event1);
-        eventArrayList.add(event2);
-        eventArrayList.add(event3);
-        eventArrayList.add(event4);
+//        Event event1 = new Event("חומוס פול","21.2.2015","22:00",4);
+//        Event event2 = new Event("קובה סלק","17.2.2015","19:00",3);
+//        Event event3 = new Event("מוקפץ תאילנדי","17.2.2015","14:00",8);
+//        Event event4 = new Event("ספגטי בולונז","17.2.2015","19:00",5);
+//        eventArrayList.add(event1);
+//        eventArrayList.add(event2);
+//        eventArrayList.add(event3);
+//        eventArrayList.add(event4);
         eventsListView =(ListView)getActivity().findViewById(R.id.chef_fragment_events_list_view);
         eventsArrayAdapter = new EventRowListAdapter();
         eventsListView.setAdapter(eventsArrayAdapter);

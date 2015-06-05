@@ -13,6 +13,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -45,23 +46,30 @@ public class AddDishEventFragment extends Fragment {
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("year",eventYear);
-                bundle.putInt("month",eventMonth);
-                bundle.putInt("day",eventDay);
-                bundle.putInt("starting_hour",startingHour);
-                bundle.putInt("starting_minute",startingMinute);
-                bundle.putInt("ending_hour",endingHour);
-                bundle.putInt("ending_minute",endingMinute);
-                bundle.putString("title",titleEditText.getText().toString());
-                bundle.putString("location",location.getText().toString());
-                bundle.putString("apartment_number",apartmentNumber.getText().toString());
-                //set Fragmentclass Arguments
-                EditEventDishesFragment fragment=new EditEventDishesFragment();
-                fragment.setArguments(bundle);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.chef_fragment_container,fragment, "add_event")
-                        .commit();
+
+                if(validateFields()) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("year", eventYear);
+                    bundle.putInt("month", eventMonth);
+                    bundle.putInt("day", eventDay);
+                    bundle.putInt("starting_hour", startingHour);
+                    bundle.putInt("starting_minute", startingMinute);
+                    bundle.putInt("ending_hour", endingHour);
+                    bundle.putInt("ending_minute", endingMinute);
+                    bundle.putString("title", titleEditText.getText().toString());
+                    bundle.putString("location", location.getText().toString());
+                    bundle.putString("apartment_number", apartmentNumber.getText().toString());
+                    //set Fragmentclass Arguments
+                    EditEventDishesFragment fragment = new EditEventDishesFragment();
+                    fragment.setArguments(bundle);
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.chef_fragment_container, fragment, "add_event")
+                            .commit();
+                }
+                else
+                {
+                    Toast.makeText(getActivity(),"Please fill all event details",Toast.LENGTH_SHORT).show();
+                }
             }
         });
         initTimePicker();
@@ -70,7 +78,19 @@ public class AddDishEventFragment extends Fragment {
 
         return v;
     }
-
+    private boolean validateFields()
+    {
+        if(dateTextView.equals("Date")
+                || startingTime.equals("Starting Time")
+                || endingTime.equals("EndingTime")
+                || location.getText().toString().equals("")
+                || apartmentNumber.getText().toString().equals(""))
+        {
+            return false;
+        }
+        else
+        { return true;}
+    }
     private void initTimePicker() {
         startingTime.setOnClickListener(new View.OnClickListener() {
             @Override
