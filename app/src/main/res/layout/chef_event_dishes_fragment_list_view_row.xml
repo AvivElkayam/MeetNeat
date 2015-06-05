@@ -51,7 +51,7 @@
             android:layout_height="fill_parent"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Dishes left: 0"
-            android:id="@+id/chef_fragment_row_dishes_left_text_view"
+            android:id="@+id/chef_fragment_row_location_text_view"
             android:layout_weight="1"
             android:gravity="left|center_vertical" />
 

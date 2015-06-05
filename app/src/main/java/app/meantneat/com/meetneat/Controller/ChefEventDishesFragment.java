@@ -51,14 +51,16 @@ public class ChefEventDishesFragment extends Fragment
 
 
 
-
             TextView titleTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_title_text_view);
             titleTextView.setText(title);
             TextView dateTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_date_text_view);
-            //dateTextView.setText(date);
+            dateTextView.setText(event.getEventDay()+"."+event.getEventMonth()+"."+event.getEventYear());
             TextView timeTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_time_text_view);
             //timeTextView.setText(time);
 
+            timeTextView.setText(event.getStartingHour()+":"+event.getStartingMinute()+" - "+event.getEndingHour()+":"+event.getEndingMinute());
+            TextView dishesLeftTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_location_text_view);
+            dishesLeftTextView.setText(event.getLocation());
             return itemView;
         }
     }
@@ -85,6 +87,12 @@ public class ChefEventDishesFragment extends Fragment
 //        Event event3 = new Event("מוקפץ תאילנדי","17.2.2015","14:00",8);
 //        Event event4 = new Event("ספגטי בולונז","17.2.2015","19:00",5);
 //        eventArrayList.add(event1);
+        EventDishes event1 = new EventDishes("שישי בשכונה",12,00,16,00,2015,3,12,"תל אביב, אבן גבירול","22","",null);
+        EventDishes event2 = new EventDishes("שאריות משבת",8,00,13,00,2015,3,12,"תל אביב,שאול המלך","11","",null);
+
+        eventDishesArrayList.add(event1);
+        eventDishesArrayList.add(event2);
+
 //        eventArrayList.add(event2);
 //        eventArrayList.add(event3);
 //        eventArrayList.add(event4);

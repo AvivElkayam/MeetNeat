@@ -16,10 +16,8 @@ public class EventDishes {
     private ArrayList<Dish> eventsDishes;
 
 
-    public EventDishes(String title, int startingHour, int startingMinute, int endingHour,
-        int endingMinute, int eventYear, int eventMonth, int eventDay, String location,
-                String apartmentNumber, String eventId, ArrayList<Dish> eventsDishes)
-        {
+
+    public EventDishes(String title, int startingHour, int startingMinute, int endingHour, int endingMinute, int eventYear, int eventMonth, int eventDay, String location, String apartmentNumber, String eventId, ArrayList<Dish> eventsDishes) {
         this.title = title;
         this.startingHour = startingHour;
         this.startingMinute = startingMinute;
