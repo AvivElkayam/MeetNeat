@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ public class ChefEventDishesFragment extends Fragment
     private ListView eventsListView;
     private EventRowListAdapter eventsArrayAdapter;
     View view;
+
     public class EventRowListAdapter extends ArrayAdapter<EventDishes>
     {
         public EventRowListAdapter()
@@ -36,7 +38,7 @@ public class ChefEventDishesFragment extends Fragment
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             View itemView = convertView;
 
             if(itemView==null)
@@ -61,6 +63,14 @@ public class ChefEventDishesFragment extends Fragment
             timeTextView.setText(event.getStartingHour()+":"+event.getStartingMinute()+" - "+event.getEndingHour()+":"+event.getEndingMinute());
             TextView dishesLeftTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_location_text_view);
             dishesLeftTextView.setText(event.getLocation());
+            Button editButton = (Button)itemView.findViewById(R.id.chef_fragment_row_edit_button);
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                packDataToBundleAndPassToEditScreen(position);
+
+                }
+            });
             return itemView;
         }
     }
@@ -121,6 +131,25 @@ public class ChefEventDishesFragment extends Fragment
 
         return super.onOptionsItemSelected(item);
     }
-
+    private void packDataToBundleAndPassToEditScreen(int index)
+    {
+        EventDishes eventDishes = eventDishesArrayList.get(index);
+        Bundle bundle = new Bundle();
+        bundle.putInt("year", eventDishes.getEventYear());
+        bundle.putInt("month", eventDishes.getEventMonth());
+        bundle.putInt("day", eventDishes.getEventDay());
+        bundle.putInt("starting_hour", eventDishes.getStartingHour());
+        bundle.putInt("starting_minute", eventDishes.getStartingMinute());
+        bundle.putInt("ending_hour", eventDishes.getEndingHour());
+        bundle.putInt("ending_minute", eventDishes.getEndingMinute());
+        bundle.putString("title", eventDishes.getTitle());
+        bundle.putString("location",eventDishes.getLocation());
+        bundle.putString("apartment_number", eventDishes.getApartmentNumber());
+        EditEventDishesFragment fragment = new EditEventDishesFragment();
+        fragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.chef_event_dishes_fragment_container, fragment, "add_event")
+                .commit();
+    }
 
 }

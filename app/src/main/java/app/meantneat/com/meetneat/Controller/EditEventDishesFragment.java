@@ -50,7 +50,7 @@ public class EditEventDishesFragment extends Fragment {
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
     private int startingYear,startingMonth,startingDay,startingHour,startingMinute;
-    private EditText eventTitleEditText;
+    private EditText eventTitleEditText,eventLocationEditText,eventApartmentNumberEditText;
     private int endingYear,endingMonth,endingDay,endingHour,endingMinute;
     private Calendar calendar;
     private ListView dishesListView;
@@ -162,21 +162,24 @@ public class EditEventDishesFragment extends Fragment {
         startingDateTextView.setText(startingDay+"."+"."+startingMonth+"."+startingYear);
         startingTimeTextView.setText(startingHour+":"+startingMinute);
         endingTimeTextView.setText(endingHour+":"+endingMinute);
-        //addDishTitleEditText.setText(getArguments().getString("title"));
+        eventTitleEditText.setText(getArguments().getString("title"));
         apartmentNumber = getArguments().getString("apartment_number");
+        eventApartmentNumberEditText.setText(apartmentNumber);
         location = getArguments().getString("location");
+        eventLocationEditText.setText(location);
 
     }
 private void initViews()
 {
     createEventButton = (Button)getActivity().findViewById(R.id.add_event_fragment_add_event_button_id);
     eventTitleEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_title_edit_text_id);
+    eventLocationEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_location_edit_text_id);
+    eventApartmentNumberEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_apartment_numebr_edit_text_id);
     addNewDish= (FloatingActionButton) getActivity().findViewById(R.id.add_event_fragment_add_new_dish_button);
     calendar=Calendar.getInstance();
     startingTimeTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_starting_time_label);
     startingDateTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_starting_date_label);
     endingTimeTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_ending_time_label);
-    endingDateTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_ending_date_label);
 
     dishTitleTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_title_text_view);
     dishPriceTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_price_text_view);
@@ -214,23 +217,23 @@ private void initViews()
             timePickerDialog.show();
         }
     });
-    endingDateTextView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(final View v) {
-            datePickerDialog = new DatePickerDialog(getActivity(),new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    TextView textView = (TextView)v;
-                    endingYear=year;
-                    endingMonth=monthOfYear;
-                    endingDay=dayOfMonth;
-                    ((TextView) v).setText(dayOfMonth+"."+monthOfYear+"."+year);
-                }
-            },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
-            datePickerDialog.show();
-
-        }
-    });
+//    endingDateTextView.setOnClickListener(new View.OnClickListener() {
+//        @Override
+//        public void onClick(final View v) {
+//            datePickerDialog = new DatePickerDialog(getActivity(),new DatePickerDialog.OnDateSetListener() {
+//                @Override
+//                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                    TextView textView = (TextView)v;
+//                    endingYear=year;
+//                    endingMonth=monthOfYear;
+//                    endingDay=dayOfMonth;
+//                    ((TextView) v).setText(dayOfMonth+"."+monthOfYear+"."+year);
+//                }
+//            },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+//            datePickerDialog.show();
+//
+//        }
+//    });
     endingTimeTextView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(final View v) {
@@ -390,10 +393,10 @@ private void initViews()
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==R.id.chef_fragment_menu_add_button)
-        {
-            addDishDialog.show();
-        }
+//        if(item.getItemId()==R.id.chef_fragment_menu_add_button)
+//        {
+//            addDishDialog.show();
+//        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -12,88 +12,107 @@
     <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:id="@+id/add_event_fragment_event_image_view"
-            android:background="@android:drawable/ic_menu_gallery" />
+        android:layout_height="160dp">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="120dp"
-            android:layout_gravity="center_horizontal|top">
+            android:layout_height="120dp">
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:id="@+id/add_event_fragment_event_image_view"
+                android:background="@android:drawable/ic_menu_gallery" />
 
             <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-                <EditText
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:id="@+id/add_event_fragment_title_edit_text_id"
-                    android:layout_weight="1"
-                    android:hint="Event name:" />
+                android:layout_height="120dp"
+                android:layout_gravity="center_horizontal|top">
 
                 <LinearLayout
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1">
+                    android:layout_height="fill_parent">
 
-                    <TextView
+                    <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Starting time"
-                        android:id="@+id/add_event_fragment_starting_time_label"
+                        android:id="@+id/add_event_fragment_title_edit_text_id"
                         android:layout_weight="1"
-                        android:textSize="15dp"
-                        android:gravity="center" />
+                        android:hint="Event name:" />
 
-                    <TextView
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Staring date"
-                        android:id="@+id/add_event_fragment_starting_date_label"
-                        android:layout_weight="1"
-                        android:textSize="15dp"
-                        android:gravity="center" />
-                </LinearLayout>
+                        android:layout_weight="1">
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1">
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="Staring date"
+                            android:id="@+id/add_event_fragment_starting_date_label"
+                            android:layout_weight="1"
+                            android:textSize="15dp"
+                            android:gravity="center" />
+                    </LinearLayout>
 
-                    <TextView
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Ending time"
-                        android:id="@+id/add_event_fragment_ending_time_label"
-                        android:layout_weight="1"
-                        android:textSize="15dp"
-                        android:gravity="center" />
+                        android:layout_weight="1">
 
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="ending date"
-                        android:id="@+id/add_event_fragment_ending_date_label"
-                        android:layout_weight="1"
-                        android:textSize="15dp"
-                        android:gravity="center" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="Ending time"
+                            android:id="@+id/add_event_fragment_ending_time_label"
+                            android:layout_weight="1"
+                            android:textSize="15dp"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="Starting time"
+                            android:id="@+id/add_event_fragment_starting_time_label"
+                            android:layout_weight="1"
+                            android:textSize="15dp"
+                            android:gravity="center" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/add_event_fragment_location_edit_text_id"
+                android:layout_weight="1"
+                android:text="Location"
+                android:textSize="15dp" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/add_event_fragment_apartment_numebr_edit_text_id"
+                android:layout_weight="2"
+                android:text="Appartment Number"
+                android:textSize="12dp"
+                android:textIsSelectable="false" />
         </LinearLayout>
     </LinearLayout>
 
