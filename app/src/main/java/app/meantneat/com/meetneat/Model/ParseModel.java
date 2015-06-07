@@ -17,7 +17,7 @@ import app.meantneat.com.meetneat.Controller.SignInActivity;
 import app.meantneat.com.meetneat.Dish;
 
 import app.meantneat.com.meetneat.EventDishes;
-import app.meantneat.com.meetneat.EventDishes;
+
 
 /**
  * Created by mac on 5/25/15.

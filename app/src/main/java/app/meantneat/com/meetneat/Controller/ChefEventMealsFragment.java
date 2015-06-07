@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -52,6 +53,7 @@ public class ChefEventMealsFragment extends Fragment
             String title = eventMeal.getTitle();
 
 
+
             TextView titleTextView = (TextView)itemView.findViewById(R.id.chef_event_meals_row_title_text_view);
             titleTextView.setText(title);
             TextView dateTextView = (TextView)itemView.findViewById(R.id.chef_event_meals_row_date_text_view);
@@ -62,6 +64,18 @@ public class ChefEventMealsFragment extends Fragment
             mealsLeftTextView.setText(mealsLeft);
             TextView totalMealsTextView = (TextView)itemView.findViewById(R.id.chef_event_meals_row_total_meals_text_view);
             totalMealsTextView.setText(totalMeals);
+
+            Button editButton = (Button) itemView.findViewById(R.id.chef_event_meals_row_edit_button);
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.chef_event_meals_fragment_container, new EditEventMealsFragment(), "edit_meal_event")
+                            // Add this transaction to the back stack
+                    .addToBackStack("edit_meal_event")
+                    .commit();
+                }
+            });
             return itemView;
         }
     }
