@@ -13,10 +13,12 @@ import java.util.Date;
 
 import app.meantneat.com.meetneat.AppConstants;
 import app.meantneat.com.meetneat.Controller.EditEventDishesFragment;
+import app.meantneat.com.meetneat.Controller.EditEventMealsFragment;
 import app.meantneat.com.meetneat.Controller.SignInActivity;
 import app.meantneat.com.meetneat.Dish;
 
 import app.meantneat.com.meetneat.EventDishes;
+import app.meantneat.com.meetneat.EventMeals;
 
 
 /**
@@ -106,6 +108,39 @@ public class ParseModel implements MyModel.ModelInterface {
 
             }
         });
+    }
+
+    @Override
+    public void addNewEventMealsToServer(final EventMeals event, final EditEventMealsFragment.SaveToServerCallback callback) {
+        AsyncTask<Void, Void, String> asyncTask = new AsyncTask<Void, Void, String>() {
+
+
+            @Override
+            protected String doInBackground(Void... params) {
+                final ParseObject eventObject = new ParseObject(AppConstants.EVENT_MEALS);
+                Date startingDate = new Date(event.getEventYear(), event.getEventMonth(), event.getEventDay(), event.getStartingHour(), event.getStartingMinute());
+
+                eventObject.put(AppConstants.EVENT_MEALS_CHEF_ID, ParseUser.getCurrentUser().getObjectId());
+                eventObject.put(AppConstants.EVENT_MEALS_START_DATE, startingDate);
+                eventObject.put(AppConstants.EVENT_MEALS_LOCATION, event.getLocation());
+                eventObject.put(AppConstants.EVENT_MEALS_APARTMENT_NUMBER, event.getApartmentNumber());
+                eventObject.put(AppConstants.EVENT_MEALS_PRICE, event.getPrice());
+                eventObject.put(AppConstants.EVENT_MEALS_QUANTITY, event.getTotalDishes());
+
+                try {
+                    eventObject.save();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return "good";
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                callback.onResult();
+            }
+        }.execute();
     }
 
 }

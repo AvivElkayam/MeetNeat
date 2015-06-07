@@ -145,6 +145,7 @@ public class ChefEventDishesFragment extends Fragment
         bundle.putString("title", eventDishes.getTitle());
         bundle.putString("location",eventDishes.getLocation());
         bundle.putString("apartment_number", eventDishes.getApartmentNumber());
+        bundle.putBoolean("is_new", false);
         EditEventDishesFragment fragment = new EditEventDishesFragment();
         fragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction()

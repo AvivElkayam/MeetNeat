@@ -68,6 +68,7 @@ public class EditEventDishesFragment extends Fragment {
     private EditText addDishTitleEditText,addDishPriceEditText,addDishDishesLeftEditText,addDishDescriptionEditText;
     private ImageView addDishImageView,eventImageView;
     private String dishTitle,dishPrice,dishDescription,dishQuantity;
+    private boolean isNew;
     int dialogBoxIndex=1;
     //
     public class DishRowListAdapter extends ArrayAdapter<Dish>
@@ -166,6 +167,7 @@ public class EditEventDishesFragment extends Fragment {
         apartmentNumber = getArguments().getString("apartment_number");
         eventApartmentNumberEditText.setText(apartmentNumber);
         location = getArguments().getString("location");
+        isNew = getArguments().getBoolean("is_new");
         eventLocationEditText.setText(location);
 
     }

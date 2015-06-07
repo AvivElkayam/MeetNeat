@@ -23,26 +23,30 @@ import app.meantneat.com.meetneat.R;
  * Created by mac on 6/1/15.
  */
 public class AddMealsEventFragment extends Fragment {
-    TextView dateTextView,startingTime,endingTime;
-    EditText location,apartmentNumber,titleEditText;
+    TextView dateTextView,startingTime;
+    EditText location,apartmentNumber,titleEditText,mealsAmountText;
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
     int startingHour,startingMinute,endingHour,endingMinute;
     int eventYear,eventMonth,eventDay;
+    int mealsAmount;
     Calendar calendar;
     View v;
     Button continueButton;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.add_dish_event_fragment_layout,container,false);
+        v = inflater.inflate(R.layout.add_meals_event_fragment_layout, container, false);
         calendar=Calendar.getInstance();
-        dateTextView = (TextView)v.findViewById(R.id.add_dish_event_fragment_date_text_view_id);
-        startingTime = (TextView)v.findViewById(R.id.add_dish_event_fragment_starting_time_text_view_id);
-        endingTime = (TextView)v.findViewById(R.id.add_dish_event_fragment_ending_time_text_view_id);
-        location = (EditText)v.findViewById(R.id.add_dish_event_fragment_location_text_view_id);
-        apartmentNumber = (EditText)v.findViewById(R.id.add_dish_event_fragment_appartment_number_text_view_id);
-        titleEditText = (EditText)v.findViewById(R.id.add_dish_event_fragment_title_edit_text_id);
-        continueButton = (Button)v.findViewById(R.id.buttadd_dish_event_fragment_continue_button_idon3);
+        dateTextView = (TextView)v.findViewById(R.id.add_meals_event_fragment_date_text_view_id);
+        startingTime = (TextView)v.findViewById(R.id.add_meals_event_fragment_starting_time_text_view_id);
+        mealsAmountText = (EditText) v.findViewById(R.id.add_meals_event_fragment_meals_amount_text_view_id);
+        location = (EditText)v.findViewById(R.id.add_meals_event_fragment_location_text_view_id);
+        apartmentNumber = (EditText)v.findViewById(R.id.add_meals_event_fragment_appartment_number_text_view_id);
+        titleEditText = (EditText)v.findViewById(R.id.add_meals_event_fragment_title_edit_text_id);
+
+        continueButton = (Button)v.findViewById(R.id.buttadd_meal_event_fragment_continue_button_idon3);
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,11 +63,17 @@ public class AddMealsEventFragment extends Fragment {
                     bundle.putString("title", titleEditText.getText().toString());
                     bundle.putString("location", location.getText().toString());
                     bundle.putString("apartment_number", apartmentNumber.getText().toString());
+
+
+                    int meals = Integer.parseInt(mealsAmountText.getText().toString());
+                    bundle.putInt("meals_amount", Integer.parseInt(mealsAmountText.getText().toString()));
+                    bundle.putBoolean("is_new", true);
                     //set Fragmentclass Arguments
-                    EditEventDishesFragment fragment = new EditEventDishesFragment();
+                    EditEventMealsFragment fragment = new EditEventMealsFragment();
+
                     fragment.setArguments(bundle);
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.chef_event_dishes_fragment_container, fragment, "add_event")
+                            .replace(R.id.chef_event_meals_fragment_container, fragment, "edit_meal_event")
                             .commit();
                 }
                 else
@@ -82,7 +92,7 @@ public class AddMealsEventFragment extends Fragment {
     {
         if(dateTextView.equals("Date")
                 || startingTime.equals("Starting Time")
-                || endingTime.equals("EndingTime")
+
                 || location.getText().toString().equals("")
                 || apartmentNumber.getText().toString().equals(""))
         {
@@ -106,20 +116,7 @@ public class AddMealsEventFragment extends Fragment {
                 timePickerDialog.show();
             }
         });
-        endingTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                timePickerDialog = new TimePickerDialog(getActivity(),new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        endingHour = hourOfDay;
-                        endingMinute=minute;
-                        ((TextView) v).setText(hourOfDay+":"+minute);
-                    }
-                },calendar.get(Calendar.HOUR),calendar.get(Calendar.MINUTE),true);
-                timePickerDialog.show();
-            }
-        });
+
         dateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {

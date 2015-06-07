@@ -32,6 +32,7 @@ public class AppConstants {
     public static String EVENT_MEALS_LOCATION = "location";
     public static String EVENT_MEALS_PRICE = "price";
     public static String EVENT_MEALS_QUANTITY = "quantity";
+    public static String EVENT_MEALS_APARTMENT_NUMBER = "apartment_number";
     //DISH TABLE
     public static String DISH = "Dish";
     public static String DISH_ID = "objectId";

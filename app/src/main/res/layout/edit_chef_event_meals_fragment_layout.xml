@@ -11,16 +11,144 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"></LinearLayout>
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="160dp" >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="120dp" >
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center_horizontal|top" >
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent" >
+
+                        <EditText
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/edit_chef_event_meals_fragment_title_edit_text_id"
+                            android:layout_weight="1"
+                            android:hint="Event title:" />
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1" >
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:text="Staring date"
+                                android:id="@+id/edit_chef_event_meals_fragment_starting_date_label"
+                                android:layout_weight="1"
+                                android:textSize="15dp"
+                                android:gravity="center" />
+
+                            <EditText
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:id="@+id/edit_chef_event_meals_fragment_price_edit_text_id"
+                                android:layout_weight="1"
+                                android:hint="Price"
+                                android:inputType="number" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:text="Ending time"
+                                android:id="@+id/edit_chef_event_meals_fragment_ending_time_label"
+                                android:layout_weight="1"
+                                android:textSize="15dp"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:text="Starting time"
+                                android:id="@+id/edit_chef_event_meals_fragment_starting_time_label"
+                                android:layout_weight="1"
+                                android:textSize="15dp"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edit_chef_event_meals_fragment_location_edit_text_id"
+                    android:layout_weight="1"
+                    android:text="Location"
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edit_chef_event_meals_fragment_meals_amount_edit_text_id"
+                    android:layout_weight="1"
+                    android:text="Meals amount"
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edit_chef_event_meals_apartment_numebr_edit_text_id"
+                    android:layout_weight="1"
+                    android:text="Appartment Number"
+                    android:textSize="12dp"
+                    android:textIsSelectable="false" />
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"></LinearLayout>
+            android:layout_weight="1"
+            android:weightSum="1">
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/editText"
+                android:layout_weight="0.88"
+                android:hint="Buffet - Bendict Style\nEach one will get 4 eggs - you can choose your egg style,Salads and Diary as much as you can" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create event"
+                android:id="@+id/edit_chef_event_meals_fragment_add_event_button_id"
+                android:layout_gravity="center_horizontal" />
+
+
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"

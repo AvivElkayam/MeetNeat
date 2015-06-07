@@ -5,19 +5,67 @@ import java.util.ArrayList;
 
 public class EventMeals {
     private String title;
-    private String date;
-    private String time;
+    int startingHour,startingMinute,endingHour,endingMinute;
+    int eventYear,eventMonth,eventDay;
+    String location,apartmentNumber;
     private int mealsLeft;
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    private int price;
+
+    public int getEventYear() {
+        return eventYear;
+    }
+
+    public int getEventMonth() {
+        return eventMonth;
+    }
+
+    public int getEventDay() {
+        return eventDay;
+    }
+
+    public int getStartingMinute() {
+        return startingMinute;
+    }
+
+    public int getStartingHour() {
+        return startingHour;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getApartmentNumber() {
+        return apartmentNumber;
+    }
+
     private int totalMeals;
     private String eventId;
     //array of photos - ArrayList...
-    public EventMeals(String title, String date, String time, int totalDishes,int dishesLeft) {
+
+
+    public EventMeals(String title, int startingHour, int startingMinute, int eventYear,
+                      int eventMonth, int eventDay, String location, String apartmentNumber, int totalMeals,int price) {
         this.title = title;
-        this.date = date;
-        this.time = time;
-        this.mealsLeft = dishesLeft;
-        this.totalMeals = totalDishes;
-     }
+        this.startingHour = startingHour;
+        this.startingMinute = startingMinute;
+        this.eventYear = eventYear;
+        this.eventMonth = eventMonth;
+        this.eventDay = eventDay;
+        this.location = location;
+        this.apartmentNumber = apartmentNumber;
+        this.totalMeals = totalMeals;
+        this.price = price;
+    }
 
     public String getTitle() {
         return title;
@@ -27,21 +75,9 @@ public class EventMeals {
         this.title = title;
     }
 
-    public String getDate() {
-        return date;
-    }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
 
-    public String getTime() {
-        return time;
-    }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
 
     public int getDishesLeft() {
         return mealsLeft;

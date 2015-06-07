@@ -59,6 +59,7 @@ public class AddDishEventFragment extends Fragment {
                     bundle.putString("title", titleEditText.getText().toString());
                     bundle.putString("location", location.getText().toString());
                     bundle.putString("apartment_number", apartmentNumber.getText().toString());
+                    bundle.putBoolean("is_new", true);
                     //set Fragmentclass Arguments
                     EditEventDishesFragment fragment = new EditEventDishesFragment();
                     fragment.setArguments(bundle);

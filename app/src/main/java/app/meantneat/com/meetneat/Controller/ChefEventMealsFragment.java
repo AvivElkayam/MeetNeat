@@ -46,9 +46,9 @@ public class ChefEventMealsFragment extends Fragment
                 itemView = getActivity().getLayoutInflater().inflate(R.layout.chef_event_meals_fragment_list_view_row,parent,false);
             }
             EventMeals eventMeal = eventMealsArrayList.get(position);
-            String time = eventMeal.getTime();
-            String date = eventMeal.getDate();
-            String mealsLeft = "Meals left: "+ eventMeal.getDishesLeft();
+            //String time = eventMeal.getTime();
+            //String date = eventMeal.getDate();
+            //String mealsLeft = "Meals left: "+ eventMeal.getDishesLeft();
             String totalMeals = "Total meals: "+eventMeal.getTotalDishes();
             String title = eventMeal.getTitle();
 
@@ -57,11 +57,11 @@ public class ChefEventMealsFragment extends Fragment
             TextView titleTextView = (TextView)itemView.findViewById(R.id.chef_event_meals_row_title_text_view);
             titleTextView.setText(title);
             TextView dateTextView = (TextView)itemView.findViewById(R.id.chef_event_meals_row_date_text_view);
-            dateTextView.setText(date);
+            //dateTextView.setText(date);
             TextView timeTextView = (TextView)itemView.findViewById(R.id.chef_event_meals_row_time_text_view);
-            timeTextView.setText(time);
+            //timeTextView.setText(time);
             TextView mealsLeftTextView = (TextView)itemView.findViewById(R.id.chef_event_meals_row_meals_left_text_view);
-            mealsLeftTextView.setText(mealsLeft);
+            //mealsLeftTextView.setText(mealsLeft);
             TextView totalMealsTextView = (TextView)itemView.findViewById(R.id.chef_event_meals_row_total_meals_text_view);
             totalMealsTextView.setText(totalMeals);
 
@@ -97,11 +97,12 @@ public class ChefEventMealsFragment extends Fragment
     {
 
         eventMealsArrayList = new ArrayList<>();
-        EventMeals eventDishes1 = new EventMeals("חגיגה אסיאתית","21.2.2015","22:00",4,2);
-        EventMeals eventDishes2 = new EventMeals("חינגה לובית","17.2.2015","19:00",15,8);
+        EventMeals eventMeals1 = new EventMeals("חרטות",22,22,2017,7,3,"Shaul","12",8,25);
+        //EventMeals eventDishes1 = new EventMeals("חגיגה אסיאתית",,4,2);
+        //EventMeals eventDishes2 = new EventMeals("חינגה לובית",,15,8);
 
-        eventMealsArrayList.add(eventDishes1);
-        eventMealsArrayList.add(eventDishes2);
+        eventMealsArrayList.add(eventMeals1);
+       // eventMealsArrayList.add(eventDishes2);
 
         eventsListView =(ListView)getActivity().findViewById(R.id.chef_events_meals_list_view);
         eventsArrayAdapter = new EventRowListAdapter();
@@ -111,20 +112,20 @@ public class ChefEventMealsFragment extends Fragment
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        //inflater.inflate(R.menu.chef_fragment_menu, menu);
+        inflater.inflate(R.menu.chef_fragment_menu, menu);
         super.onCreateOptionsMenu(menu,inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        if(item.getItemId()==R.id.chef_fragment_menu_add_button)
-//        {
-//            getActivity().getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.chef_event_meals_fragment_container,new AddDishEventFragment(), "add_dish_event")
-//                            // Add this transaction to the back stack
-//                    .addToBackStack("add_dish_event")
-//                    .commit();
-//        }
+        if(item.getItemId()==R.id.chef_fragment_menu_add_button)
+        {
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.chef_event_meals_fragment_container,new AddMealsEventFragment(), "add_meal_event")
+                            // Add this transaction to the back stack
+                    .addToBackStack("add_meal_event")
+                    .commit();
+        }
 
         return super.onOptionsItemSelected(item);
     }
