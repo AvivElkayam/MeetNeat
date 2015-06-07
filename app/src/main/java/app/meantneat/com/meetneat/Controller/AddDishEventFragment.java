@@ -70,6 +70,7 @@ public class AddDishEventFragment extends Fragment {
                 {
                     Toast.makeText(getActivity(),"Please fill all event details",Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
         initTimePicker();

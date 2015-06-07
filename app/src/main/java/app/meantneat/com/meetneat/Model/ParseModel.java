@@ -62,7 +62,6 @@ public class ParseModel implements MyModel.ModelInterface {
         final ParseObject eventObject = new ParseObject(AppConstants.EVENT_DISHES);
         Date startingDate = new Date(event.getEventYear(), event.getEventMonth(), event.getEventDay(), event.getStartingHour(), event.getStartingMinute());
         Date endingDate = new Date(event.getEventYear(), event.getEventMonth(), event.getEventDay(), event.getEndingHour(), event.getEndingMinute());
-
         eventObject.put(AppConstants.EVENT_DISHES_CHEF_ID, ParseUser.getCurrentUser().getObjectId());
         eventObject.put(AppConstants.EVENT_DISHES_START_DATE, startingDate);
         eventObject.put(AppConstants.EVENT_DISHES_END_DATE, endingDate);
@@ -73,6 +72,7 @@ public class ParseModel implements MyModel.ModelInterface {
             public void done(ParseException e) {
                 //now lets save the event dishes to the DISHES table
                 //need async task???
+
                 new AsyncTask<String, String, String>() {
                     @Override
                     protected String doInBackground(String... params) {
