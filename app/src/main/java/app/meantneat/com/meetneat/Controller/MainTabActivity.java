@@ -1,6 +1,7 @@
 package app.meantneat.com.meetneat.Controller;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.ActionBarActivity;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import app.meantneat.com.meetneat.Camera.CameraBasics;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 
@@ -18,6 +20,8 @@ public class MainTabActivity extends ActionBarActivity {
 private FragmentTabHost mTabHost;
     Fragment chefFragment;
     Fragment hungryFragment;
+    private CameraBasics cameraBasics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +77,17 @@ private FragmentTabHost mTabHost;
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+        //cameraBasics.myOnActivityResult(requestCode,resultCode,data);
+       // eventImageView.setImageBitmap(b);
+//        if (requestCode == REQUEST_IMAGE_CAPTURE) {
+//            Bundle extras = data.getExtras();
+//            Bitmap imageBitmap = (Bitmap) extras.get("data");
+//            eventImageView.setImageBitmap(imageBitmap);
 
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

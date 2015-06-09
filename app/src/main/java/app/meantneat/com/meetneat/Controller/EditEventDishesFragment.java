@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,9 +31,12 @@ import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
+
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import app.meantneat.com.meetneat.Camera.CameraBasics;
 import app.meantneat.com.meetneat.Dish;
 
 import app.meantneat.com.meetneat.EventDishes;
@@ -43,8 +47,8 @@ import app.meantneat.com.meetneat.R;
 public class EditEventDishesFragment extends Fragment {
 
     FloatingActionButton addNewDish;
-
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    Bitmap[] bitmapArray;
+    CameraBasics cameraBasics = new CameraBasics();
     private TextView startingTimeTextView,startingDateTextView,endingTimeTextView,endingDateTextView;
     private TextView dishTitleTextView,dishPriceTextView,dishQuantityTextView,dishDescriptionTextView;
     private DatePickerDialog datePickerDialog;
@@ -404,18 +408,32 @@ private void initViews()
     }
 
     private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
+        cameraBasics.setF(this);
+        cameraBasics.dispatchTakePictureIntent(getActivity());
+//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+ //          startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+//        }
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            eventImageView.setImageBitmap(imageBitmap);
-        }
+
+
+        bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
+
+        bitmapToByteArr(bitmapArray[0]); //Full size to Bytearray
+        bitmapToByteArr(bitmapArray[1]); //Thumbnail to Bytearray
+
+        eventImageView.setImageBitmap(bitmapArray[1]);
+    }
+
+
+    private byte[] bitmapToByteArr(Bitmap b)
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        b.compress(Bitmap.CompressFormat.PNG,100,baos);
+        return baos.toByteArray();
+
     }
     private void wrapAllDataToEventAndUpdateServer()
     {
@@ -432,6 +450,7 @@ private void initViews()
                 apartmentNumber,
                 "",
                 dishArrayList);
+
         MyModel.getInstance().getModel().addNewEventDishesToServer(event,new SaveToServerCallback() {
             @Override
             public void onResult() {
