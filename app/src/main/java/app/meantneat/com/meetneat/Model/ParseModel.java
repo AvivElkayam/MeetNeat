@@ -3,6 +3,7 @@ package app.meantneat.com.meetneat.Model;
 import android.os.AsyncTask;
 
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -89,6 +90,24 @@ public class ParseModel implements MyModel.ModelInterface {
                             dishObject.put(AppConstants.DISH_DISHES_LEFT, dish.getQuantity());
                             dishObject.put(AppConstants.DISH_DISHES, dish.getQuantity());
                             dishObject.put(AppConstants.DISH_PRICE, dish.getPrice());
+
+                            ParseFile file = new ParseFile("aFull.jpeg", dish.getFullsizeImg());
+
+                            try {
+                                file.save();
+                                dishObject.put(AppConstants.DISH_IMG_FULL, file);
+                            } catch (ParseException e1) {
+                                e1.printStackTrace();
+                            }
+
+                            ParseFile fileB = new ParseFile("aThmb.jpeg", dish.getThumbnailImg());
+                            try {
+                                fileB.save();
+                                dishObject.put(AppConstants.DISH_IMG_THUMBNAIL, fileB);
+                            } catch (ParseException e1) {
+                                e1.printStackTrace();
+                            }
+
                             try {
                                 dishObject.save();
                             } catch (ParseException e1) {

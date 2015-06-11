@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,13 +30,17 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import app.meantneat.com.meetneat.Camera.CameraBasics;
+import app.meantneat.com.meetneat.Camera.LocationAutoComplete;
 import app.meantneat.com.meetneat.Dish;
 
 import app.meantneat.com.meetneat.EventDishes;
@@ -45,7 +49,9 @@ import app.meantneat.com.meetneat.R;
 
 
 public class EditEventDishesFragment extends Fragment {
-
+    int PLACE_PICKER_REQUEST = 1;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    LocationAutoComplete lAC;
     FloatingActionButton addNewDish;
     Bitmap[] bitmapArray;
     CameraBasics cameraBasics = new CameraBasics();
@@ -70,10 +76,12 @@ public class EditEventDishesFragment extends Fragment {
     private LinearLayout dialogBoxLayoutContainer;
     private Button nextButton,backButton;
     private EditText addDishTitleEditText,addDishPriceEditText,addDishDishesLeftEditText,addDishDescriptionEditText;
-    private ImageView addDishImageView,eventImageView;
+    private ImageView addDishImageView, dishImageView;
     private String dishTitle,dishPrice,dishDescription,dishQuantity;
     private boolean isNew;
     int dialogBoxIndex=1;
+    private int currentPosition;
+
     //
     public class DishRowListAdapter extends ArrayAdapter<Dish>
     {
@@ -84,7 +92,7 @@ public class EditEventDishesFragment extends Fragment {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             View itemView = convertView;
 
             if(itemView==null)
@@ -96,6 +104,7 @@ public class EditEventDishesFragment extends Fragment {
             String price = "Price: "+dish.getPrice();
             String dishesLeft = "Dishes left: "+dish.getQuantity();
             final String description = dish.getDescriprion();
+           // dishImageView = dish.getThumbnailImg();
 
 
             TextView titleTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_title_text_view);
@@ -103,6 +112,7 @@ public class EditEventDishesFragment extends Fragment {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    currentPosition = position;
                     dishTitleTextView.setText(title);
                     dishPriceTextView.setText(Double.toString(dish.getPrice()));
                     dishQuantityTextView.setText(Double.toString(dish.getQuantity()));
@@ -140,7 +150,9 @@ public class EditEventDishesFragment extends Fragment {
                 addDishDialog.show();
             }
         });
+
         buildAddDishDiaglog();
+        lAC  = new LocationAutoComplete(getActivity());
     }
 
     @Override
@@ -223,6 +235,22 @@ private void initViews()
             timePickerDialog.show();
         }
     });
+    eventLocationEditText.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+
+            try {
+                startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST);
+            } catch (GooglePlayServicesRepairableException e) {
+                e.printStackTrace();
+            } catch (GooglePlayServicesNotAvailableException e) {
+                e.printStackTrace();
+            }
+        }
+    });
 //    endingDateTextView.setOnClickListener(new View.OnClickListener() {
 //        @Override
 //        public void onClick(final View v) {
@@ -254,11 +282,11 @@ private void initViews()
             timePickerDialog.show();
         }
     });
-    eventImageView = (ImageView)getActivity().findViewById(R.id.add_event_fragment_event_image_view);
-    eventImageView.setOnClickListener(new View.OnClickListener() {
+    dishImageView = (ImageView)getActivity().findViewById(R.id.add_event_fragment_dish_image_view);
+    dishImageView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            dispatchTakePictureIntent();;
+            dispatchTakePictureIntent();
         }
     });
     createEventButton.setOnClickListener(new View.OnClickListener() {
@@ -302,7 +330,7 @@ private void initViews()
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
         inflater.inflate(R.menu.chef_fragment_menu, menu);
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onCreateOptionsMenu(menu, inflater);
     }
     private void buildAddDishDiaglog()
     {
@@ -386,7 +414,7 @@ private void initViews()
                         }
                         else
                         {
-                            dishArrayList.add(new Dish(dishTitle, dishDescription, Double.parseDouble(dishPrice), Double.parseDouble(dishQuantity), true, true, null));
+                            dishArrayList.add(new Dish(dishTitle, dishDescription, Double.parseDouble(dishPrice), Double.parseDouble(dishQuantity), true, true));
                             dishRowListAdapter.notifyDataSetChanged();
                             addDishDialog.dismiss();
                         }
@@ -417,21 +445,39 @@ private void initViews()
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //New image for a dish
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode==Activity.RESULT_OK) {
+            bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... params) {
+                    dishArrayList.get(currentPosition).setFullsizeImg(bitmapToByteArr(bitmapArray[0])); //Full size to Bytearray
+
+                    dishArrayList.get(currentPosition).setThumbnailImg(bitmapToByteArr(bitmapArray[1])); //Thumbnail to Bytearray
+                    return null;
+
+                }
+            }.execute();
+            dishImageView.setImageBitmap(bitmapArray[1]);
+        }
+        //Location from google picker
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, getActivity());
+                String toastMsg = String.format("Place: %s", place.getName());
+                Toast.makeText(getActivity(), toastMsg, Toast.LENGTH_LONG).show();
+            }
 
 
-        bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
+        }
 
-        bitmapToByteArr(bitmapArray[0]); //Full size to Bytearray
-        bitmapToByteArr(bitmapArray[1]); //Thumbnail to Bytearray
-
-        eventImageView.setImageBitmap(bitmapArray[1]);
     }
 
 
     private byte[] bitmapToByteArr(Bitmap b)
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        b.compress(Bitmap.CompressFormat.PNG,100,baos);
+        b.compress(Bitmap.CompressFormat.JPEG,80,baos);
         return baos.toByteArray();
 
     }

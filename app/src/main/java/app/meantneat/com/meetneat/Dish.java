@@ -16,16 +16,34 @@ public class Dish {
     private double quantityLeft;
     private boolean isTakeAway;
     private boolean isToSit;
-    private Bitmap picture;
+    private byte[] thumbnailImg;
 
-    public Dish(String name, String descriprion, double price, double quantity, boolean isTakeAway, boolean isToSit, Bitmap picture) {
+    public byte[] getThumbnailImg() {
+        return thumbnailImg;
+    }
+
+    public void setThumbnailImg(byte[] thumbnailImg) {
+        this.thumbnailImg = thumbnailImg;
+    }
+
+    public byte[] getFullsizeImg() {
+        return fullsizeImg;
+    }
+
+    public void setFullsizeImg(byte[] fullsizeImg) {
+        this.fullsizeImg = fullsizeImg;
+    }
+
+    private byte[] fullsizeImg;
+
+    public Dish(String name, String descriprion, double price, double quantity, boolean isTakeAway, boolean isToSit) {
         this.name = name;
         this.descriprion = descriprion;
         this.price = price;
         this.quantity = quantity;
         this.isTakeAway = isTakeAway;
         this.isToSit = isToSit;
-        this.picture = picture;
+
     }
 
     public String getEventId() {
@@ -92,11 +110,5 @@ public class Dish {
         this.isToSit = isToSit;
     }
 
-    public Bitmap getPicture() {
-        return picture;
-    }
 
-    public void setPicture(Bitmap picture) {
-        this.picture = picture;
-    }
 }

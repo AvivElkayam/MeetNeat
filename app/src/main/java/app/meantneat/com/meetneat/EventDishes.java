@@ -14,25 +14,7 @@ public class EventDishes {
     String location,apartmentNumber;
     private String eventId;
     private ArrayList<Dish> eventsDishes;
-    private byte[] thumbnailImg;
 
-    public byte[] getThumbnailImg() {
-        return thumbnailImg;
-    }
-
-    public void setThumbnailImg(byte[] thumbnailImg) {
-        this.thumbnailImg = thumbnailImg;
-    }
-
-    public byte[] getFullsizeImg() {
-        return fullsizeImg;
-    }
-
-    public void setFullsizeImg(byte[] fullsizeImg) {
-        this.fullsizeImg = fullsizeImg;
-    }
-
-    private byte[] fullsizeImg;
 
 
 

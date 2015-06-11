@@ -71,7 +71,7 @@ public class HungryMenuFragment extends Fragment {
     {
 
         dishesArrayList = new ArrayList<>();
-        Dish dish1 = new Dish("ss","ss",22,7,true,false,null);
+        Dish dish1 = new Dish("ss","ss",22,7,true,false);
        // Dish dish2 = new Dish("���� ���","��� ���",18,1,true,false,null);
         //Dish dish3 = new Dish("����� �������","���� ��",26,9,true,true,null);
 

@@ -45,6 +45,8 @@ public class AppConstants {
     public static String DISH_DISHES_LEFT = "dishes_left";
     public static String DISH_IS_TAKE_AWAY = "is_take_away";
     public static String DISH_IS_TO_SIT = "is_to_sit";
+    public static String DISH_IMG_FULL = "dish_img_full";
+    public static String DISH_IMG_THUMBNAIL = "dish_img_thmb";
     //DISHES_OREDERS
     public static String DISHES_ORDER = "DishesOrders";
     public static String DISHES_ORDER_ID = "objectId";
