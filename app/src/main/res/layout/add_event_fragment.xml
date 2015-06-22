@@ -50,7 +50,6 @@
                             android:orientation="vertical"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
-                            android:background="1"
                             android:layout_weight="1">
 
                             <TextView
@@ -169,21 +168,24 @@
                 android:layout_width="fill_parent"
                 android:layout_height="120dp">
 
-                <TextView
+                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
                     android:id="@+id/add_event_fragment_dish_title_text_view"
                     android:layout_gravity="center_horizontal"
                     android:text="title"
                     android:background="@drawable/gray_text_field"
-                    android:layout_margin="2dp" />
+                    android:layout_margin="2dp"
+                    android:gravity="center_vertical"
+                    android:textSize="15dp"
+                    android:paddingLeft="5dp" />
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <TextView
+                    <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="25dp"
                         android:inputType="number"
@@ -192,30 +194,93 @@
                         android:text="price"
                         android:background="@drawable/gray_text_field"
                         android:layout_margin="2dp"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:textSize="15dp"
+                        android:paddingLeft="5dp" />
 
-                    <TextView
+                    <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="25dp"
                         android:inputType="number"
                         android:ems="10"
-                        android:id="@+id/add_event_fragment_dish_dishes_left_text_view"
+                        android:id="@+id/add_event_fragment_dish_dishes_left_edit_text"
                         android:text="dishes left"
                         android:background="@drawable/gray_text_field"
                         android:layout_margin="2dp"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:textSize="15dp"
+                        android:paddingLeft="5dp" />
+                </LinearLayout>
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/add_event_fragment_dish_total_orders_edit_text"
+                    android:layout_weight="1"
+                    android:background="@drawable/gray_text_field"
+                    android:text="dishes left"
+                    android:layout_margin="2dp"
+                    android:textSize="15dp"
+                    android:textIsSelectable="false"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="5dp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:text="TakeAway"
+                        android:id="@+id/add_event_fragment_dish_take_away_button"
+                        android:layout_weight="1"
+                        android:textSize="10dp" />
+
+                    <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:text="To seat"
+                        android:id="@+id/add_event_fragment_dish_to_seat_button"
+                        android:layout_weight="1"
+                        android:textSize="10dp" />
                 </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
 
-        <EditText
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/add_event_fragment_dish_description_text_view"
-            android:layout_weight="1"
-            android:background="@drawable/gray_text_field"
-            android:text="description" />
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/add_event_fragment_dish_description_text_view"
+                android:layout_weight="1"
+                android:background="@drawable/gray_text_field"
+                android:text="description"
+                android:paddingLeft="5dp"
+                android:textSize="15dp" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Create event"
+                android:id="@+id/add_event_fragment_add_event_button_id"
+                android:layout_weight="4"
+                android:textColor="@color/eat_white"
+                android:background="@drawable/green_button" />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -256,7 +321,8 @@
         fab:fab_addButtonSize="mini"
         fab:fab_labelStyle="@style/menu_labels_style"
         fab:fab_labelsPosition="left"
-        android:layout_gravity="bottom|right">
+        android:layout_gravity="bottom|right"
+        >
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
@@ -276,13 +342,6 @@
             fab:fab_colorPressed="@color/white_pressed"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create event"
-        android:id="@+id/add_event_fragment_add_event_button_id"
-        android:layout_gravity="bottom" />
 
 
 </FrameLayout>

@@ -7,10 +7,13 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -65,7 +68,10 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     Bitmap[] bitmapArray;
     CameraBasics cameraBasics = new CameraBasics();
     private TextView startingTimeTextView,startingDateTextView,endingTimeTextView,endingDateTextView;
-    private TextView dishTitleTextView,dishPriceTextView,dishQuantityTextView,dishDescriptionTextView;
+    //dishes viewas
+    private EditText dishTitleEditText,dishPriceEditText,dishQuantityEditText,dishDescriptionEditText;
+    private Button dishTakeAwayButton,dishToSeatButton;
+    private boolean isTakeAway=false,isToSeat=false;
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
     private int startingYear,startingMonth,startingDay,startingHour,startingMinute;
@@ -138,10 +144,10 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                 @Override
                 public void onClick(View v) {
                     currentPosition = position;
-                    dishTitleTextView.setText(title);
-                    dishPriceTextView.setText(Double.toString(dish.getPrice()));
-                    dishQuantityTextView.setText(Double.toString(dish.getQuantity()));
-                    dishDescriptionTextView.setText(description);
+                    dishTitleEditText.setText(title);
+                    dishPriceEditText.setText(Double.toString(dish.getPrice()));
+                    dishQuantityEditText.setText(Double.toString(dish.getQuantity()));
+                    dishDescriptionEditText.setText(description);
                 }
             });
             return itemView;
@@ -243,10 +249,45 @@ private void initViews()
     startingDateTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_starting_date_label);
     endingTimeTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_ending_time_label);
 
-    dishTitleTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_title_text_view);
-    dishPriceTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_price_text_view);
-    dishQuantityTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_dishes_left_text_view);
-    dishDescriptionTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_description_text_view);
+    dishTitleEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_dish_title_text_view);
+
+    dishPriceEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_dish_price_text_view);
+    dishQuantityEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_dish_dishes_left_edit_text);
+    dishDescriptionEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_dish_description_text_view);
+    dishTakeAwayButton = (Button)getActivity().findViewById(R.id.add_event_fragment_dish_take_away_button);
+    dishTakeAwayButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+        Button button = (Button)v;
+            if(isTakeAway==false)
+            {
+                button.setBackgroundColor(Color.GREEN);
+                isTakeAway=true;
+            }
+            else
+            {
+                button.setBackgroundColor(Color.RED);
+                isTakeAway=false;
+            }
+        }
+    });
+    dishToSeatButton = (Button)getActivity().findViewById(R.id.add_event_fragment_dish_to_seat_button);
+    dishToSeatButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Button button = (Button)v;
+            if(isToSeat==false)
+            {
+                button.setBackgroundColor(Color.GREEN);
+                isToSeat=true;
+            }
+            else
+            {
+                button.setBackgroundColor(Color.RED);
+                isToSeat=false;
+            }
+        }
+    });
 
     startingDateTextView.setOnClickListener(new View.OnClickListener() {
         @Override
