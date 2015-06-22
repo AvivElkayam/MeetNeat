@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,10 +31,14 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -48,7 +53,11 @@ import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 
 
-public class EditEventDishesFragment extends Fragment {
+public class EditEventDishesFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+
+    private GoogleApiClient mGoogleApiClient;
+
+
     int PLACE_PICKER_REQUEST = 1;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     LocationAutoComplete lAC;
@@ -81,6 +90,22 @@ public class EditEventDishesFragment extends Fragment {
     private boolean isNew;
     int dialogBoxIndex=1;
     private int currentPosition;
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        //Log()
+        Log.e("LNGLTD", "Connected");
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
 
     //
     public class DishRowListAdapter extends ArrayAdapter<Dish>
@@ -137,6 +162,8 @@ public class EditEventDishesFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
+
+
     }
 
     @Override
@@ -152,7 +179,24 @@ public class EditEventDishesFragment extends Fragment {
         });
 
         buildAddDishDiaglog();
-        lAC  = new LocationAutoComplete(getActivity());
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(getActivity())
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+
+        lAC  = new LocationAutoComplete(getActivity(),mGoogleApiClient);
+
+
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
     }
 
     @Override
@@ -484,6 +528,9 @@ private void initViews()
     private void wrapAllDataToEventAndUpdateServer()
     {
         String title = eventTitleEditText.getText().toString();
+        LatLng locationCoord = lAC.getChoosenCoordinates();
+        //To do: Get string ftom the autoComlete Label;
+        //String locationStr =
         EventDishes event = new EventDishes(title
                 ,startingHour
                 ,startingMinute

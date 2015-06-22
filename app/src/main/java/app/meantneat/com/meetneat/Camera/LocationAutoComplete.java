@@ -12,6 +12,13 @@ import android.widget.Filterable;
 import android.widget.Toast;
 
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.model.LatLng;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,21 +36,28 @@ import app.meantneat.com.meetneat.R;
 /**
  * Created by DanltR on 10/06/2015.
  */
-public class LocationAutoComplete implements AdapterView.OnItemClickListener{
+public class LocationAutoComplete implements AdapterView.OnItemClickListener {
 
-    Context context ;
+    Context context;
+    static ArrayList resultListIds = null;
+
+
     private static final String LOG_TAG = "Google Places Autocomplete";
     private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
     private static final String OUT_JSON = "/json";
 
     private static final String API_KEY = "AIzaSyAoIFsCvxHkeyfQVzktxItuCUbmmyrwv-w";
+    private GoogleApiClient mGoogleApiClient;
+
+    private String choosenPlaceid;
+    private LatLng choosenPlaceLatLng;
 
 
-
-    public LocationAutoComplete(Context c) {
+    public LocationAutoComplete(Context c, GoogleApiClient mGoogleApiClient) {
         this.context = c;
-        AutoCompleteTextView autoCompView = (AutoCompleteTextView) ((Activity)context).findViewById(R.id.add_event_fragment_auto_location_label);
+        this.mGoogleApiClient = mGoogleApiClient;
+        AutoCompleteTextView autoCompView = (AutoCompleteTextView) ((Activity) context).findViewById(R.id.add_event_fragment_auto_location_label);
 
         autoCompView.setAdapter(new GooglePlacesAutocompleteAdapter(context, R.layout.autocomplete_list_item));
         autoCompView.setOnItemClickListener(this);
@@ -52,12 +66,36 @@ public class LocationAutoComplete implements AdapterView.OnItemClickListener{
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         String str = (String) parent.getItemAtPosition(position);
+
+
+        choosenPlaceid = (String) resultListIds.get(position);
+
+        //Gets Choosen Place Coordinates(LATLNG)
+        Places.GeoDataApi.getPlaceById(mGoogleApiClient, choosenPlaceid)
+                .setResultCallback(new ResultCallback<PlaceBuffer>() {
+
+
+                    @Override
+                    public void onResult(PlaceBuffer places) {
+                        if (places.getStatus().isSuccess()) {
+                            final Place myPlace = places.get(0);
+                            LatLng l = myPlace.getLatLng() ;
+                            LocationAutoComplete.this.choosenPlaceLatLng = l;
+                            Log.e("Location Coordinates", "Place found: " + l.latitude + " " + l.longitude);
+                        }
+                        places.release();
+                    }
+                });
+
+
         Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
     }
 
 
+    public LatLng getChoosenCoordinates(){
 
-
+        return this.choosenPlaceLatLng;
+    }
 
 
     public static ArrayList autocomplete(String input) {
@@ -100,10 +138,13 @@ public class LocationAutoComplete implements AdapterView.OnItemClickListener{
 
             // Extract the Place descriptions from the results
             resultList = new ArrayList(predsJsonArray.length());
+            resultListIds = new ArrayList(predsJsonArray.length());
             for (int i = 0; i < predsJsonArray.length(); i++) {
                 System.out.println(predsJsonArray.getJSONObject(i).getString("description"));
+                System.out.println(predsJsonArray.getJSONObject(i).getString("place_id"));
                 System.out.println("============================================================");
                 resultList.add(predsJsonArray.getJSONObject(i).getString("description"));
+                resultListIds.add(predsJsonArray.getJSONObject(i).getString("place_id"));
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Cannot process JSON results", e);
