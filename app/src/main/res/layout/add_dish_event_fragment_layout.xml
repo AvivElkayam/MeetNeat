@@ -1,75 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:text="Event title"
-        android:id="@+id/hh"
-        android:layout_gravity="right" />
+    android:layout_height="match_parent"
+    android:background="@color/eat_black">
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:id="@+id/add_dish_event_fragment_title_edit_text_id"
-        android:layout_gravity="center_horizontal" />
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:text="Date"
-        android:id="@+id/add_dish_event_fragment_date_text_view_id"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="left"
+        android:hint="Event title"
+        android:background="@drawable/gray_text_field"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:layout_marginRight="60dp" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="40dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/imageView2"
+            android:background="@android:drawable/ic_menu_month" />
 
         <TextView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:text="Starting Time"
-            android:id="@+id/add_dish_event_fragment_starting_time_text_view_id"
-            android:layout_weight="1" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:text="Ending Time"
-            android:id="@+id/add_dish_event_fragment_ending_time_text_view_id"
-            android:layout_weight="1" />
+            android:layout_height="40dp"
+            android:text="Date"
+            android:id="@+id/add_dish_event_fragment_date_text_view_id"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@drawable/gray_text_field"
+            android:layout_marginRight="150dp"
+            android:textSize="15dp"
+            android:textIsSelectable="false"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:layout_marginLeft="5dp" />
     </LinearLayout>
 
-    <TextView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:text="Location"
-        android:id="@+id/textView" />
+        android:layout_height="48dp"
+        android:layout_marginTop="5dp">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/add_dish_event_fragment_location_text_view_id" />
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/imageView3"
+            android:background="@android:drawable/ic_menu_recent_history"
+            android:layout_gravity="bottom" />
 
-    <TextView
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:text="Starting Time"
+            android:id="@+id/add_dish_event_fragment_starting_time_text_view_id"
+            android:layout_weight="1"
+            android:background="@drawable/gray_text_field"
+            android:layout_marginRight="150dp"
+            android:textSize="15dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:text="Appartment number"
-        android:id="@+id/textView2" />
-
-    <EditText
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/add_dish_event_fragment_appartment_number_text_view_id" />
+        android:layout_marginTop="5dp">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Continue"
-        android:id="@+id/buttadd_dish_event_fragment_continue_button_idon3"
-        android:layout_gravity="center_horizontal" />
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/imageView4"
+            android:background="@android:drawable/ic_menu_recent_history"
+            android:layout_gravity="bottom" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:text="Ending Time"
+            android:id="@+id/add_dish_event_fragment_ending_time_text_view_id"
+            android:layout_weight="1"
+            android:background="@drawable/gray_text_field"
+            android:layout_marginRight="150dp"
+            android:textSize="15dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="5dp">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/imageView5"
+            android:background="@android:drawable/ic_dialog_map" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/add_dish_event_fragment_location_text_view_id"
+            android:background="@drawable/gray_text_field"
+            android:layout_marginRight="150dp"
+            android:textSize="15dp"
+            android:gravity="center_vertical"
+            android:hint="Location"
+            android:paddingLeft="5dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="96dp"
+            android:id="@+id/add_dish_event_fragment_appartment_number_text_view_id"
+            android:background="@drawable/gray_text_field"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="53dp"
+            android:textSize="15dp"
+            android:hint="Specific adress instructions"
+            android:paddingLeft="5dp"
+            android:layout_weight="3" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:text="Continue"
+            android:id="@+id/buttadd_dish_event_fragment_continue_button_idon3"
+            android:background="@drawable/green_button"
+            android:textColor="@color/eat_white"
+            android:layout_gravity="bottom"
+            android:textSize="15dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="5"
+            android:layout_marginRight="30dp" />
+    </LinearLayout>
 
 </LinearLayout>

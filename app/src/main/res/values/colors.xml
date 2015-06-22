@@ -9,4 +9,10 @@
   <color name="pink_pressed">#ec407a</color>
   <color name="blue_semi_transparent">#805677fc</color>
   <color name="blue_semi_transparent_pressed">#80738ffe</color>
+
+    <color name="eat_orange">#FBAE17</color>
+    <color name="eat_black">#333333</color>
+    <color name="eat_green">#00A595</color>
+    <color name="eat_gray">#b3b3b3</color>
+    <color name="eat_white">#ffffff</color>
 </resources>
