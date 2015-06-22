@@ -57,6 +57,7 @@ public class ChefFragment extends Fragment {
             // Generate title based on item position
             return tabTitles[position];
         }
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

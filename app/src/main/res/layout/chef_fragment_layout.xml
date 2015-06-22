@@ -10,7 +10,14 @@
         app:pstsShouldExpand="true"
         app:pstsTextAllCaps="true"
         android:layout_width="match_parent"
-        android:layout_height="48dp">
+        android:layout_height="48dp"
+        android:textSize="14sp"
+        android:background="@color/eat_black"
+        android:textColor="@color/eat_orange"
+        app:pstsDividerColor="@color/eat_orange"
+        app:pstsIndicatorColor="@color/eat_orange"
+        app:pstsUnderlineColor="@color/eat_orange"
+        app:pstsTabPaddingLeftRight="14dp">
     </com.astuetz.PagerSlidingTabStrip>
 
     <android.support.v4.view.ViewPager

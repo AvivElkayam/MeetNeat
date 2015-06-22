@@ -3,6 +3,8 @@ package app.meantneat.com.meetneat.Controller;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +29,7 @@ public class ChefEventDishesFragment extends Fragment
     private ArrayList<EventDishes> eventDishesArrayList;
     private ListView eventsListView;
     private EventRowListAdapter eventsArrayAdapter;
+    private Button addEventButton;
     View view;
 
     public class EventRowListAdapter extends ArrayAdapter<EventDishes>
@@ -61,8 +64,8 @@ public class ChefEventDishesFragment extends Fragment
             //timeTextView.setText(time);
 
             timeTextView.setText(event.getStartingHour()+":"+event.getStartingMinute()+" - "+event.getEndingHour()+":"+event.getEndingMinute());
-            TextView dishesLeftTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_location_text_view);
-            dishesLeftTextView.setText(event.getLocation());
+           // TextView dishesLeftTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_location_text_view);
+            //dishesLeftTextView.setText(event.getLocation());
             Button editButton = (Button)itemView.findViewById(R.id.chef_fragment_row_edit_button);
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -90,7 +93,26 @@ public class ChefEventDishesFragment extends Fragment
     }
     private void initViews()
     {
+        addEventButton = (Button)getActivity().findViewById(R.id.chef_events_dishes_add_button);
+        addEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                AddDishEventFragment fragment = new AddDishEventFragment();
+                fragmentTransaction.add(R.id.chef_event_dishes_fragment_container, fragment);
+                fragmentTransaction.commit();
 
+
+
+//                getActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.chef_event_dishes_fragment_container,new AddDishEventFragment(), "add_dish_event")
+//                                // Add this transaction to the back stack
+//                        .addToBackStack("add_dish_event")
+//                        .commit();
+
+            }
+        });
         eventDishesArrayList = new ArrayList<>();
 //        Event event1 = new Event("חומוס פול","21.2.2015","22:00",4);
 //        Event event2 = new Event("קובה סלק","17.2.2015","19:00",3);
@@ -122,11 +144,7 @@ public class ChefEventDishesFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.chef_fragment_menu_add_button)
         {
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.chef_event_dishes_fragment_container,new AddDishEventFragment(), "add_dish_event")
-                            // Add this transaction to the back stack
-                    .addToBackStack("add_dish_event")
-                    .commit();
+
         }
 
         return super.onOptionsItemSelected(item);

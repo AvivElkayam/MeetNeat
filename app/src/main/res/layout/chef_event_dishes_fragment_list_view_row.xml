@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="fill_parent"
-    android:layout_height="96dp">
+    android:layout_height="140dp"
+    android:background="@color/eat_black">
 
     <LinearLayout
         android:orientation="vertical"
@@ -13,21 +14,12 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="title"
+            android:text="Yaman friday"
             android:id="@+id/chef_fragment_row_title_text_view"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
-            android:layout_marginLeft="5dp" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="time"
-            android:id="@+id/chef_fragment_row_time_text_view"
-            android:layout_weight="1"
-            android:gravity="left|center_vertical"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/eat_orange" />
 
         <TextView
             android:layout_width="fill_parent"
@@ -37,29 +29,75 @@
             android:id="@+id/chef_fragment_row_date_text_view"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
-            android:layout_marginLeft="5dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1">
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/eat_white" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Dishes left: 0"
-            android:id="@+id/chef_fragment_row_location_text_view"
+            android:text="time"
+            android:id="@+id/chef_fragment_row_time_text_view"
             android:layout_weight="1"
-            android:gravity="left|center_vertical" />
+            android:gravity="left|center_vertical"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/eat_white" />
 
         <Button
-            android:layout_width="fill_parent"
+            android:layout_width="80dp"
             android:layout_height="fill_parent"
             android:text="edit"
             android:id="@+id/chef_fragment_row_edit_button"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textColor="@color/eat_white"
+            android:background="@drawable/green_button"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp" />
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="fill_parent"
+            android:text="ORDERS"
+            android:id="@+id/button"
+            android:layout_weight="1"
+            android:background="@drawable/green_button"
+            android:textColor="@color/eat_white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="48dp"
+            android:layout_height="fill_parent"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:id="@+id/imageView"
+                android:background="@android:drawable/ic_dialog_map" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Hagefen St."
+            android:id="@+id/textView6"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/eat_white"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="5dp" />
     </LinearLayout>
 </LinearLayout>
