@@ -32,12 +32,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
 import app.meantneat.com.meetneat.EventDishes;
 import app.meantneat.com.meetneat.Model.MyModel;
+import app.meantneat.com.meetneat.Camera.SpecificEventDishesDialogBox;
 import app.meantneat.com.meetneat.R;
 //import com.google.android.gms.maps.*;
 //import com.google.android.gms.maps.model.*;
@@ -109,10 +111,6 @@ import app.meantneat.com.meetneat.R;
 
     }
 
-//    public interface GetClosestChefsCallback
-//    {
-//        public void done(ArrayList<Chef> ChefsClose);
-//    }
 
 
 
@@ -120,6 +118,19 @@ import app.meantneat.com.meetneat.R;
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         googleMap.setMyLocationEnabled(true);
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                SpecificEventDishesDialogBox dialogBox = new SpecificEventDishesDialogBox(getActivity(),"Dan Luter","01.08.2004 - 03.09.2014","Asian Party");
+
+                new MarkerOptions()
+                        .position(new LatLng(32.073776, 34.781890))
+                        .title("Marker")
+                        .icon(BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 200, 200, true)));
+                dialogBox.show();
+                return false;
+            }
+        });
         //googleMap.animateCamera(Cmera);
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(32.073776, 34.781890), 16));
         //ArrayList<LatLng> coordinatesArr = getClosestCoordinatesFromServer();
@@ -149,7 +160,7 @@ import app.meantneat.com.meetneat.R;
     private void showClosestEvents()
     {
         Drawable dr = getResources().getDrawable(R.drawable.logo1);
-        Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+        final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
 
         for (LatLng l : coordinatesArray) {
             googleMap.addMarker(new MarkerOptions()
@@ -160,6 +171,7 @@ import app.meantneat.com.meetneat.R;
         }
     }
 
+        
     @Override
     public void onConnected(Bundle bundle) {
         Log.e("LNGLTD", "Connected");

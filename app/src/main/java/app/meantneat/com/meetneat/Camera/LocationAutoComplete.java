@@ -52,7 +52,7 @@ public class LocationAutoComplete implements AdapterView.OnItemClickListener {
 
     private String choosenPlaceid;
     private LatLng choosenPlaceLatLng;
-
+    private String choosenLocationString;
 
     public LocationAutoComplete(Context c, GoogleApiClient mGoogleApiClient) {
         this.context = c;
@@ -66,7 +66,7 @@ public class LocationAutoComplete implements AdapterView.OnItemClickListener {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         String str = (String) parent.getItemAtPosition(position);
-
+        choosenLocationString=str;
 
         choosenPlaceid = (String) resultListIds.get(position);
 
@@ -96,7 +96,10 @@ public class LocationAutoComplete implements AdapterView.OnItemClickListener {
 
         return this.choosenPlaceLatLng;
     }
-
+    public String getChoosenLocationString()
+    {
+        return choosenLocationString;
+    }
 
     public static ArrayList autocomplete(String input) {
         ArrayList resultList = null;
