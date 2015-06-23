@@ -2,6 +2,7 @@ package app.meantneat.com.meetneat.Model;
 
 import javax.security.auth.callback.Callback;
 
+import app.meantneat.com.meetneat.Controller.ChefEventDishesFragment;
 import app.meantneat.com.meetneat.Controller.EditEventDishesFragment;
 import app.meantneat.com.meetneat.Controller.EditEventMealsFragment;
 import app.meantneat.com.meetneat.Controller.SignInActivity;
@@ -34,6 +35,7 @@ public class MyModel {
         public boolean currentUserConnected();
         public void addNewEventDishesToServer(EventDishes event,EditEventDishesFragment.SaveToServerCallback callback);
         public void addNewEventMealsToServer(EventMeals event,EditEventMealsFragment.SaveToServerCallback callback);
+        public void getChefsEventFromServer(ChefEventDishesFragment.GetEventDishesCallback callback);
     }
 
 }

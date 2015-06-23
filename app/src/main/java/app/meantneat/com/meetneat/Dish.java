@@ -10,13 +10,39 @@ public class Dish {
     private String eventId;
     private String name;
     private String descriprion;
-
+    private String title;
     private double price;
     private double quantity;
     private double quantityLeft;
     private boolean isTakeAway;
     private boolean isToSit;
-    private byte[] thumbnailImg;
+    private byte[] thumbnailImg=null;
+    private byte[] fullsizeImg=null;
+    private String dishID,chefID;
+
+    public String getChefID() {
+        return chefID;
+    }
+
+    public void setChefID(String chefID) {
+        this.chefID = chefID;
+    }
+
+    public String getDishID() {
+        return dishID;
+    }
+
+    public void setDishID(String dishID) {
+        this.dishID = dishID;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public byte[] getThumbnailImg() {
         return thumbnailImg;
@@ -34,7 +60,6 @@ public class Dish {
         this.fullsizeImg = fullsizeImg;
     }
 
-    private byte[] fullsizeImg;
 
     public Dish(String name, String descriprion, double price, double quantity, boolean isTakeAway, boolean isToSit) {
         this.name = name;
@@ -44,6 +69,9 @@ public class Dish {
         this.isTakeAway = isTakeAway;
         this.isToSit = isToSit;
 
+    }
+
+    public Dish() {
     }
 
     public String getEventId() {

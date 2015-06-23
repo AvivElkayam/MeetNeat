@@ -11,14 +11,31 @@ public class EventDishes {
 //    private String time;
     int startingHour,startingMinute,endingHour,endingMinute;
     int eventYear,eventMonth,eventDay;
-    String location,apartmentNumber;
+    private String location,apartmentNumber;
     private String eventId;
     private ArrayList<Dish> eventsDishes;
+    private double longitude,latitude;
 
+    public double getLongitude() {
+        return longitude;
+    }
 
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 
+    public double getLatitude() {
+        return latitude;
+    }
 
-    public EventDishes(String title, int startingHour, int startingMinute, int endingHour, int endingMinute, int eventYear, int eventMonth, int eventDay, String location, String apartmentNumber, String eventId, ArrayList<Dish> eventsDishes) {
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public EventDishes() {
+    }
+
+    public EventDishes(String title, int startingHour, int startingMinute, int endingHour, int endingMinute, int eventYear, int eventMonth, int eventDay, String location, String apartmentNumber, String eventId, ArrayList<Dish> eventsDishes,double longitude,double latitude) {
         this.title = title;
         this.startingHour = startingHour;
         this.startingMinute = startingMinute;
@@ -31,6 +48,8 @@ public class EventDishes {
         this.apartmentNumber = apartmentNumber;
         this.eventId = eventId;
         this.eventsDishes = eventsDishes;
+        this.longitude=longitude;
+        this.latitude=latitude;
     }
 
     public String getLocation() {

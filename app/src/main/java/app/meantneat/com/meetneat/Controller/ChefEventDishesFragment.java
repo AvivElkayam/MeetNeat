@@ -19,6 +19,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import app.meantneat.com.meetneat.EventDishes;
+import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 
 /**
@@ -51,21 +52,22 @@ public class ChefEventDishesFragment extends Fragment
             EventDishes event = eventDishesArrayList.get(position);
 
             String title = event.getTitle();
-            EventDishes eventDishes = eventDishesArrayList.get(position);
 
 
 
 
             TextView titleTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_title_text_view);
             titleTextView.setText(title);
+
             TextView dateTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_date_text_view);
             dateTextView.setText(event.getEventDay()+"."+event.getEventMonth()+"."+event.getEventYear());
-            TextView timeTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_time_text_view);
-            //timeTextView.setText(time);
 
+            TextView timeTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_time_text_view);
             timeTextView.setText(event.getStartingHour()+":"+event.getStartingMinute()+" - "+event.getEndingHour()+":"+event.getEndingMinute());
-           // TextView dishesLeftTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_location_text_view);
-            //dishesLeftTextView.setText(event.getLocation());
+
+            TextView locationTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_location_text_view);
+            locationTextView.setText(event.getLocation());
+
             Button editButton = (Button)itemView.findViewById(R.id.chef_fragment_row_edit_button);
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -91,6 +93,24 @@ public class ChefEventDishesFragment extends Fragment
             view = inflater.inflate(R.layout.chef_event_dishes_fragment_layout,container,false);
         return view;
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        MyModel.getInstance().getModel().getChefsEventFromServer(new GetEventDishesCallback() {
+            @Override
+            public void done(ArrayList<EventDishes> eventDisheses) {
+                eventDishesArrayList.clear();
+                eventDishesArrayList.addAll(eventDisheses);
+                eventsArrayAdapter.notifyDataSetChanged();
+            }
+        });
+
+    }
+    public interface GetEventDishesCallback
+    {
+        public void done(ArrayList<EventDishes> eventDisheses);
+    }
     private void initViews()
     {
         addEventButton = (Button)getActivity().findViewById(R.id.chef_events_dishes_add_button);
@@ -102,32 +122,14 @@ public class ChefEventDishesFragment extends Fragment
                 AddDishEventFragment fragment = new AddDishEventFragment();
                 fragmentTransaction.add(R.id.chef_event_dishes_fragment_container, fragment);
                 fragmentTransaction.commit();
-
-
-
-//                getActivity().getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.chef_event_dishes_fragment_container,new AddDishEventFragment(), "add_dish_event")
-//                                // Add this transaction to the back stack
-//                        .addToBackStack("add_dish_event")
-//                        .commit();
-
             }
         });
         eventDishesArrayList = new ArrayList<>();
-//        Event event1 = new Event("חומוס פול","21.2.2015","22:00",4);
-//        Event event2 = new Event("קובה סלק","17.2.2015","19:00",3);
-//        Event event3 = new Event("מוקפץ תאילנדי","17.2.2015","14:00",8);
-//        Event event4 = new Event("ספגטי בולונז","17.2.2015","19:00",5);
-//        eventArrayList.add(event1);
-        EventDishes event1 = new EventDishes("שישי בשכונה",12,00,16,00,2015,3,12,"תל אביב, אבן גבירול","22","",null);
-        EventDishes event2 = new EventDishes("שאריות משבת",8,00,13,00,2015,3,12,"תל אביב,שאול המלך","11","",null);
-
-        eventDishesArrayList.add(event1);
-        eventDishesArrayList.add(event2);
-
-//        eventArrayList.add(event2);
-//        eventArrayList.add(event3);
-//        eventArrayList.add(event4);
+//        EventDishes event1 = new EventDishes("שישי בשכונה",12,00,16,00,2015,3,12,"תל אביב, אבן גבירול","22","",null,0,0);
+//        EventDishes event2 = new EventDishes("שאריות משבת",8,00,13,00,2015,3,12,"תל אביב,שאול המלך","11","",null,0,0);
+//
+//        eventDishesArrayList.add(event1);
+//        eventDishesArrayList.add(event2);
         eventsListView =(ListView)getActivity().findViewById(R.id.chef_events_dishes_list_view);
         eventsArrayAdapter = new EventRowListAdapter();
         eventsListView.setAdapter(eventsArrayAdapter);

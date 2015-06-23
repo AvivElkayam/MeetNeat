@@ -8,7 +8,7 @@
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:text="Price"
-        android:id="@+id/textView3"
+        android:id="@+id/textView2"
         android:layout_gravity="center_vertical" />
 
     <EditText
@@ -18,4 +18,16 @@
         android:ems="10"
         android:id="@+id/add_dish_phase_two_price_edit_text_id"
         android:layout_gravity="center_vertical" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:text="Quantity"
+        android:id="@+id/textView3" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:id="@+id/add_dish_phase_two_quantity_edit_text_id"
+        android:inputType="number"/>
+
 </LinearLayout>

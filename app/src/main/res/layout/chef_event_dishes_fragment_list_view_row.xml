@@ -8,7 +8,8 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        >
 
         <TextView
             android:layout_width="fill_parent"
@@ -94,7 +95,7 @@
             android:layout_height="fill_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Hagefen St."
-            android:id="@+id/textView6"
+            android:id="@+id/chef_fragment_row_location_text_view"
             android:layout_gravity="center_horizontal"
             android:textColor="@color/eat_white"
             android:gravity="center_vertical"

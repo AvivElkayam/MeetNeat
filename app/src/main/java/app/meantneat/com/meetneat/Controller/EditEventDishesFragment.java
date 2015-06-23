@@ -4,16 +4,15 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -61,15 +60,15 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     private GoogleApiClient mGoogleApiClient;
 
 
-    int PLACE_PICKER_REQUEST = 1;
+    int PLACE_PICKER_REQUEST = 2;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     LocationAutoComplete lAC;
-    FloatingActionButton addNewDish;
+    FloatingActionButton addNewDishFloatingButton;
     Bitmap[] bitmapArray;
     CameraBasics cameraBasics = new CameraBasics();
     private TextView startingTimeTextView,startingDateTextView,endingTimeTextView,endingDateTextView;
     //dishes viewas
-    private EditText dishTitleEditText,dishPriceEditText,dishQuantityEditText,dishDescriptionEditText;
+    private TextView dishTitleEditText,dishPriceEditText,dishQuantityEditText,dishDescriptionEditText,dishTotalOrdersTextView;
     private Button dishTakeAwayButton,dishToSeatButton;
     private boolean isTakeAway=false,isToSeat=false;
     private DatePickerDialog datePickerDialog;
@@ -95,8 +94,8 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     private String dishTitle,dishPrice,dishDescription,dishQuantity;
     private boolean isNew;
     int dialogBoxIndex=1;
+    private Dish newDish;
     private int currentPosition;
-
     @Override
     public void onConnected(Bundle bundle) {
         //Log()
@@ -131,7 +130,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                 itemView = getActivity().getLayoutInflater().inflate(R.layout.add_event_fragment_dish_row,parent,false);
             }
             final Dish dish = dishArrayList.get(position);
-            final String title = dish.getName();
+            final String title = dish.getTitle();
             String price = "Price: "+dish.getPrice();
             String dishesLeft = "Dishes left: "+dish.getQuantity();
             final String description = dish.getDescriprion();
@@ -140,14 +139,19 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
 
             TextView titleTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_title_text_view);
             titleTextView.setText(title);
+
+            ImageView imageView = (ImageView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_image_view);
+            imageView.setBackground(new BitmapDrawable(BitmapFactory.decodeByteArray(dish.getThumbnailImg() , 0,dish.getThumbnailImg().length)));
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     currentPosition = position;
                     dishTitleEditText.setText(title);
-                    dishPriceEditText.setText(Double.toString(dish.getPrice()));
-                    dishQuantityEditText.setText(Double.toString(dish.getQuantity()));
+                    dishPriceEditText.setText("Price: "+dish.getPrice());
+                    dishQuantityEditText.setText("DishesLeft: "+dish.getQuantityLeft());
                     dishDescriptionEditText.setText(description);
+                    dishImageView.setBackground(new BitmapDrawable(BitmapFactory.decodeByteArray(dish.getThumbnailImg() , 0,dish.getThumbnailImg().length)));
                 }
             });
             return itemView;
@@ -177,14 +181,14 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
         initViews();
-        addNewDish.setOnClickListener(new View.OnClickListener() {
+        addNewDishFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                buildAddDishDiaglog();
+
                 addDishDialog.show();
             }
         });
-
-        buildAddDishDiaglog();
         mGoogleApiClient = new GoogleApiClient
                 .Builder(getActivity())
                 .addApi(Places.GEO_DATA_API)
@@ -243,17 +247,17 @@ private void initViews()
     eventTitleEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_title_edit_text_id);
     eventLocationEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_location_edit_text_id);
     eventApartmentNumberEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_apartment_numebr_edit_text_id);
-    addNewDish= (FloatingActionButton) getActivity().findViewById(R.id.add_event_fragment_add_new_dish_button);
+    addNewDishFloatingButton = (FloatingActionButton) getActivity().findViewById(R.id.add_event_fragment_add_new_dish_button);
     calendar=Calendar.getInstance();
     startingTimeTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_starting_time_label);
     startingDateTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_starting_date_label);
     endingTimeTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_ending_time_label);
 
-    dishTitleEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_dish_title_text_view);
-
-    dishPriceEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_dish_price_text_view);
-    dishQuantityEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_dish_dishes_left_edit_text);
-    dishDescriptionEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_dish_description_text_view);
+    dishTitleEditText = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_title_text_view);
+    dishTotalOrdersTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_total_orders_text_view);
+    dishPriceEditText = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_price_text_view);
+    dishQuantityEditText = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_dishes_left_text_view);
+    dishDescriptionEditText = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_description_text_view);
     dishTakeAwayButton = (Button)getActivity().findViewById(R.id.add_event_fragment_dish_take_away_button);
     dishTakeAwayButton.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -336,23 +340,7 @@ private void initViews()
             }
         }
     });
-//    endingDateTextView.setOnClickListener(new View.OnClickListener() {
-//        @Override
-//        public void onClick(final View v) {
-//            datePickerDialog = new DatePickerDialog(getActivity(),new DatePickerDialog.OnDateSetListener() {
-//                @Override
-//                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//                    TextView textView = (TextView)v;
-//                    endingYear=year;
-//                    endingMonth=monthOfYear;
-//                    endingDay=dayOfMonth;
-//                    ((TextView) v).setText(dayOfMonth+"."+monthOfYear+"."+year);
-//                }
-//            },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
-//            datePickerDialog.show();
-//
-//        }
-//    });
+
     endingTimeTextView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(final View v) {
@@ -442,12 +430,25 @@ private void initViews()
         addDishDescriptionEditText = (EditText)v1.findViewById(R.id.add_dish_phase_one_description_edit_text_id);
         v2 = getActivity().getLayoutInflater().inflate(R.layout.add_dish_phase_two,dialogBoxLayoutContainer,false);
         addDishPriceEditText = (EditText)v2.findViewById(R.id.add_dish_phase_two_price_edit_text_id);
+        addDishDishesLeftEditText = (EditText)v2.findViewById(R.id.add_dish_phase_two_quantity_edit_text_id);
+
         v3 = getActivity().getLayoutInflater().inflate(R.layout.add_dish_phase_three,dialogBoxLayoutContainer,false);
-        addDishDishesLeftEditText = (EditText)v3.findViewById(R.id.add_dish_phase_three_quantity_edit_text_id);
+        addDishImageView = (ImageView)v3.findViewById(R.id.add_dish_phase_three_dish_image_view_id);
+        addDishImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //dispatchTakePictureIntent();
+                Bitmap b = BitmapFactory.decodeResource(getResources(),R.drawable.logo1);
+                addDishImageView.setImageBitmap(b);
+                byte[] ba = bitmapToByteArr(b);
+                newDish.setThumbnailImg(ba);
+                newDish.setFullsizeImg(ba);
+            }
+        });
         dialogBoxLayoutContainer.addView(v1);
         dialogBoxLayoutContainer.addView(v2);
         dialogBoxLayoutContainer.addView(v3);
-
+        newDish = new Dish();
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -455,10 +456,12 @@ private void initViews()
                 {
                     case 1:
                     {
-
-                        dishDescription=addDishDescriptionEditText.getText().toString();
-                        dishTitle = addDishTitleEditText.getText().toString();
-                        if(dishDescription.equals("") || dishTitle.equals(""))
+                        dialogBoxIndex=1;
+                        //dishDescription=addDishDescriptionEditText.getText().toString();
+                        newDish.setDescriprion(addDishDescriptionEditText.getText().toString());
+                        //dishTitle = addDishTitleEditText.getText().toString();
+                        newDish.setTitle(addDishTitleEditText.getText().toString());
+                        if(newDish.getTitle().equals("") || newDish.getDescriprion().equals(""))
                         {
                             Toast.makeText(getActivity(),"Please fill in details",Toast.LENGTH_SHORT).show();
                         }
@@ -474,8 +477,11 @@ private void initViews()
                     }
                     case 2:
                     {
-                        dishPrice = addDishPriceEditText.getText().toString();
-                        if(dishPrice.equals(""))
+//                        dishPrice = addDishPriceEditText.getText().toString();
+//                        dishQuantity = addDishDishesLeftEditText.getText().toString();
+                        newDish.setPrice(Double.parseDouble(addDishPriceEditText.getText().toString()));
+                        newDish.setQuantityLeft(Double.parseDouble(addDishDishesLeftEditText.getText().toString()));
+                        if(addDishPriceEditText.getText().toString().equals("")|| addDishDishesLeftEditText.getText().toString().equals(""))
                         {
                             Toast.makeText(getActivity(),"Please fill in details",Toast.LENGTH_SHORT).show();
                         }
@@ -491,17 +497,17 @@ private void initViews()
                     }
                     case 3:
                     {
-                        dishQuantity = addDishDishesLeftEditText.getText().toString();
 
-                        if(dishQuantity.equals(""))
+                        if(newDish.getFullsizeImg()==null)
                         {
                             Toast.makeText(getActivity(),"Please fill in details",Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
-                            dishArrayList.add(new Dish(dishTitle, dishDescription, Double.parseDouble(dishPrice), Double.parseDouble(dishQuantity), true, true));
+                            dishArrayList.add(newDish);
                             dishRowListAdapter.notifyDataSetChanged();
                             addDishDialog.dismiss();
+                            dialogBoxIndex=1;
                         }
                         break;
                     }
@@ -536,14 +542,16 @@ private void initViews()
             new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... params) {
-                    dishArrayList.get(currentPosition).setFullsizeImg(bitmapToByteArr(bitmapArray[0])); //Full size to Bytearray
-
-                    dishArrayList.get(currentPosition).setThumbnailImg(bitmapToByteArr(bitmapArray[1])); //Thumbnail to Bytearray
+//                    dishArrayList.get(currentPosition).setFullsizeImg(bitmapToByteArr(bitmapArray[0])); //Full size to Bytearray
+//
+//                    dishArrayList.get(currentPosition).setThumbnailImg(bitmapToByteArr(bitmapArray[1])); //Thumbnail to Bytearray
+                    newDish.setFullsizeImg(bitmapToByteArr(bitmapArray[0]));
+                    newDish.setThumbnailImg(bitmapToByteArr(bitmapArray[1]));
                     return null;
 
                 }
             }.execute();
-            dishImageView.setImageBitmap(bitmapArray[1]);
+            addDishImageView.setImageBitmap(bitmapArray[1]);
         }
         //Location from google picker
         if (requestCode == PLACE_PICKER_REQUEST) {
@@ -583,7 +591,7 @@ private void initViews()
                 location,
                 apartmentNumber,
                 "",
-                dishArrayList);
+                dishArrayList,locationCoord.longitude,locationCoord.latitude);
 
         MyModel.getInstance().getModel().addNewEventDishesToServer(event,new SaveToServerCallback() {
             @Override

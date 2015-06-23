@@ -4,16 +4,11 @@
     android:orientation="vertical"
     android:gravity="center_vertical">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:text="Quantity"
-        android:id="@+id/textView3" />
 
-    <EditText
+    <ImageView
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:id="@+id/add_dish_phase_three_quantity_edit_text_id"
-        android:inputType="number"/>
-
+        android:layout_height="fill_parent"
+        android:id="@+id/add_dish_phase_three_dish_image_view_id"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp" />
 </LinearLayout>

@@ -60,8 +60,9 @@
                                 android:id="@+id/add_event_fragment_starting_date_label"
                                 android:layout_weight="1"
                                 android:textSize="15dp"
-                                android:gravity="center"
-                                android:textColor="@color/eat_white" />
+                                android:textColor="@color/eat_white"
+                                android:gravity="left|center_vertical"
+                                android:layout_marginLeft="5dp" />
 
                             <LinearLayout
                                 android:orientation="horizontal"
@@ -70,41 +71,58 @@
                                 android:layout_weight="1">
 
                                 <TextView
-                                    android:layout_width="fill_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="fill_parent"
                                     android:textAppearance="?android:attr/textAppearanceLarge"
                                     android:text="Starting time"
                                     android:id="@+id/add_event_fragment_starting_time_label"
                                     android:layout_weight="1"
                                     android:textSize="15dp"
-                                    android:gravity="center"
-                                    android:textColor="@color/eat_white" />
+                                    android:textColor="@color/eat_white"
+                                    android:gravity="left|center_vertical"
+                                    android:layout_marginLeft="5dp" />
 
                                 <TextView
-                                    android:layout_width="fill_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="fill_parent"
                                     android:textAppearance="?android:attr/textAppearanceLarge"
                                     android:text="Ending time"
                                     android:id="@+id/add_event_fragment_ending_time_label"
                                     android:layout_weight="1"
                                     android:textSize="15dp"
-                                    android:gravity="center"
-                                    android:textColor="@color/eat_white" />
+                                    android:textColor="@color/eat_white"
+                                    android:gravity="left|center_vertical" />
                             </LinearLayout>
                         </LinearLayout>
 
-                        <AutoCompleteTextView
+                        <LinearLayout
+                            android:orientation="horizontal"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
-                            android:text="Google location"
-                            android:id="@+id/add_event_fragment_auto_location_label"
-                            android:focusable="true"
+                            android:layout_weight="1">
 
-                            android:dropDownWidth="fill_parent"
-                            android:completionThreshold="1"
-                            android:dropDownHeight="100dp"
-                            android:layout_weight="1"
-                            android:textColor="@color/eat_white" />
+                            <ImageView
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:id="@+id/imageView6"
+                                android:layout_gravity="center"
+                                android:background="@android:drawable/ic_dialog_map" />
+
+                            <AutoCompleteTextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:id="@+id/add_event_fragment_auto_location_label"
+                                android:focusable="true"
+
+                                android:dropDownWidth="fill_parent"
+                                android:completionThreshold="1"
+                                android:dropDownHeight="100dp"
+                                android:layout_weight="1"
+                                android:textColor="@color/eat_white"
+                                android:textColorHint="@color/eat_white"
+                                android:hint="Google location" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -143,7 +161,7 @@
         android:layout_width="fill_parent"
         android:layout_height="180dp"
         android:orientation="vertical"
-        android:background="#55000000">
+        android:background="@color/eat_black">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -168,66 +186,67 @@
                 android:layout_width="fill_parent"
                 android:layout_height="120dp">
 
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
                     android:id="@+id/add_event_fragment_dish_title_text_view"
                     android:layout_gravity="center_horizontal"
-                    android:text="title"
-                    android:background="@drawable/gray_text_field"
+                    android:text="Title:"
                     android:layout_margin="2dp"
                     android:gravity="center_vertical"
                     android:textSize="15dp"
-                    android:paddingLeft="5dp" />
+                    android:paddingLeft="5dp"
+                    android:autoText="false"
+                    android:textColor="@color/eat_white" />
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <EditText
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="25dp"
                         android:inputType="number"
                         android:ems="10"
                         android:id="@+id/add_event_fragment_dish_price_text_view"
-                        android:text="price"
-                        android:background="@drawable/gray_text_field"
+                        android:text="Price: "
                         android:layout_margin="2dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:textSize="15dp"
-                        android:paddingLeft="5dp" />
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/eat_white" />
 
-                    <EditText
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="25dp"
                         android:inputType="number"
                         android:ems="10"
-                        android:id="@+id/add_event_fragment_dish_dishes_left_edit_text"
-                        android:text="dishes left"
-                        android:background="@drawable/gray_text_field"
+                        android:id="@+id/add_event_fragment_dish_dishes_left_text_view"
+                        android:text="Dishes left"
                         android:layout_margin="2dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:textSize="15dp"
-                        android:paddingLeft="5dp" />
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/eat_white" />
                 </LinearLayout>
 
-                <EditText
+                <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:inputType="number"
                     android:ems="10"
-                    android:id="@+id/add_event_fragment_dish_total_orders_edit_text"
+                    android:id="@+id/add_event_fragment_dish_total_orders_text_view"
                     android:layout_weight="1"
-                    android:background="@drawable/gray_text_field"
-                    android:text="dishes left"
+                    android:text="Total orders: 0"
                     android:layout_margin="2dp"
                     android:textSize="15dp"
                     android:textIsSelectable="false"
                     android:gravity="center_vertical"
-                    android:paddingLeft="5dp" />
+                    android:paddingLeft="5dp"
+                    android:textColor="@color/eat_white" />
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -262,15 +281,16 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="1">
 
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/add_event_fragment_dish_description_text_view"
                 android:layout_weight="1"
-                android:background="@drawable/gray_text_field"
                 android:text="description"
                 android:paddingLeft="5dp"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/eat_white" />
 
             <Button
                 android:layout_width="fill_parent"
@@ -279,7 +299,8 @@
                 android:id="@+id/add_event_fragment_add_event_button_id"
                 android:layout_weight="4"
                 android:textColor="@color/eat_white"
-                android:background="@drawable/green_button" />
+                android:background="@drawable/green_button"
+                android:layout_marginRight="10dp" />
         </LinearLayout>
 
     </LinearLayout>
