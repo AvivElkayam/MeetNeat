@@ -578,6 +578,7 @@ private void initViews()
     {
         String title = eventTitleEditText.getText().toString();
         LatLng locationCoord = lAC.getChoosenCoordinates();
+        String locationString = lAC.getChoosenLocationString();
         //To do: Get string ftom the autoComlete Label;
         //String locationStr =
         EventDishes event = new EventDishes(title
@@ -588,10 +589,12 @@ private void initViews()
                 startingYear,
                 startingMonth,
                 startingDay,
-                location,
+                locationString,
                 apartmentNumber,
                 "",
-                dishArrayList,locationCoord.longitude,locationCoord.latitude);
+                dishArrayList,
+                locationCoord.longitude,
+                locationCoord.latitude);
 
         MyModel.getInstance().getModel().addNewEventDishesToServer(event,new SaveToServerCallback() {
             @Override

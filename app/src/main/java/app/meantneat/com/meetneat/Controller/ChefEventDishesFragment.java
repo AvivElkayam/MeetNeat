@@ -1,23 +1,35 @@
 package app.meantneat.com.meetneat.Controller;
 
+import android.app.ActionBar;
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import app.meantneat.com.meetneat.Camera.SpecificEventDishesDialogBox;
 import app.meantneat.com.meetneat.EventDishes;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
@@ -31,8 +43,8 @@ public class ChefEventDishesFragment extends Fragment
     private ListView eventsListView;
     private EventRowListAdapter eventsArrayAdapter;
     private Button addEventButton;
-    View view;
-
+    private View view;
+    private SwipeRefreshLayout swipeRefreshLayout ;
     public class EventRowListAdapter extends ArrayAdapter<EventDishes>
     {
         public EventRowListAdapter()
@@ -84,6 +96,7 @@ public class ChefEventDishesFragment extends Fragment
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
         initViews();
+        initSwipeRefresh();
     }
 
     @Override
@@ -97,12 +110,17 @@ public class ChefEventDishesFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getEventDishesFromServer();
+    }
+    private void getEventDishesFromServer()
+    {
         MyModel.getInstance().getModel().getChefsEventFromServer(new GetEventDishesCallback() {
             @Override
             public void done(ArrayList<EventDishes> eventDisheses) {
                 eventDishesArrayList.clear();
                 eventDishesArrayList.addAll(eventDisheses);
                 eventsArrayAdapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -151,6 +169,7 @@ public class ChefEventDishesFragment extends Fragment
 
         return super.onOptionsItemSelected(item);
     }
+
     private void packDataToBundleAndPassToEditScreen(int index)
     {
         EventDishes eventDishes = eventDishesArrayList.get(index);
@@ -172,5 +191,25 @@ public class ChefEventDishesFragment extends Fragment
                 .replace(R.id.chef_event_dishes_fragment_container, fragment, "add_event")
                 .commit();
     }
+    private void initSwipeRefresh()
+    {
+        swipeRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.chef_events_dishes_swipe_to_refresh);
+        // Setup refresh listener which triggers new data loading
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                getEventDishesFromServer();
+            }
+        });
+        // Configure the refreshing colors
+        swipeRefreshLayout.setColorSchemeResources(R.color.eat_black,
+                R.color.eat_orange,
+                R.color.eat_white
+                );
 
+
+    }
 }

@@ -22,8 +22,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import app.meantneat.com.meetneat.Camera.SpecificEventDishesDialogBox;
 import app.meantneat.com.meetneat.R;
 //import com.google.android.gms.maps.*;
 //import com.google.android.gms.maps.model.*;
@@ -82,14 +84,27 @@ import app.meantneat.com.meetneat.R;
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Drawable dr = getResources().getDrawable(R.drawable.logo1);
-        Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+        final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
 
 
         googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(32.073776, 34.781890))
-                .title("Marker")
-                .icon(BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 200, 200, true)))
+                        .position(new LatLng(32.073776, 34.781890))
+                        .title("Marker")
+                        .icon(BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 200, 200, true)))
         );
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                SpecificEventDishesDialogBox dialogBox = new SpecificEventDishesDialogBox(getActivity(),"Dan Luter","01.08.2004 - 03.09.2014","Asian Party");
+
+                new MarkerOptions()
+                        .position(new LatLng(32.073776, 34.781890))
+                        .title("Marker")
+                        .icon(BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 200, 200, true)));
+                dialogBox.show();
+                return false;
+            }
+        });
     }
 //        @Override
 //        public void onCreate(Bundle savedInstanceState) {
