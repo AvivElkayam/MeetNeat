@@ -2,7 +2,11 @@ package app.meantneat.com.meetneat.Camera;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -14,6 +18,8 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import app.meantneat.com.meetneat.EventDishes;
+import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 
 /**
@@ -21,46 +27,76 @@ import app.meantneat.com.meetneat.R;
  */
 public class SpecificEventDishesDialogBox {
     private Context context;
-    private Dialog dialog;
+    private Dialog dialogBox;
     private String chefName;
     private String date;
     private String eventTitle;
-    public SpecificEventDishesDialogBox(Context context,String chefName,String eventDate,String eventTitle) {
+    private String eventID;
+    private TextView chefNameTextView,dateTextView,titleTextView;
+    private ImageView chefImageView;
+    public SpecificEventDishesDialogBox(Context context,String eventID,String chefName,String eventDate,String eventTitle) {
         this.context=context;
+        this.eventID=eventID;
         this.chefName=chefName;
         this.date=eventDate;
         this.eventTitle=eventTitle;
-        dialog = new Dialog(context);
+        dialogBox = new Dialog(context);
         initDialogBoxAndShow();
 
     }
+    public interface DishEventCallback
+    {
+        public void eventHasBeenFetched(EventDishes event);
+    }
     private void initDialogBoxAndShow()
     {
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.hungry_fragment_event_details_dialog_box);
-        GridView gridview = (GridView) dialog.findViewById(R.id.hungry_fragment_dialog_box_grid_view);
+        dialogBox.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogBox.setContentView(R.layout.hungry_fragment_event_details_dialog_box);
+        GridView gridview = (GridView) dialogBox.findViewById(R.id.hungry_fragment_dialog_box_grid_view);
         gridview.setAdapter(new ImageAdapter(context));
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialogBox.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-        TextView chefNameTextView = (TextView)dialog.findViewById(R.id.speceific_event_dialog_box_chef_text_view);
+         chefNameTextView = (TextView)dialogBox.findViewById(R.id.speceific_event_dialog_box_chef_text_view);
         chefNameTextView.setText("Chef: "+chefName);
 
-        TextView dateTextView = (TextView)dialog.findViewById(R.id.speceific_event_dialog_box_date_text_view);
-        dateTextView.setText(date);
+        chefImageView = (ImageView)dialogBox.findViewById(R.id.events_dialog_box_chef_image_view);
+        dateTextView = (TextView)dialogBox.findViewById(R.id.speceific_event_dialog_box_date_text_view);
+        //dateTextView.setText(date);
 
-        TextView titleTextView = (TextView)dialog.findViewById(R.id.speceific_event_dialog_box_title_text_view);
-        titleTextView.setText(eventTitle);
+        titleTextView = (TextView)dialogBox.findViewById(R.id.speceific_event_dialog_box_title_text_view);
+        //titleTextView.setText(eventTitle);
+        titleTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final EventsDialogBox eventsDialogBox = new EventsDialogBox(context);
+                dialogBox.hide();
+                //dialogBox.show();
+                eventsDialogBox.getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        dialogBox.show();
+
+                    }
+                });
+                eventsDialogBox.show();
+            }
+        });
+        getEventFromserver();
 
 
     }
     public void show()
     {
-        dialog.show();
+        dialogBox.show();
     }
-
     {
 
     }
+
+    public Dialog getDialog() {
+        return dialogBox;
+    }
+
     public class ImageAdapter extends BaseAdapter {
         private Context mContext;
 
@@ -102,11 +138,40 @@ public class SpecificEventDishesDialogBox {
 
         // references to our images
         private Integer[] mThumbIds = {
-                R.drawable.logo1, R.drawable.meet_n_eat_logo,
-                R.drawable.logo1, R.drawable.meet_n_eat_logo,
-                R.drawable.logo1, R.drawable.meet_n_eat_logo,
-                R.drawable.logo1, R.drawable.meet_n_eat_logo,
+                R.drawable.logo1, R.drawable.jachnun,
+                R.drawable.logo1, R.drawable.dish2,
+                R.drawable.logo1, R.drawable.pasta1,
+
 
         };
+    }
+    private void getEventFromserver()
+    {
+        MyModel.getInstance().getModel().getDishEventDetailsByID(eventID,new DishEventCallback() {
+            @Override
+            public void eventHasBeenFetched(EventDishes event) {
+                titleTextView.setText(event.getTitle());
+                dateTextView.setText(event.getEventYear()
+                        +"."
+                        +event.getEventMonth()
+                        + "."
+                        +event.getEventDay()
+                        +" | "
+                        +event.getStartingHour()
+                        +":"
+                        +event.getStartingMinute()
+                        +"-"
+                        +event.getEndingHour()
+                        +":"
+                        +event.getEndingMinute()
+                );
+                MyModel.getInstance().getModel().getChefPicture(event.getChefID(),new MyModel.PictureCallback() {
+                    @Override
+                    public void pictureHasBeenFetched(Bitmap bitmap) {
+                        chefImageView.setBackground(new BitmapDrawable(bitmap));
+                    }
+                });
+            }
+        });
     }
 }

@@ -25,7 +25,10 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -42,9 +45,10 @@ public class ChefEventDishesFragment extends Fragment
     private ArrayList<EventDishes> eventDishesArrayList;
     private ListView eventsListView;
     private EventRowListAdapter eventsArrayAdapter;
-    private Button addEventButton;
     private View view;
-    private SwipeRefreshLayout swipeRefreshLayout ;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private ProgressBar progressBar;
+    FloatingActionButton floatingAddButton;
     public class EventRowListAdapter extends ArrayAdapter<EventDishes>
     {
         public EventRowListAdapter()
@@ -121,6 +125,8 @@ public class ChefEventDishesFragment extends Fragment
                 eventDishesArrayList.addAll(eventDisheses);
                 eventsArrayAdapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
+                progressBar.setVisibility(View.GONE);
+
             }
         });
 
@@ -131,17 +137,7 @@ public class ChefEventDishesFragment extends Fragment
     }
     private void initViews()
     {
-        addEventButton = (Button)getActivity().findViewById(R.id.chef_events_dishes_add_button);
-        addEventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                AddDishEventFragment fragment = new AddDishEventFragment();
-                fragmentTransaction.add(R.id.chef_event_dishes_fragment_container, fragment);
-                fragmentTransaction.commit();
-            }
-        });
+
         eventDishesArrayList = new ArrayList<>();
 //        EventDishes event1 = new EventDishes("שישי בשכונה",12,00,16,00,2015,3,12,"תל אביב, אבן גבירול","22","",null,0,0);
 //        EventDishes event2 = new EventDishes("שאריות משבת",8,00,13,00,2015,3,12,"תל אביב,שאול המלך","11","",null,0,0);
@@ -151,6 +147,23 @@ public class ChefEventDishesFragment extends Fragment
         eventsListView =(ListView)getActivity().findViewById(R.id.chef_events_dishes_list_view);
         eventsArrayAdapter = new EventRowListAdapter();
         eventsListView.setAdapter(eventsArrayAdapter);
+
+        progressBar = (ProgressBar)getActivity().findViewById(R.id.chef_events_dishes_progress_bar);
+        progressBar.setVisibility(View.VISIBLE);
+
+        floatingAddButton = (FloatingActionButton) getActivity().findViewById(R.id.chef_events_dishes_floating_add_button);
+        floatingAddButton.attachToListView(eventsListView);
+        floatingAddButton.setColorNormal(getResources().getColor(R.color.eat_orange));
+        floatingAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                AddDishEventFragment fragment = new AddDishEventFragment();
+                fragmentTransaction.add(R.id.chef_event_dishes_fragment_container, fragment);
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     @Override

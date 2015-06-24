@@ -1,7 +1,13 @@
 package app.meantneat.com.meetneat.Model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
+import com.parse.GetCallback;
+import com.parse.GetDataCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -16,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 import app.meantneat.com.meetneat.AppConstants;
+import app.meantneat.com.meetneat.Camera.SpecificEventDishesDialogBox;
 import app.meantneat.com.meetneat.Controller.ChefEventDishesFragment;
 import app.meantneat.com.meetneat.Controller.EditEventDishesFragment;
 import app.meantneat.com.meetneat.Controller.EditEventMealsFragment;
@@ -183,34 +190,8 @@ public class ParseModel implements MyModel.ModelInterface {
                      tempEventArray = eventQuery.find();
                      for(ParseObject object : tempEventArray)
                      {
-                         EventDishes eventDishes = new EventDishes();
-                         eventDishes.setEventId(object.getObjectId());
-                         eventDishes.setTitle(object.getString(AppConstants.EVENT_DISHES_TITLE));
 
-                         Date startingDate = object.getDate(AppConstants.EVENT_DISHES_START_DATE);
-                         String s = startingDate.toString();
-                         eventDishes.setEventDay(startingDate.getDay());
-                         eventDishes.setEventMonth(startingDate.getMonth());
-                         eventDishes.setEventYear(startingDate.getYear());
-                         eventDishes.setStartingHour(startingDate.getHours());
-                         eventDishes.setStartingMinute(startingDate.getMinutes());
-
-                         Date endingDate = object.getDate(AppConstants.EVENT_DISHES_END_DATE);
-                         eventDishes.setEventYear(endingDate.getYear());
-                         eventDishes.setEventMonth(endingDate.getMonth());
-                         eventDishes.setEventDay(endingDate.getDay());
-                         eventDishes.setEndingHour(endingDate.getHours());
-                         eventDishes.setEndingMinute(endingDate.getMinutes());
-
-                         ParseGeoPoint point = object.getParseGeoPoint(AppConstants.EVENT_DISHES_GEO_POINT);
-                         eventDishes.setLatitude(point.getLatitude());
-                         eventDishes.setLongitude(point.getLongitude());
-                         eventDishes.setLocation(object.getString(AppConstants.EVENT_DISHES_LOCATION));
-                         eventDishes.setApartmentNumber(object.getString(AppConstants.EVENT_DISHES_APARTMENT_NUMBER));
-                         //finished the event, now all the event's dishes =\
-                         eventDishes.setEventsDishes(getDishesForEvent(eventDishes.getEventId()));
-
-                         eventDishesArrayList.add(eventDishes);
+                         eventDishesArrayList.add(ParseObjectToEventDishes(object));
 
                      }
                 } catch (ParseException e) {
@@ -226,6 +207,72 @@ public class ParseModel implements MyModel.ModelInterface {
             }
         }.execute();
     }
+
+    @Override
+    public void getDishEventDetailsByID(final String eventID, final SpecificEventDishesDialogBox.DishEventCallback callback)
+    {
+        new AsyncTask<Void, Void, Void>() {
+            EventDishes eventDishes;
+            @Override
+            protected Void doInBackground(Void... params) {
+                ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(AppConstants.EVENT_DISHES);
+                try {
+                    ParseObject object = query.get(eventID);
+                    eventDishes = ParseObjectToEventDishes(object);
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                callback.eventHasBeenFetched(eventDishes);
+            }
+        }.execute();
+
+    }
+
+    @Override
+    public void getChefPicture(final String chefID, final MyModel.PictureCallback callback) {
+        new AsyncTask<Void, Void, Void>() {
+            Bitmap bitmap;
+            @Override
+            protected Void doInBackground(Void... params) {
+                ParseQuery<ParseUser> query = ParseQuery.getUserQuery();
+                try
+                {
+                    ParseUser user = query.get(chefID);
+                    ParseFile applicantResume = (ParseFile)user.get(AppConstants.USER_IMAGE);
+                    byte[] bytes = applicantResume.getData();
+
+                    bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                }
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                callback.pictureHasBeenFetched(bitmap);
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getDishPicture(String dishID, MyModel.PictureCallback callback) {
+
+    }
+
     private ArrayList<Dish> getDishesForEvent(String eventID)
     {
         ParseQuery<ParseObject> dishesQuery = new ParseQuery<ParseObject>(AppConstants.DISH);
@@ -255,7 +302,38 @@ public class ParseModel implements MyModel.ModelInterface {
         }
         return dishesArray;
     }
+    private EventDishes ParseObjectToEventDishes(ParseObject object)
+    {
+        EventDishes eventDishes = new EventDishes();
+        eventDishes.setEventId(object.getObjectId());
+        eventDishes.setTitle(object.getString(AppConstants.EVENT_DISHES_TITLE));
+        eventDishes.setChefID(object.getString(AppConstants.EVENT_DISHES_CHEF_ID));
+        Date startingDate = object.getDate(AppConstants.EVENT_DISHES_START_DATE);
+        String s = startingDate.toString();
+        eventDishes.setEventDay(startingDate.getDay());
+        eventDishes.setEventMonth(startingDate.getMonth());
+        eventDishes.setEventYear(startingDate.getYear());
+        eventDishes.setStartingHour(startingDate.getHours());
+        eventDishes.setStartingMinute(startingDate.getMinutes());
 
+        Date endingDate = object.getDate(AppConstants.EVENT_DISHES_END_DATE);
+        eventDishes.setEventYear(endingDate.getYear());
+        eventDishes.setEventMonth(endingDate.getMonth());
+        eventDishes.setEventDay(endingDate.getDay());
+        eventDishes.setEndingHour(endingDate.getHours());
+        eventDishes.setEndingMinute(endingDate.getMinutes());
+
+        ParseGeoPoint point = object.getParseGeoPoint(AppConstants.EVENT_DISHES_GEO_POINT);
+        eventDishes.setLatitude(point.getLatitude());
+        eventDishes.setLongitude(point.getLongitude());
+        eventDishes.setLocation(object.getString(AppConstants.EVENT_DISHES_LOCATION));
+        eventDishes.setApartmentNumber(object.getString(AppConstants.EVENT_DISHES_APARTMENT_NUMBER));
+        //finished the event, now all the event's dishes =\
+        eventDishes.setEventsDishes(getDishesForEvent(eventDishes.getEventId()));
+
+
+        return eventDishes;
+    }
 //    public void getClosestChefsRadius(final HungryMapFragment.GetEventDishesCallback callback) {
 //        new AsyncTask<Void, Void, Void>() {
 //            ArrayList<EventDishes> eventDishesArrayList = new ArrayList<>();

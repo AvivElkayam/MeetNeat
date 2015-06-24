@@ -1,5 +1,6 @@
 package app.meantneat.com.meetneat.Controller;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -121,12 +122,14 @@ import app.meantneat.com.meetneat.R;
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                SpecificEventDishesDialogBox dialogBox = new SpecificEventDishesDialogBox(getActivity(),"Dan Luter","01.08.2004 - 03.09.2014","Asian Party");
+                final SpecificEventDishesDialogBox dialogBox = new SpecificEventDishesDialogBox(getActivity(),"1iQJTTCiYO","Jonathan Roshfeld","01.08.2004 - 03.09.2014","Italian Party");
+                dialogBox.getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        //dialogBox.getDialog().show();
+                    }
+                });
 
-                new MarkerOptions()
-                        .position(new LatLng(32.073776, 34.781890))
-                        .title("Marker")
-                        .icon(BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 200, 200, true)));
                 dialogBox.show();
                 return false;
             }

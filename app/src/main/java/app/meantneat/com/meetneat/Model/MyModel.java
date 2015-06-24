@@ -1,7 +1,10 @@
 package app.meantneat.com.meetneat.Model;
 
+import android.graphics.Bitmap;
+
 import javax.security.auth.callback.Callback;
 
+import app.meantneat.com.meetneat.Camera.SpecificEventDishesDialogBox;
 import app.meantneat.com.meetneat.Controller.ChefEventDishesFragment;
 import app.meantneat.com.meetneat.Controller.EditEventDishesFragment;
 import app.meantneat.com.meetneat.Controller.EditEventMealsFragment;
@@ -36,6 +39,14 @@ public class MyModel {
         public void addNewEventDishesToServer(EventDishes event,EditEventDishesFragment.SaveToServerCallback callback);
         public void addNewEventMealsToServer(EventMeals event,EditEventMealsFragment.SaveToServerCallback callback);
         public void getChefsEventFromServer(ChefEventDishesFragment.GetEventDishesCallback callback);
+        public void getDishEventDetailsByID(String eventID,SpecificEventDishesDialogBox.DishEventCallback callback);
+
+        public void getChefPicture(String chefID,PictureCallback callback);
+        public void getDishPicture(String dishID,PictureCallback callback);
+    }
+    public interface PictureCallback
+    {
+        public void pictureHasBeenFetched(Bitmap bitmap);
     }
 
 }

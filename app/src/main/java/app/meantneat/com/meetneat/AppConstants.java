@@ -14,6 +14,7 @@ public class AppConstants {
     public static String USER_PHONE = "phone";
     public static String USER_PRICE_MIN = "min_price";
     public static String USER_PRICE_MAX = "max_price";
+    public static String USER_IMAGE = "image";
     //EVENT_DISHES TABLE
     public static String EVENT_DISHES = "EventDishes";
     public static String EVENT_DISHES_ID = "objectId";
