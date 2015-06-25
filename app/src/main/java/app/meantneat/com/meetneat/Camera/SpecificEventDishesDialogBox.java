@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -15,8 +14,6 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import app.meantneat.com.meetneat.EventDishes;
 import app.meantneat.com.meetneat.Model.MyModel;
@@ -65,22 +62,23 @@ public class SpecificEventDishesDialogBox {
 
         titleTextView = (TextView)dialogBox.findViewById(R.id.speceific_event_dialog_box_title_text_view);
         //titleTextView.setText(eventTitle);
-        titleTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final EventsDialogBox eventsDialogBox = new EventsDialogBox(context);
-                dialogBox.hide();
-                //dialogBox.show();
-                eventsDialogBox.getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        dialogBox.show();
-
-                    }
-                });
-                eventsDialogBox.show();
-            }
-        });
+//        titleTextView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final SpecifiecChefEventsDialogBox eventsDialogBox = new SpecifiecChefEventsDialogBox(context,
+//                        "pFubDWWXGT",);
+//                dialogBox.hide();
+//                //dialogBox.show();
+//                eventsDialogBox.getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
+//                    @Override
+//                    public void onCancel(DialogInterface dialog) {
+//                        dialogBox.show();
+//
+//                    }
+//                });
+//                eventsDialogBox.show();
+//            }
+//        });
         getEventFromserver();
 
 

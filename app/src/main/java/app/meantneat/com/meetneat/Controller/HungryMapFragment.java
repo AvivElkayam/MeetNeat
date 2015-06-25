@@ -37,7 +37,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import app.meantneat.com.meetneat.Camera.SpecifiecChefEventsDialogBox;
 import app.meantneat.com.meetneat.EventDishes;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.Camera.SpecificEventDishesDialogBox;
@@ -54,6 +57,7 @@ import app.meantneat.com.meetneat.R;
  public class HungryMapFragment extends Fragment implements OnMapReadyCallback , LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
     private static View view;
+    private Map<Marker, EventDishes> allMarkersMap = new HashMap<Marker, EventDishes>();
     private ArrayList<EventDishes> eventsArray = new ArrayList<>();
     private ArrayList<LatLng> coordinatesArray = new ArrayList<>();
     private GoogleMap googleMap;
@@ -119,10 +123,19 @@ import app.meantneat.com.meetneat.R;
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         googleMap.setMyLocationEnabled(true);
+
+
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                final SpecificEventDishesDialogBox dialogBox = new SpecificEventDishesDialogBox(getActivity(),"1iQJTTCiYO","Jonathan Roshfeld","01.08.2004 - 03.09.2014","Italian Party");
+
+//                final SpecifiecChefEventsDialogBox dialogBox = new SpecifiecChefEventsDialogBox(
+//                        getActivity(),"pFubDWWXGT",marker.getPosition());
+                EventDishes eventByMarker =  allMarkersMap.get(marker);
+                final SpecifiecChefEventsDialogBox dialogBox = new SpecifiecChefEventsDialogBox(
+                        getActivity(),eventByMarker.getChefID(),marker.getPosition());
+
+
                 dialogBox.getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
@@ -162,15 +175,22 @@ import app.meantneat.com.meetneat.R;
 
     private void showClosestEvents()
     {
+        //make hashmap of markers and coordinates - if there is
+        // 2 diffrent chefs in the same coordinate rotate the marker
+        // if there same chef in the same location diffrent events - add only one event...
+
+
         Drawable dr = getResources().getDrawable(R.drawable.logo1);
         final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
-
-        for (LatLng l : coordinatesArray) {
-            googleMap.addMarker(new MarkerOptions()
-                            .position(l)
+        int i=0;
+        for (i = 0;i< coordinatesArray.size(); i++) {
+            Marker m = googleMap.addMarker(new MarkerOptions()
+                            .position(coordinatesArray.get(i))
                             .title("Marker")
+                            .rotation((float)90.0)
                             .icon(BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 150, 150, true)))
             );
+            allMarkersMap.put(m, eventsArray.get(i));
         }
     }
 
