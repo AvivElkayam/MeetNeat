@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="300dp"
+    android:layout_height="340dp"
+    android:background="@drawable/rounded_corner_white"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Pasta"
+        android:id="@+id/specific_dish_dialog_box_title_text_view"
+        android:gravity="center" />
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="200dp"
+        android:id="@+id/specific_dish_dialog_box_image_view"
+        android:layout_margin="10dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="12$"
+            android:id="@+id/specific_dish_dialog_box_price_text_view"
+            android:background="@drawable/yellow_circle"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:textSize="18dp" />
+
+        <TextView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="4"
+            android:id="@+id/specific_dish_dialog_box_dishes_left_text_view"
+            android:background="@drawable/yellow_circle"
+            android:gravity="center"
+            android:textSize="18dp" />
+    </LinearLayout>
+</LinearLayout>

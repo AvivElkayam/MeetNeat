@@ -4,9 +4,16 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -18,6 +25,9 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
+import app.meantneat.com.meetneat.Dish;
 import app.meantneat.com.meetneat.EventDishes;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
@@ -34,6 +44,8 @@ public class SpecificEventDishesDialogBox {
     private String eventID;
     private TextView chefNameTextView,dateTextView,titleTextView;
     private ImageView chefImageView;
+    private ArrayList<Dish> dishArrayList;
+    private DishAdapter dishAdapter;
     public SpecificEventDishesDialogBox(Context context,String eventID,String chefName,String eventDate,String eventTitle) {
         this.context=context;
         this.eventID=eventID;
@@ -41,6 +53,7 @@ public class SpecificEventDishesDialogBox {
         this.date=eventDate;
         this.eventTitle=eventTitle;
         dialogBox = new Dialog(context);
+        dishArrayList = new ArrayList<>();
         initDialogBoxAndShow();
 
     }
@@ -53,7 +66,8 @@ public class SpecificEventDishesDialogBox {
         dialogBox.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialogBox.setContentView(R.layout.hungry_fragment_event_details_dialog_box);
         GridView gridview = (GridView) dialogBox.findViewById(R.id.hungry_fragment_dialog_box_grid_view);
-        gridview.setAdapter(new ImageAdapter(context));
+        dishAdapter = new DishAdapter(context);
+        gridview.setAdapter(dishAdapter);
         dialogBox.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
          chefNameTextView = (TextView)dialogBox.findViewById(R.id.speceific_event_dialog_box_chef_text_view);
@@ -74,7 +88,7 @@ public class SpecificEventDishesDialogBox {
                 eventsDialogBox.getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
-                        dialogBox.show();
+                        eventsDialogBox.getDialog().dismiss();
 
                     }
                 });
@@ -97,15 +111,15 @@ public class SpecificEventDishesDialogBox {
         return dialogBox;
     }
 
-    public class ImageAdapter extends BaseAdapter {
+    public class DishAdapter extends BaseAdapter {
         private Context mContext;
 
-        public ImageAdapter(Context c) {
+        public DishAdapter(Context c) {
             mContext = c;
         }
 
         public int getCount() {
-            return mThumbIds.length;
+            return dishArrayList.size();
         }
 
         public Object getItem(int position) {
@@ -118,29 +132,43 @@ public class SpecificEventDishesDialogBox {
 
         // create a new ImageView for each item referenced by the Adapter
         public View getView(int position, View convertView, ViewGroup parent) {
-            ImageView imageView;
-            if (convertView == null) {
-                // if it's not recycled, initialize some attributes
-                imageView = new ImageView(mContext);
-                imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setPadding(8, 8, 8, 8);
-            } else {
-                imageView = (ImageView) convertView;
+            View itemView = convertView;
+//
+            if(itemView==null)
+            {
+//                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                itemView = dialogBox.getLayoutInflater().inflate(R.layout.hungry_fragment_event_details_dialog_box_cell,parent,false);
             }
+            final Dish dish = dishArrayList.get(position);
+            TextView dishNameTextView = (TextView)itemView.findViewById(R.id.hungry_fragment_event_dishes_dialog_box_cell_dish_name_text_view);
+            dishNameTextView.setText(dish.getTitle());
 
-            imageView.setImageResource(mThumbIds[position]);
-            //LinearLayout layout = new LinearLayout(mContext);
-            AbsListView.LayoutParams layoutParams = new AbsListView.LayoutParams(200, 200);
-            imageView.setLayoutParams(layoutParams);
-            return imageView;
+            TextView dishPriceTextView = (TextView)itemView.findViewById(R.id.hungry_fragment_event_dishes_dialog_box_cell_price_texr_view);
+            dishPriceTextView.setText(dish.getPrice()+"$");
+
+            final ImageView dishImageView = (ImageView)itemView.findViewById(R.id.hungry_fragment_event_dishes_dialog_box_cell_image_view);
+
+            MyModel.getInstance().getModel().getDishPicture(dish.getDishID(),new MyModel.PictureCallback() {
+                @Override
+                public void pictureHasBeenFetched(Bitmap bitmap) {
+                    dishImageView.setBackground(new BitmapDrawable(getRoundedCornerBitmap(bitmap,20)));
+                }
+            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SpecificDishDialogBox specificDishDialogBox = new SpecificDishDialogBox(context,dish.getDishID(),dish.getTitle(),Double.toString(dish.getPrice()),Double.toString(dish.getQuantityLeft()));
+                    specificDishDialogBox.show();
+                }
+            });
+            return itemView;
         }
 
         // references to our images
         private Integer[] mThumbIds = {
-                R.drawable.logo1, R.drawable.jachnun,
-                R.drawable.logo1, R.drawable.dish2,
-                R.drawable.logo1, R.drawable.pasta1,
+                 R.drawable.jachnun,
+                R.drawable.dish2,
+                R.drawable.pasta1,
 
 
         };
@@ -164,14 +192,44 @@ public class SpecificEventDishesDialogBox {
                         +event.getEndingHour()
                         +":"
                         +event.getEndingMinute()
+
                 );
+                dishArrayList.clear();
+                dishArrayList.addAll(event.getEventsDishes());
+                dishAdapter.notifyDataSetChanged();
                 MyModel.getInstance().getModel().getChefPicture(event.getChefID(),new MyModel.PictureCallback() {
                     @Override
                     public void pictureHasBeenFetched(Bitmap bitmap) {
+                        if(bitmap!=null
+                                )
                         chefImageView.setBackground(new BitmapDrawable(bitmap));
                     }
                 });
+
             }
         });
     }
+
+        public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
+            Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
+                    .getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(output);
+
+            final int color = 0xff424242;
+            final Paint paint = new Paint();
+            final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+            final RectF rectF = new RectF(rect);
+            final float roundPx = pixels;
+
+            paint.setAntiAlias(true);
+            canvas.drawARGB(0, 0, 0, 0);
+            paint.setColor(color);
+            canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+
+            paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+            canvas.drawBitmap(bitmap, rect, rect, paint);
+
+            return output;
+        }
+
 }

@@ -40,7 +40,6 @@ public class MyModel {
         public void addNewEventMealsToServer(EventMeals event,EditEventMealsFragment.SaveToServerCallback callback);
         public void getChefsEventFromServer(ChefEventDishesFragment.GetEventDishesCallback callback);
         public void getDishEventDetailsByID(String eventID,SpecificEventDishesDialogBox.DishEventCallback callback);
-
         public void getChefPicture(String chefID,PictureCallback callback);
         public void getDishPicture(String dishID,PictureCallback callback);
     }
