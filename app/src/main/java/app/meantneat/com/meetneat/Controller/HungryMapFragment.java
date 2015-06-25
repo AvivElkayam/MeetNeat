@@ -137,13 +137,13 @@ import app.meantneat.com.meetneat.R;
                         getActivity(),eventByMarker.getChefID(),marker.getPosition());
 
 
-                final SpecificEventDishesDialogBox dialogBox = new SpecificEventDishesDialogBox(getActivity(),"7k60BVnPPQ","Jonathan Roshfeld","01.08.2004 - 03.09.2014","Italian Party");
-                dialogBox.getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        //dialogBox.getDialog().show();
-                    }
-                });
+//                final SpecificEventDishesDialogBox dialogBox = new SpecificEventDishesDialogBox(getActivity(),"7k60BVnPPQ","Jonathan Roshfeld","01.08.2004 - 03.09.2014","Italian Party");
+//                dialogBox.getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
+//                    @Override
+//                    public void onCancel(DialogInterface dialog) {
+//                        //dialogBox.getDialog().show();
+//                    }
+//                });
 
                 dialogBox.show();
                 return false;

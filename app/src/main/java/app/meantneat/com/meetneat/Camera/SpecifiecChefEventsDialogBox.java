@@ -2,6 +2,7 @@ package app.meantneat.com.meetneat.Camera;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
@@ -77,7 +78,7 @@ public class SpecifiecChefEventsDialogBox {
 
     }
 
-    private View addEventDishtoList(EventDishes event)
+    private View addEventDishtoList(final EventDishes event)
     {
         View v = dialog.getLayoutInflater().inflate(R.layout.hungry_specifiec_chef_events_dialog_box_event_dishes_cell,
                 eventDishesLayout,false);
@@ -86,13 +87,27 @@ public class SpecifiecChefEventsDialogBox {
         TextView descriptionText = (TextView)v.findViewById(R.id.hungry_specifiec_chef_events_dialog_box_event_dishes_cell_Description);
 
         dateText.setText(Integer.toString(event.getEventDay()));
-        String time = (Integer.toString(event.getStartingHour())) + ":" +
+        final String time = (Integer.toString(event.getStartingHour())) + ":" +
                     (Integer.toString(event.getStartingMinute())) + "-" +
                      (Integer.toString(event.getEndingHour())) + ":" +
                      (Integer.toString(event.getEndingMinute()));
 
         timeText.setText(time);
-
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SpecificEventDishesDialogBox eventDialog = new SpecificEventDishesDialogBox(context
+                        ,event.getEventId(),"TODO",time,event.getTitle(),event.getEventsDishes());
+                eventDialog.getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        show();
+                    }
+                });
+                dialog.hide();
+                eventDialog.show();
+            }
+        });
 
         //Enter Tedails From Event;
         //Date,Time,Description, Check if open now

@@ -46,14 +46,14 @@ public class SpecificEventDishesDialogBox {
     private ImageView chefImageView;
     private ArrayList<Dish> dishArrayList;
     private DishAdapter dishAdapter;
-    public SpecificEventDishesDialogBox(Context context,String eventID,String chefName,String eventDate,String eventTitle) {
+    public SpecificEventDishesDialogBox(Context context,String eventID,String chefName,String eventDate,String eventTitle,ArrayList<Dish> dishArrayList) {
         this.context=context;
         this.eventID=eventID;
         this.chefName=chefName;
         this.date=eventDate;
         this.eventTitle=eventTitle;
         dialogBox = new Dialog(context);
-        dishArrayList = new ArrayList<>();
+        this.dishArrayList = dishArrayList;
         initDialogBoxAndShow();
 
     }
@@ -79,22 +79,7 @@ public class SpecificEventDishesDialogBox {
 
         titleTextView = (TextView)dialogBox.findViewById(R.id.speceific_event_dialog_box_title_text_view);
         //titleTextView.setText(eventTitle);
-        titleTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final EventsDialogBox eventsDialogBox = new EventsDialogBox(context);
-                dialogBox.hide();
-                //dialogBox.show();
-                eventsDialogBox.getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        dialogBox.show();
 
-                    }
-                });
-                eventsDialogBox.show();
-            }
-        });
         getEventFromserver();
 
 
