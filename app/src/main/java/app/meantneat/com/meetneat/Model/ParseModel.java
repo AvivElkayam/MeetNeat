@@ -187,15 +187,16 @@ public class ParseModel implements MyModel.ModelInterface {
             @Override
             protected Void doInBackground(Void... params) {
                 ParseQuery<ParseObject> eventQuery = new ParseQuery<ParseObject>(AppConstants.EVENT_DISHES);
-                // eventQuery.whereEqualTo(AppConstants.EVENT_DISHES_CHEF_ID,ParseUser.getCurrentUser().getObjectId());
+               // eventQuery.whereEqualTo(AppConstants.EVENT_DISHES_CHEF_ID,ParseUser.getCurrentUser().getObjectId());
                 List<ParseObject> tempEventArray;
                 try {
-                    tempEventArray = eventQuery.find();
-                    for (ParseObject object : tempEventArray) {
+                     tempEventArray = eventQuery.find();
+                     for(ParseObject object : tempEventArray)
+                     {
 
-                        eventDishesArrayList.add(ParseObjectToEventDishes(object));
+                         eventDishesArrayList.add(ParseObjectToEventDishes(object));
 
-                    }
+                     }
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -211,7 +212,8 @@ public class ParseModel implements MyModel.ModelInterface {
     }
 
     @Override
-    public void getDishEventDetailsByID(final String eventID, final SpecificEventDishesDialogBox.DishEventCallback callback) {
+    public void getDishEventDetailsByID(final String eventID, final SpecificEventDishesDialogBox.DishEventCallback callback)
+    {
         new AsyncTask<Void, Void, Void>() {
             EventDishes eventDishes;
 
@@ -240,20 +242,25 @@ public class ParseModel implements MyModel.ModelInterface {
     @Override
     public void getChefPicture(final String chefID, final MyModel.PictureCallback callback) {
         new AsyncTask<Void, Void, Void>() {
-            Bitmap bitmap;
-
+            Bitmap bitmap=null;
             @Override
             protected Void doInBackground(Void... params) {
                 ParseQuery<ParseUser> query = ParseQuery.getUserQuery();
-                try {
+                try
+                {
                     ParseUser user = query.get(chefID);
-                    ParseFile applicantResume = (ParseFile) user.get(AppConstants.USER_IMAGE);
-                    byte[] bytes = applicantResume.getData();
+                    ParseFile applicantResume = (ParseFile)user.get(AppConstants.USER_IMAGE);
+                    if(applicantResume!=null) {
+                        byte[] bytes = applicantResume.getData();
 
-                    bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                } catch (ParseException e) {
+                        bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    }
+                }
+                catch (ParseException e) {
                     e.printStackTrace();
                 }
+
+
 
 
                 return null;
@@ -268,17 +275,47 @@ public class ParseModel implements MyModel.ModelInterface {
     }
 
     @Override
-    public void getDishPicture(String dishID, MyModel.PictureCallback callback) {
+    public void getDishPicture(final String dishID,final MyModel.PictureCallback callback) {
+        new AsyncTask<Void, Void, Void>() {
+            Bitmap bitmap;
+            @Override
+            protected Void doInBackground(Void... params) {
+                ParseQuery<ParseUser> query = new ParseQuery<>(AppConstants.DISH);
+                try
+                {
+                    ParseObject dish = query.get(dishID);
+                    ParseFile applicantResume = (ParseFile)dish.get(AppConstants.DISH_IMG_FULL);
+                    byte[] bytes = applicantResume.getData();
 
+                    bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                }
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                callback.pictureHasBeenFetched(bitmap);
+            }
+        }.execute();
     }
 
-    private ArrayList<Dish> getDishesForEvent(String eventID) {
+    private ArrayList<Dish> getDishesForEvent(String eventID)
+    {
         ParseQuery<ParseObject> dishesQuery = new ParseQuery<ParseObject>(AppConstants.DISH);
-        dishesQuery.whereEqualTo(AppConstants.DISH_EVENT_ID, eventID);
+        dishesQuery.whereEqualTo(AppConstants.DISH_EVENT_ID,eventID);
         ArrayList<Dish> dishesArray = new ArrayList<>();
         try {
             List<ParseObject> tempDishArray = dishesQuery.find();
-            for (ParseObject object : tempDishArray) {
+            for(ParseObject object : tempDishArray)
+            {
                 Dish dish = new Dish();
                 dish.setDishID(object.getObjectId());
                 dish.setChefID(object.getString(AppConstants.DISH_CHEF_ID));
@@ -332,8 +369,7 @@ public class ParseModel implements MyModel.ModelInterface {
 
         return eventDishes;
     }
-
-    //    public void getClosestChefsRadius(final HungryMapFragment.GetEventDishesCallback callback) {
+//    public void getClosestChefsRadius(final HungryMapFragment.GetEventDishesCallback callback) {
 //        new AsyncTask<Void, Void, Void>() {
 //            ArrayList<EventDishes> eventDishesArrayList = new ArrayList<>();
 //            @Override

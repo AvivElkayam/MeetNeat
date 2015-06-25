@@ -24,11 +24,9 @@ public class MyModel {
     private ModelInterface model;
 
     private static MyModel ourInstance = new MyModel();
-
     public static MyModel getInstance() {
         return ourInstance;
     }
-
     private MyModel() {
         model = new ParseModel();
     }
@@ -175,8 +173,6 @@ public class MyModel {
         //    }
 
     }
-
-
     public interface PictureCallback
     {
         public void pictureHasBeenFetched(Bitmap bitmap);

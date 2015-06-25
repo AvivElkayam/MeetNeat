@@ -1,5 +1,6 @@
 package app.meantneat.com.meetneat.Controller;
 
+import android.app.ActionBar;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -136,6 +137,7 @@ import app.meantneat.com.meetneat.R;
                         getActivity(),eventByMarker.getChefID(),marker.getPosition());
 
 
+                final SpecificEventDishesDialogBox dialogBox = new SpecificEventDishesDialogBox(getActivity(),"7k60BVnPPQ","Jonathan Roshfeld","01.08.2004 - 03.09.2014","Italian Party");
                 dialogBox.getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
