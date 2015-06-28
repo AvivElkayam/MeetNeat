@@ -537,10 +537,7 @@ private void initViews()
     private void dispatchTakePictureIntent() {
         cameraBasics.setF(this);
         cameraBasics.dispatchTakePictureIntent(getActivity());
-//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
- //          startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-//        }
+
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -563,18 +560,37 @@ private void initViews()
             CropImageIntentBuilder cropImage = new CropImageIntentBuilder(200, 200, croppedImage);
             cropImage.setOutlineColor(0xFF03A9F4);
             cropImage.setSourceImage(data.getData());
+            Intent a = cropImage.getIntent(getActivity());
 
 
-                  this.startActivityForResult(cropImage.getIntent(getActivity()), REQUEST_CROP_PICTURE);
+
+            bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
+//            new AsyncTask<Void, Void, Void>() {
+//                @Override
+//                protected Void doInBackground(Void... params) {
+//                    dishArrayList.get(currentPosition).setFullsizeImg(bitmapToByteArr(bitmapArray[0])); //Full size to Bytearray
+//
+//                    dishArrayList.get(currentPosition).setThumbnailImg(bitmapToByteArr(bitmapArray[1])); //Thumbnail to Bytearray
+//                    newDish.setFullsizeImg(bitmapToByteArr(bitmapArray[0]));
+//                    newDish.setThumbnailImg(bitmapToByteArr(bitmapArray[1]));
+//                    return null;
+//
+//                }
+//            }.execute();
+            dishImageView.setImageBitmap(bitmapArray[1]);
+
+            startActivityForResult(cropImage.getIntent(getActivity()), REQUEST_CROP_PICTURE);
+
+
         } else if ((requestCode == REQUEST_CROP_PICTURE) && (resultCode == Activity.RESULT_OK)) {
             // When we are done cropping, display it in the ImageView.
-            addDishImageView.setImageBitmap(BitmapFactory.decodeFile(croppedImageFile.getAbsolutePath()));
+            dishImageView.setImageBitmap(BitmapFactory.decodeFile(croppedImageFile.getAbsolutePath()));
         }
 
 
 
 //        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode==Activity.RESULT_OK) {
-//            bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
+           //bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
 //            new AsyncTask<Void, Void, Void>() {
 //                @Override
 //                protected Void doInBackground(Void... params) {

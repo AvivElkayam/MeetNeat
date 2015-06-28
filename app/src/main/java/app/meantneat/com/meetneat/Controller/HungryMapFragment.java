@@ -161,14 +161,14 @@ import app.meantneat.com.meetneat.R;
                 //final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
                 //BitmapDescriptor fixed = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 150, 150, true));
 
-                if(lastMarker != null)
-                    lastMarker.remove();
-                lastMarker = googleMapHungry.addMarker(new MarkerOptions()
-                                .position(googleMapHungry.getCameraPosition().target)
-                                .title("Center")
-
-                                .icon(fixed)
-                );
+//                if(lastMarker != null)
+//                    lastMarker.remove();
+//                lastMarker = googleMapHungry.addMarker(new MarkerOptions()
+//                                .position(googleMapHungry.getCameraPosition().target)
+//                                .title("Center")
+//
+//                                .icon(fixed)
+//                );
 
 
 
@@ -249,39 +249,20 @@ import app.meantneat.com.meetneat.R;
 
     private void showClosestEvents()
     {
-        //make hashmap of markers and coordinates - if there is
-        // 2 diffrent chefs in the same coordinate rotate the marker
-        // if there same chef in the same location diffrent events - add only one event...
-
-
-
-
-        // dr = getResources().getDrawable(R.drawable.logo1);
-        //final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
-        //BitmapDescriptor fixed = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 150, 150, true));
         int i=0;
         googleMapHungry.clear();
-        lastMarker = googleMapHungry.addMarker(new MarkerOptions()
-                        .position(googleMapHungry.getCameraPosition().target)
-                        .title("Center")
-
-                        .icon(fixed)
-        );
 
         allMarkersMap.clear();
         for (i = 0;i< coordinatesArray.size(); i++) {
 
-
-
-
-            Marker m = googleMapHungry.addMarker(new MarkerOptions()
+        Marker m = googleMapHungry.addMarker(new MarkerOptions()
                             .position(coordinatesArray.get(i))
                             .title("Marker")
                             .rotation((float)90.0)
                             .icon(fixed)
-            );
+        );
 
-            allMarkersMap.put(m, eventsArray.get(i));
+        allMarkersMap.put(m, eventsArray.get(i));
         }
     }
 

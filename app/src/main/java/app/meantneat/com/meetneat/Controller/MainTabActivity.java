@@ -3,6 +3,7 @@ package app.meantneat.com.meetneat.Controller;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -79,7 +80,11 @@ private FragmentTabHost mTabHost;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+
+
         //cameraBasics.myOnActivityResult(requestCode,resultCode,data);
        // eventImageView.setImageBitmap(b);
 //        if (requestCode == REQUEST_IMAGE_CAPTURE) {
@@ -110,36 +115,22 @@ private FragmentTabHost mTabHost;
 
         return super.onOptionsItemSelected(item);
     }
-//    private void initTabs()
-//    {
-//
-//        mTabHost = (FragmentTabHost)findViewById(R.id.mainTabHost);
-//        mTabHost.setup(this, getSupportFragmentManager(), R.id.mainTabHostContainer);
-//
-//
-//        mTabHost.addTab(mTabHost.newTabSpec("HungryFragment").setIndicator("Hungry"),
-//                HungryFragment.class, null);
-//        mTabHost.addTab(mTabHost.newTabSpec("ChefEventDishesFragment").setIndicator("Chef"),ChefEventDishesFragment.class,null);
-//
-//        for(int i=0;i<mTabHost.getTabWidget().getChildCount();i++)
-//        {
-//            mTabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#E0E0E0")); //unselected
-//        }
-//        mTabHost.getTabWidget().getChildAt(mTabHost.getCurrentTab()).setBackgroundColor(Color.BLUE);
-//
-//        mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-//            @Override
-//            public void onTabChanged(String tabId) {
-//
-//                for(int i=0;i<mTabHost.getTabWidget().getChildCount();i++)
-//                {
-//                    mTabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#E0E0E0")); //unselected
-//                }
-//                mTabHost.getTabWidget().getChildAt(mTabHost.getCurrentTab()).setBackgroundColor(Color.BLUE);
-//            }
-//
-//
-//        });
-//
-//    }
-}
+
+    @Override
+    public void onBackPressed() {
+        // if there is a fragment and the back stack of this fragment is not empty,
+        // then emulate 'onBackPressed' behaviour, because in default, it is not working
+        FragmentManager fm = getSupportFragmentManager();
+        for (Fragment frag : fm.getFragments()) {
+            if (frag.getTag() == "chef"){
+                FragmentManager childFm = frag.getChildFragmentManager();
+
+                int k = childFm.getBackStackEntryCount();
+                if (childFm.getBackStackEntryCount() > 0) {
+                    childFm.popBackStack();
+                    return;
+                }
+            }
+        }
+        super.onBackPressed();
+    }}

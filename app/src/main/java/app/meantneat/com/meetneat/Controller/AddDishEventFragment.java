@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,8 +64,10 @@ public class AddDishEventFragment extends Fragment {
                     //set Fragmentclass Arguments
                     EditEventDishesFragment fragment = new EditEventDishesFragment();
                     fragment.setArguments(bundle);
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.chef_event_dishes_fragment_container, fragment, "add_event")
+                    Fragment f = getParentFragment();
+                    FragmentManager fragmentManager = f.getChildFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.chef_event_dishes_fragment_container, fragment, "added_event").addToBackStack("added_new")
                             .commit();
                 }
                 else

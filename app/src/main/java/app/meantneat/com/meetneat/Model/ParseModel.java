@@ -393,6 +393,8 @@ public class ParseModel implements MyModel.ModelInterface {
                 //eventQuery.whereEqualTo(AppConstants.EVENT_DISHES_CHEF_ID,ParseUser.getCurrentUser().getObjectId());
                 List<ParseObject> tempEventArray;
                 try {
+                    if( ! (HungryMapFragment.lastCenterStatic.equals(centerLocation ))  )
+                        return null;
                     tempEventArray = eventQuery.find();
                     if( ! (HungryMapFragment.lastCenterStatic.equals(centerLocation ))  )
                         return null;

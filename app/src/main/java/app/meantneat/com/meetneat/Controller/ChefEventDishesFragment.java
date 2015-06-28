@@ -157,10 +157,10 @@ public class ChefEventDishesFragment extends Fragment
         floatingAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentManager fragmentManager = getParentFragment().getChildFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 AddDishEventFragment fragment = new AddDishEventFragment();
-                fragmentTransaction.add(R.id.chef_event_dishes_fragment_container, fragment);
+                fragmentTransaction.add(R.id.chef_event_dishes_fragment_container, fragment).addToBackStack("addNewEventDish");
                 fragmentTransaction.commit();
             }
         });
@@ -197,8 +197,9 @@ public class ChefEventDishesFragment extends Fragment
         bundle.putBoolean("is_new", false);
         EditEventDishesFragment fragment = new EditEventDishesFragment();
         fragment.setArguments(bundle);
-        getChildFragmentManager().beginTransaction()
-                .replace(R.id.chef_event_dishes_fragment_container, fragment, "add_event")
+        getParentFragment().getChildFragmentManager().beginTransaction()
+                .add(R.id.chef_event_dishes_fragment_container, fragment, "add_event")
+                .addToBackStack("1")
                 .commit();
     }
     private void initSwipeRefresh()

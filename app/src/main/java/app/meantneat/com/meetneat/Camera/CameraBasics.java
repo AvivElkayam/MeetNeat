@@ -60,14 +60,14 @@ public class CameraBasics {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(image));
 
-//        takePictureIntent.putExtra("crop", "true");
-//        //takePictureIntent.putExtra("circleCrop", true);
-//        takePictureIntent.putExtra("outputX",600);
-//        takePictureIntent.putExtra("outputY", 600);
+//       takePictureIntent.putExtra("crop", "true");
+//       takePictureIntent.putExtra("circleCrop", true);
+//       takePictureIntent.putExtra("outputX",600);
+//       takePictureIntent.putExtra("outputY", 600);
 //        takePictureIntent.putExtra("aspectX", 1);
 //        takePictureIntent.putExtra("aspectY", 1);
 //        takePictureIntent.putExtra("scale", true);
-//        takePictureIntent.putExtra("return-data", true);
+//       takePictureIntent.putExtra("return-data", true);
 
         if (takePictureIntent.resolveActivity(((Activity)context).getPackageManager()) != null) {
             f.startActivityForResult(takePictureIntent, 1);
