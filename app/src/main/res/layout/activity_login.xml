@@ -4,17 +4,18 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="app.meantneat.com.meetneat.LoginActivity"
+    tools:context="app.meantneat.com.meetneat.Controller.LoginActivity"
     android:background="@color/eat_black"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    >
 
     <EditText
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/editText2"
+        android:id="@+id/login_activity_email_text_field"
         android:background="@drawable/gray_text_field"
         android:hint="Email address"
         android:paddingLeft="5dp" />
@@ -24,7 +25,7 @@
         android:layout_height="40dp"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/editText3"
+        android:id="@+id/login_activity_password_text_field"
         android:background="@drawable/gray_text_field"
         android:hint="Password"
         android:layout_marginTop="5dp"
@@ -33,8 +34,8 @@
     <Button
         android:layout_width="250dp"
         android:layout_height="40dp"
-        android:text="New Button"
-        android:id="@+id/button2"
+        android:text="LogIn"
+        android:id="@+id/login_activity_login_button"
         android:textColor="@color/eat_white"
         android:background="@drawable/green_button"
         android:layout_marginTop="10dp" />

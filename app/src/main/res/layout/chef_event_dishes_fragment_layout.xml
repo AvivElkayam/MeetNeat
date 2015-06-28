@@ -27,12 +27,13 @@
         android:id="@+id/chef_events_dishes_floating_add_button"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_gravity="bottom|right"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="50dp"
+        android:layout_gravity="left|bottom"
+        android:layout_marginBottom="20dp"
 
         android:text="+"
-        android:textColor="@color/eat_black" />
+        android:textColor="@drawable/plus_icon"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/yellow_circle" />
     <ProgressBar
         android:layout_width="64dp"
         android:layout_height="64dp"

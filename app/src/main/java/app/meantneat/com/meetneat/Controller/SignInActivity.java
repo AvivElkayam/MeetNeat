@@ -1,16 +1,25 @@
 package app.meantneat.com.meetneat.Controller;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import app.meantneat.com.meetneat.Camera.CameraBasics;
@@ -18,10 +27,13 @@ import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 
 public class SignInActivity extends ActionBarActivity {
-    EditText userNameEditText,emailEditText,passwordEditText;
-    ImageView userImage;
-    Button signInButton;
-    CameraBasics cameraBasics;
+    private EditText userNameEditText,emailEditText,passwordEditText;
+    private ImageView userImage;
+    private Button signInButton;
+    private Bitmap userImageBitmap;
+    private CameraBasics cameraBasics;
+    private ProgressDialog progressBar;
+    private TextView signedInTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,21 +46,36 @@ public class SignInActivity extends ActionBarActivity {
         userNameEditText = (EditText)findViewById(R.id.sign_in_activity_user_name_text_field_id);
         emailEditText = (EditText)findViewById(R.id.sign_in_activity_email_text_field_id);
         passwordEditText = (EditText)findViewById(R.id.sign_in_activity_password_field_id);
+        signedInTextView = (TextView)findViewById(R.id.sign_in_activity_signedin_text_field_id);
+        signedInTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignInActivity.this,LoginActivity.class);
+                startActivity(intent);
+            }
+        });
         userImage = (ImageView)findViewById(R.id.sign_in_activity_user_image);
-
         userImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //88888888// start camera
-                //dispatchTakePictureIntent();
+                dispatchTakePictureIntent();
 
             }
         });
+        //progressBar = (ProgressBar)findViewById(R.id.sign_in_progress_bar);
 
+        //progressBar.setProgress(0);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            signIn();
+                progressBar=new ProgressDialog(SignInActivity.this);
+                progressBar.setMessage("Signing in...");
+                progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressBar.setIndeterminate(false);
+                progressBar.show();
+
+                signIn();
             }
         });
     }
@@ -61,18 +88,26 @@ public class SignInActivity extends ActionBarActivity {
         name = userNameEditText.getText().toString();
         email = emailEditText.getText().toString();
         password = passwordEditText.getText().toString();
-        MyModel.getInstance().getModel().signUpToMeetNeat(name, email, password, new SignUpCallback() {
-            @Override
-            public void onResult(String s) {
-                if(s.equals("Yes"))
-                {
-                    Intent intent = new Intent(SignInActivity.this,MainTabActivity.class);
-                    startActivity(intent);
+        if(userImageBitmap==null)
+            userImageBitmap = BitmapFactory.decodeResource(getResources(),R.drawable.chef_48_red);
+        if(!name.equals("") && !password.equals("") && !email.equals("")) {
+            MyModel.getInstance().getModel().signUpToMeetNeat(name, email, password, userImageBitmap, new SignUpCallback() {
+                @Override
+                public void onResult(String s) {
+                    if (s.equals("Yes")) {
+                        progressBar.hide();
+                        Intent intent = new Intent(SignInActivity.this, MainTabActivity.class);
+                        startActivity(intent);
+                    } else
+                        Toast.makeText(SignInActivity.this, s, Toast.LENGTH_SHORT);
                 }
-                else
-                Toast.makeText(SignInActivity.this,s,Toast.LENGTH_SHORT);
-            }
-        });
+            });
+        }
+        else
+        {
+            Toast.makeText(SignInActivity.this, "Please fill in all details.", Toast.LENGTH_SHORT);
+
+        }
     }
 
 
@@ -127,5 +162,24 @@ public class SignInActivity extends ActionBarActivity {
 //            addDishImageView.setImageBitmap(bitmapArray[1]);
 //        }
 //    }
+static final int REQUEST_IMAGE_CAPTURE = 1;
 
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+            //userImage.setImageBitmap(imageBitmap);
+            userImageBitmap=imageBitmap;
+            userImage.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            userImage.setBackground(new BitmapDrawable(imageBitmap));
+        }
+    }
 }

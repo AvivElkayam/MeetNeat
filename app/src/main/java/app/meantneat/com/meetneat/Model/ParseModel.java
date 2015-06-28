@@ -8,6 +8,7 @@ import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
 import com.parse.GetCallback;
 import com.parse.GetDataCallback;
+import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -18,6 +19,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +31,7 @@ import app.meantneat.com.meetneat.Controller.ChefEventDishesFragment;
 import app.meantneat.com.meetneat.Controller.EditEventDishesFragment;
 import app.meantneat.com.meetneat.Controller.EditEventMealsFragment;
 import app.meantneat.com.meetneat.Controller.HungryMapFragment;
+import app.meantneat.com.meetneat.Controller.LoginActivity;
 import app.meantneat.com.meetneat.Controller.SignInActivity;
 import app.meantneat.com.meetneat.Dish;
 
@@ -41,26 +44,61 @@ import app.meantneat.com.meetneat.EventMeals;
  */
 public class ParseModel implements MyModel.ModelInterface {
     @Override
-    public void LoginToMeetNeat(String userName, String password) {
-
+    public void LoginToMeetNeat(String userName, String password, final LoginActivity.LoginCallback callback) {
+        ParseUser.logInInBackground(userName, password, new LogInCallback() {
+            public void done(ParseUser user, ParseException e) {
+                if (user != null) {
+                    callback.loggedIn();// Hooray! The user is logged in.
+                } else {
+                    callback.failed(e.getMessage());
+                    // Signup failed. Look at the ParseException to see what happened.
+                }
+            }
+        });
     }
 
     @Override
-    public void signUpToMeetNeat(String userName, String email, String password, final SignInActivity.SignUpCallback callback) {
-        ParseUser user = new ParseUser();
-        user.setUsername(email);
-        user.setPassword(password);
-        //user.put(AppConstants.USER_NICK_NAME,userName);
-        user.signUpInBackground(new SignUpCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null)
-                    callback.onResult("Yes");
-                else
-                    callback.onResult(e.getMessage());
+    public void signUpToMeetNeat(final String userName, final String email, final String password,final Bitmap bitmap, final SignInActivity.SignUpCallback callback) {
 
+        new AsyncTask<Void, Void, Void>() {
+            String s="Yes";
+            @Override
+            protected Void doInBackground(Void... params) {
+                ParseUser user = new ParseUser();
+                user.setUsername(email);
+                user.setPassword(password);
+                user.put(AppConstants.USER_NICK_NAME,userName);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] data = stream.toByteArray();
+                ParseFile imgFile = new ParseFile (userName+".png", data);
+                try {
+                    imgFile.save();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    s=e.getMessage();
+                }
+
+
+                user.put(AppConstants.USER_IMAGE,imgFile);
+                try {
+                    user.signUp();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    s=e.getMessage();
+                }
+                return null;
             }
-        });
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                callback.onResult(s);
+            }
+        }.execute();
+
+
+
 
     }
 

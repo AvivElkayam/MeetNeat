@@ -8,6 +8,11 @@
     <item>
         <shape android:shape="oval">
             <solid android:color="@color/eat_orange" />
+            <item>
+                <shape android:shape="oval">
+                    <solid android:color="@color/eat_black" />
+                </shape>
+            </item>
         </shape>
     </item>
 </selector>

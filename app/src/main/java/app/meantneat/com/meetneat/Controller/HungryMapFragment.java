@@ -1,6 +1,7 @@
 package app.meantneat.com.meetneat.Controller;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
@@ -37,6 +38,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +72,7 @@ import app.meantneat.com.meetneat.R;
     boolean firstTime = true;
     Marker lastMarker;
     BitmapDescriptor fixed;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -85,7 +88,7 @@ import app.meantneat.com.meetneat.R;
         /* map is already there, just return view as it is */
         }
 
-
+        //ParseUser.logOut();
         return view;
     }
 
@@ -129,9 +132,9 @@ import app.meantneat.com.meetneat.R;
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        Drawable dr = getResources().getDrawable(R.drawable.logo1);
+        Drawable dr = getResources().getDrawable(R.drawable.chef_48_green);
         final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
-        fixed = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 150, 150, true));
+        fixed = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 96, 96, true));
 
 
         this.googleMapHungry = googleMap;
@@ -157,18 +160,10 @@ import app.meantneat.com.meetneat.R;
 
 
                     // CENTER MARKER //
-                //Drawable dr = getResources().getDrawable(R.drawable.logo1);
-                //final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
-                //BitmapDescriptor fixed = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 150, 150, true));
+//                Drawable dr = getResources().getDrawable(R.drawable.chef_48_green);
+//                final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+//                BitmapDescriptor fixed = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 150, 150, true));
 
-                if(lastMarker != null)
-                    lastMarker.remove();
-                lastMarker = googleMapHungry.addMarker(new MarkerOptions()
-                                .position(googleMapHungry.getCameraPosition().target)
-                                .title("Center")
-
-                                .icon(fixed)
-                );
 
 
 
@@ -256,17 +251,12 @@ import app.meantneat.com.meetneat.R;
 
 
 
-        // dr = getResources().getDrawable(R.drawable.logo1);
-        //final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
-        //BitmapDescriptor fixed = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 150, 150, true));
+//        Drawable dr = getResources().getDrawable(R.drawable.logo1);
+//        final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+//        BitmapDescriptor fixed = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 150, 150, true));
         int i=0;
         googleMapHungry.clear();
-        lastMarker = googleMapHungry.addMarker(new MarkerOptions()
-                        .position(googleMapHungry.getCameraPosition().target)
-                        .title("Center")
 
-                        .icon(fixed)
-        );
 
         allMarkersMap.clear();
         for (i = 0;i< coordinatesArray.size(); i++) {
@@ -285,7 +275,7 @@ import app.meantneat.com.meetneat.R;
         }
     }
 
-        
+
     @Override
     public void onConnected(Bundle bundle) {
         Log.e("LNGLTD", "Connected");
@@ -337,50 +327,6 @@ import app.meantneat.com.meetneat.R;
 //        }
 //    }
 
-
-private Bitmap createChefTemplate(Bitmap chefImage)
-{
-    View v = getActivity().getLayoutInflater().inflate(R.layout.chef_template,fragmentViewGroup,false);
-    ImageView imageView = new ImageView(getActivity());
-    DisplayMetrics displayMetrics = getActivity().getResources().getDisplayMetrics();
-    //int px = Math.round(256 * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
-    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(1048,1048);
-    params.gravity= Gravity.CENTER;
-    imageView.setLayoutParams(params);
-    imageView.setBackground(getResources().getDrawable(R.drawable.eyal_shani));
-    FrameLayout layout = (FrameLayout)v.findViewById(R.id.chef_template_container);
-    layout.addView(imageView);
-
-   // if the view wasn't displayed before the size of it will be zero. Its possible to measure it like this:
-    Bitmap b;
-    if (v.getMeasuredHeight() <= 0) {
-        v.measure(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        b = Bitmap.createBitmap(1048, 1512, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(b);
-        v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
-        v.draw(c);
-        return b;
-    }
-    else
-    {
-         b = Bitmap.createBitmap( v.getLayoutParams().width, v.getLayoutParams().height, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(b);
-        v.layout(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
-        v.draw(c);
-    }
-
-
-return b;
-
-}
-
-    private Bitmap overlay(Bitmap bmp1, Bitmap bmp2) {
-        Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
-        Canvas canvas = new Canvas(bmOverlay);
-        canvas.drawBitmap(bmp1, new Matrix(), null);
-        canvas.drawBitmap(bmp2, new Matrix(), null);
-        return bmOverlay;
-    }
 
 
 }

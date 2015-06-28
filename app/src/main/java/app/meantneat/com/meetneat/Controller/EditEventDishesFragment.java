@@ -189,6 +189,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
         initViews();
+
         addNewDishFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -395,17 +396,7 @@ private void initViews()
     }
 
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
 
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -535,13 +526,15 @@ private void initViews()
     }
 
     private void dispatchTakePictureIntent() {
-        cameraBasics.setF(this);
+        cameraBasics.setF(EditEventDishesFragment.this);
         cameraBasics.dispatchTakePictureIntent(getActivity());
 //        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
  //          startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
 //        }
     }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //New image for a dish
