@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -9,80 +9,98 @@
     android:orientation="vertical"
     android:gravity="center">
 
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Sign Up to Meet n&apos; Eat"
-        android:id="@+id/textView6"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:textColor="@color/eat_orange" />
+        android:layout_height="fill_parent"
+        android:gravity="center">
 
-    <FrameLayout
-        android:layout_width="196dp"
-        android:layout_height="196dp"
-        android:layout_gravity="center"
-        android:background="@drawable/camera_frame"
-        android:layout_marginTop="10dp"
-        >
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Sign Up to Meet n&apos; Eat"
+            android:id="@+id/textView6"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:textColor="@color/eat_orange" />
 
-        <ImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:id="@+id/sign_in_activity_user_image"
+        <FrameLayout
+            android:layout_width="196dp"
+            android:layout_height="196dp"
             android:layout_gravity="center"
-            android:background="@drawable/camera" />
-    </FrameLayout>
+            android:background="@drawable/camera_frame"
+            android:layout_marginTop="10dp"
+            >
 
-    <EditText
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/sign_in_activity_email_text_field_id"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:hint="E-mail"
-        android:background="@drawable/gray_text_field"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="5dp" />
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:id="@+id/sign_in_activity_user_image"
+                android:layout_gravity="center"
+                android:background="@drawable/camera" />
+        </FrameLayout>
 
-    <EditText
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/sign_in_activity_password_field_id"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:hint="Password"
-        android:background="@drawable/gray_text_field"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="5dp" />
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/sign_in_activity_email_text_field_id"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:hint="E-mail"
+            android:background="@drawable/gray_text_field"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="5dp" />
 
-    <EditText
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/sign_in_activity_user_name_text_field_id"
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/sign_in_activity_password_field_id"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:hint="Password"
+            android:background="@drawable/gray_text_field"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="5dp" />
 
-        android:hint="Nick name"
-        android:layout_below="@+id/sign_in_activity_email_text_field_id"
-        android:layout_alignStart="@+id/sign_in_activity_password_field_id"
-        android:background="@drawable/gray_text_field"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="5dp" />
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/sign_in_activity_user_name_text_field_id"
 
-    <Button
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:text="Sign in"
-        android:id="@+id/sign_in_activity_sign_in_button_id"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/sign_in_activity_password_field_id"
-        android:textColor="@color/eat_white"
-        android:background="@drawable/green_button"
-        android:layout_marginTop="20dp" />
-</LinearLayout>
+            android:hint="Nick name"
+            android:layout_below="@+id/sign_in_activity_email_text_field_id"
+            android:layout_alignStart="@+id/sign_in_activity_password_field_id"
+            android:background="@drawable/gray_text_field"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="5dp" />
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:text="Sign in"
+            android:id="@+id/sign_in_activity_sign_in_button_id"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/sign_in_activity_password_field_id"
+            android:textColor="@color/eat_white"
+            android:background="@drawable/green_button"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Already signed in?"
+            android:id="@+id/sign_in_activity_signedin_text_field_id"
+            android:textColor="@color/eat_orange"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
+
+
+</FrameLayout>

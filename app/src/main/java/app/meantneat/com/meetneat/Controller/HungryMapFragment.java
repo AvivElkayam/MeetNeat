@@ -1,6 +1,7 @@
 package app.meantneat.com.meetneat.Controller;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
@@ -37,6 +38,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -129,9 +131,9 @@ import app.meantneat.com.meetneat.R;
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        Drawable dr = getResources().getDrawable(R.drawable.logo1);
+        Drawable dr = getResources().getDrawable(R.drawable.chef_48_green);
         final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
-        fixed = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 150, 150, true));
+        fixed = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 96, 96, true));
 
 
         this.googleMapHungry = googleMap;
@@ -249,8 +251,19 @@ import app.meantneat.com.meetneat.R;
 
     private void showClosestEvents()
     {
+        //make hashmap of markers and coordinates - if there is
+        // 2 diffrent chefs in the same coordinate rotate the marker
+        // if there same chef in the same location diffrent events - add only one event...
+
+
+
+
+//        Drawable dr = getResources().getDrawable(R.drawable.logo1);
+//        final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+//        BitmapDescriptor fixed = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 150, 150, true));
         int i=0;
         googleMapHungry.clear();
+
 
         allMarkersMap.clear();
         for (i = 0;i< coordinatesArray.size(); i++) {
@@ -266,7 +279,7 @@ import app.meantneat.com.meetneat.R;
         }
     }
 
-        
+
     @Override
     public void onConnected(Bundle bundle) {
         Log.e("LNGLTD", "Connected");

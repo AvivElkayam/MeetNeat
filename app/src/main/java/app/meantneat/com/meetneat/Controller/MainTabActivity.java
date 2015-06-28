@@ -11,6 +11,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import app.meantneat.com.meetneat.Camera.CameraBasics;
 import app.meantneat.com.meetneat.Model.MyModel;
@@ -36,17 +41,80 @@ private FragmentTabHost mTabHost;
         setContentView(R.layout.activity_main_tab);
         chefFragment = new ChefFragment();
         hungryFragment = new HungryFragment();
-        Button chefButton = (Button) findViewById(R.id.activity_main_tab_chef_button);
-        Button hungryButton = (Button) findViewById(R.id.activity_main_tab_hungry_button);
+        initTabsMenu();
+
+//        Button chefButton = (Button) findViewById(R.id.activity_main_tab_chef_button);
+//        Button hungryButton = (Button) findViewById(R.id.activity_main_tab_hungry_button);
+//
+//
 
 
+//        chefButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getSupportFragmentManager().beginTransaction()
+//                        .replace(
+//                                R.id.activity_main_tabs_container, chefFragment, "chef")
+//                                // Add this transaction to the back stack
+//                        .addToBackStack("replace_to_chef")
+//                        .commit();
+//            }
+//
+//
+//        });
+//
+//        hungryButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.activity_main_tabs_container, hungryFragment)
+//                                // Add this transaction to the back stack
+//                        .addToBackStack("replace_to_hungry")
+//                        .commit();
+//            }
+//
+//
+//        });
+        //initTabs();
+
+
+
+    }
+
+    private void initTabsMenu() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.activity_main_tabs_container, hungryFragment, "hungry")
                         // Add this transaction to the back stack
                 .addToBackStack("add_hungry")
                 .commit();
 
-        chefButton.setOnClickListener(new View.OnClickListener() {
+        ImageView icon = new ImageView(this); // Create an icon
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.menu_icon));
+
+        FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
+                .setContentView(icon)
+                .build();
+
+        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
+// repeat many times:
+        ImageView itemIcon1 = new ImageView(this);
+        itemIcon1.setImageDrawable(getResources().getDrawable(R.drawable.forks_tab_yellow));
+        SubActionButton button1 = itemBuilder.setContentView(itemIcon1).build();
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.activity_main_tabs_container, hungryFragment)
+                                // Add this transaction to the back stack
+                        .addToBackStack("replace_to_hungry")
+                        .commit();
+            }
+        });
+
+        ImageView itemIcon2 = new ImageView(this);
+        itemIcon2.setImageDrawable(getResources().getDrawable(R.drawable.chef_48_yellow));
+        SubActionButton button2 = itemBuilder.setContentView(itemIcon2).build();
+        button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction()
@@ -56,25 +124,24 @@ private FragmentTabHost mTabHost;
                         .addToBackStack("replace_to_chef")
                         .commit();
             }
-
-
         });
 
-        hungryButton.setOnClickListener(new View.OnClickListener() {
+        ImageView itemIcon3 = new ImageView(this);
+        itemIcon3.setImageDrawable(getResources().getDrawable(R.drawable.settings_tab_yellow));
+        SubActionButton button3 = itemBuilder.setContentView(itemIcon3).build();
+        button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.activity_main_tabs_container, hungryFragment)
-                                // Add this transaction to the back stack
-                        .addToBackStack("replace_to_hungry")
-                        .commit();
+
             }
-
-
         });
-        //initTabs();
-
-
+        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
+                .addSubActionView(button1)
+                .addSubActionView(button2)
+                        .addSubActionView(button3)
+                        // ...
+                .attachTo(actionButton)
+                .build();
 
     }
 

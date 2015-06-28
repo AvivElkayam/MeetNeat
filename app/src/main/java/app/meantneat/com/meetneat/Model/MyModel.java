@@ -11,6 +11,7 @@ import app.meantneat.com.meetneat.Camera.SpecifiecChefEventsDialogBox;
 import app.meantneat.com.meetneat.Controller.ChefEventDishesFragment;
 import app.meantneat.com.meetneat.Controller.EditEventDishesFragment;
 import app.meantneat.com.meetneat.Controller.EditEventMealsFragment;
+import app.meantneat.com.meetneat.Controller.LoginActivity;
 import app.meantneat.com.meetneat.Controller.SignInActivity;
 
 import app.meantneat.com.meetneat.EventDishes;
@@ -36,9 +37,9 @@ public class MyModel {
     }
 
     public interface ModelInterface {
-        public void LoginToMeetNeat(String userName, String password);
+        public void LoginToMeetNeat(String userName, String password,LoginActivity.LoginCallback callback);
 
-        public void signUpToMeetNeat(String userName, String email, String password, SignInActivity.SignUpCallback callback);
+        public void signUpToMeetNeat(String userName, String email, String password,Bitmap bitmap, SignInActivity.SignUpCallback callback);
 
         public boolean currentUserConnected();
 

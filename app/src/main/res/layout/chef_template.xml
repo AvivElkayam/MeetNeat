@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="96dp"
+    android:orientation="vertical" android:layout_width="128dp"
     android:layout_height="128dp"
-    android:id="@+id/chef_template_container">
+    android:id="@+id/chef_template_container"
+    android:foregroundGravity="center">
 
     <ImageView
         android:layout_width="fill_parent"
@@ -10,7 +11,11 @@
         android:id="@+id/chef_template_image_view"
         android:background="@drawable/eyal_shani"
         android:layout_gravity="center"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginBottom="25dp"
+        android:layout_marginLeft="20dp" />
 
     <ImageView
         android:layout_width="96dp"
