@@ -53,16 +53,29 @@ public class LocationAutoComplete implements AdapterView.OnItemClickListener {
     private String choosenPlaceid;
     private LatLng choosenPlaceLatLng;
     private String choosenLocationString;
-
-    public LocationAutoComplete(Context c, GoogleApiClient mGoogleApiClient) {
+    private AutoCompleteTextView autoCompView;
+    public LocationAutoComplete(Context c, GoogleApiClient mGoogleApiClient,int screen) {
         this.context = c;
         this.mGoogleApiClient = mGoogleApiClient;
-        AutoCompleteTextView autoCompView = (AutoCompleteTextView) ((Activity) context).findViewById(R.id.add_event_fragment_auto_location_label);
+         autoCompView = null;
+
+        //Screen 1 = EditDishEvent
+        if(screen == 2) {
+            autoCompView = (AutoCompleteTextView) ((Activity) context).findViewById(R.id.add_event_fragment_auto_location_label);
+        }
+        //Screen 1 = addDishEvent
+        if(screen == 1){
+            autoCompView = (AutoCompleteTextView) ((Activity) context).findViewById(R.id.add_dish_event_fragment_location_auto);
+
+        }
 
         autoCompView.setAdapter(new GooglePlacesAutocompleteAdapter(context, R.layout.autocomplete_list_item));
         autoCompView.setOnItemClickListener(this);
     }
-
+    public void setAutoCompleteTextView(String location)
+    {
+        autoCompView.setText(location);
+    }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         String str = (String) parent.getItemAtPosition(position);
@@ -130,7 +143,8 @@ public class LocationAutoComplete implements AdapterView.OnItemClickListener {
             return resultList;
         } finally {
             if (conn != null) {
-                conn.disconnect();
+                //
+                // conn.disconnect();
             }
         }
 
@@ -206,5 +220,11 @@ public class LocationAutoComplete implements AdapterView.OnItemClickListener {
         }
     }
 
+    public void setChoosenPlaceLatLng(LatLng choosenPlaceLatLng) {
+        this.choosenPlaceLatLng = choosenPlaceLatLng;
+    }
 
+    public void setChoosenLocationString(String choosenLocationString) {
+        this.choosenLocationString = choosenLocationString;
+    }
 }

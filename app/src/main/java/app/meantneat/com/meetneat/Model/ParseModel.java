@@ -346,6 +346,11 @@ public class ParseModel implements MyModel.ModelInterface {
         }.execute();
     }
 
+    @Override
+    public void logOut() {
+        ParseUser.logOut();
+    }
+
     private ArrayList<Dish> getDishesForEvent(String eventID)
     {
         ParseQuery<ParseObject> dishesQuery = new ParseQuery<ParseObject>(AppConstants.DISH);
@@ -455,6 +460,67 @@ public class ParseModel implements MyModel.ModelInterface {
             }
         }.execute();
     }
+
+    @Override
+    public void editEvent(final EventDishes event, final MyModel.EditEventCallback callback) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(AppConstants.EVENT_DISHES);
+                ParseObject eventObject = null;
+                try {
+                    eventObject = query.get(event.getEventId());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Date startingDate = new Date(event.getEventYear(), event.getEventMonth(), event.getEventDay(), event.getStartingHour(), event.getStartingMinute());
+                Date endingDate = new Date(event.getEventYear(), event.getEventMonth(), event.getEventDay(), event.getEndingHour(), event.getEndingMinute());
+                eventObject.put(AppConstants.EVENT_DISHES_CHEF_ID, ParseUser.getCurrentUser().getObjectId());
+                eventObject.put(AppConstants.EVENT_DISHES_START_DATE, startingDate);
+                eventObject.put(AppConstants.EVENT_DISHES_END_DATE, endingDate);
+                eventObject.put(AppConstants.EVENT_DISHES_LOCATION, event.getLocation());
+                eventObject.put(AppConstants.EVENT_DISHES_APARTMENT_NUMBER, event.getApartmentNumber());
+                ParseGeoPoint geoPoint = new ParseGeoPoint(event.getLatitude(), event.getLongitude());
+                eventObject.put(AppConstants.EVENT_DISHES_GEO_POINT, geoPoint);
+                eventObject.put(AppConstants.EVENT_DISHES_TITLE, event.getTitle());
+                try {
+                    eventObject.save();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                callback.eventHasBeenEdited();
+                super.onPostExecute(aVoid);
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getEventsDishes(String id, final MyModel.DishesCallback callback) {
+        new AsyncTask<String, Void, Void>() {
+            ArrayList<Dish> dishes;
+            @Override
+            protected Void doInBackground(String... params) {
+                String eventID = params[0];
+                dishes = getDishesForEvent(eventID);
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                callback.dishesAhBeenFetched(dishes);
+            }
+        }.execute(id);
+    }
+
     @Override
     public void getSpecifiecChefsEventFromServer(final String chefId, final LatLng coordinates, final SpecifiecChefEventsDialogBox.getEventsByType callback) {
         //Get by ChefId + Coordinates

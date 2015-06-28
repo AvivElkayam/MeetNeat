@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
+
 import javax.security.auth.callback.Callback;
 
 import app.meantneat.com.meetneat.Camera.SpecificEventDishesDialogBox;
@@ -14,6 +16,7 @@ import app.meantneat.com.meetneat.Controller.EditEventMealsFragment;
 import app.meantneat.com.meetneat.Controller.LoginActivity;
 import app.meantneat.com.meetneat.Controller.SignInActivity;
 
+import app.meantneat.com.meetneat.Dish;
 import app.meantneat.com.meetneat.EventDishes;
 import app.meantneat.com.meetneat.EventDishes;
 import app.meantneat.com.meetneat.EventMeals;
@@ -54,18 +57,27 @@ public class MyModel {
         public void getChefPicture(String chefID, PictureCallback callback);
 
         public void getDishPicture(String dishID, PictureCallback callback);
-
+        public void logOut();
         void getClosestChefsRadius(ChefEventDishesFragment.GetEventDishesCallback callback, LatLng centerLocation);
-
+        public void editEvent(EventDishes event,EditEventCallback callback);
+        public void getEventsDishes(String id,DishesCallback callback);
         //Hungry - OnClick chef-Map
         public void getSpecifiecChefsEventFromServer(String chefId, LatLng coordinates,
                                                      SpecifiecChefEventsDialogBox.getEventsByType callback);
 
 
     }
+    public interface EditEventCallback
+    {
+        public void eventHasBeenEdited();
+    }
     public interface PictureCallback
     {
         public void pictureHasBeenFetched(Bitmap bitmap);
+    }
+    public interface DishesCallback
+    {
+        public void dishesAhBeenFetched(ArrayList<Dish> dishes);
     }
 
 }

@@ -26,6 +26,7 @@ public class MainTabActivity extends ActionBarActivity {
 private FragmentTabHost mTabHost;
     Fragment chefFragment;
     Fragment hungryFragment;
+    Fragment settingsFragment;
     private CameraBasics cameraBasics;
 
     @Override
@@ -41,6 +42,7 @@ private FragmentTabHost mTabHost;
         setContentView(R.layout.activity_main_tab);
         chefFragment = new ChefFragment();
         hungryFragment = new HungryFragment();
+        settingsFragment = new SettingsFragment();
         initTabsMenu();
 
 //        Button chefButton = (Button) findViewById(R.id.activity_main_tab_chef_button);
@@ -132,7 +134,11 @@ private FragmentTabHost mTabHost;
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.activity_main_tabs_container, settingsFragment)
+                                // Add this transaction to the back stack
+                        .addToBackStack("replace_to_settings")
+                        .commit();
             }
         });
         FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)

@@ -18,7 +18,24 @@ public class Dish {
     private boolean isToSit;
     private byte[] thumbnailImg=null;
     private byte[] fullsizeImg=null;
+    private Bitmap thumbnailImage,fullImage;
     private String dishID,chefID;
+
+    public Bitmap getThumbnailImage() {
+        return thumbnailImage;
+    }
+
+    public void setThumbnailImage(Bitmap thumbnailImage) {
+        this.thumbnailImage = thumbnailImage;
+    }
+
+    public Bitmap getFullImage() {
+        return fullImage;
+    }
+
+    public void setFullImage(Bitmap fullImage) {
+        this.fullImage = fullImage;
+    }
 
     public String getChefID() {
         return chefID;

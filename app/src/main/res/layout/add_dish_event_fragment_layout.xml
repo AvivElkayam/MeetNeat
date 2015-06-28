@@ -128,18 +128,21 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp" />
 
-        <EditText
+        <AutoCompleteTextView
             android:layout_width="fill_parent"
             android:layout_height="40dp"
-            android:id="@+id/add_dish_event_fragment_location_text_view_id"
-            android:background="@drawable/gray_text_field"
-            android:layout_marginRight="30dp"
-            android:textSize="15dp"
-            android:gravity="center_vertical"
+            android:id="@+id/add_dish_event_fragment_location_auto"
+            android:focusable="true"
+            android:dropDownWidth="fill_parent"
+            android:completionThreshold="1"
+            android:dropDownHeight="100dp"
+            android:layout_weight="1"
+            android:textColor="@color/eat_white"
             android:hint="Location"
-            android:paddingLeft="5dp"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/gray_text_field" />
+
     </LinearLayout>
 
     <LinearLayout

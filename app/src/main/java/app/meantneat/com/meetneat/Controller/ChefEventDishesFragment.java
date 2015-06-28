@@ -33,6 +33,7 @@ import com.melnykov.fab.FloatingActionButton;
 import java.util.ArrayList;
 
 import app.meantneat.com.meetneat.Camera.SpecificEventDishesDialogBox;
+import app.meantneat.com.meetneat.Dish;
 import app.meantneat.com.meetneat.EventDishes;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
@@ -195,6 +196,11 @@ public class ChefEventDishesFragment extends Fragment
         bundle.putString("location",eventDishes.getLocation());
         bundle.putString("apartment_number", eventDishes.getApartmentNumber());
         bundle.putBoolean("is_new", false);
+        bundle.putString("eventID",eventDishes.getEventId());
+//        ArrayList<String> dishesIDArrayList = new ArrayList<>();
+//        for(Dish dish : eventDishes.getEventsDishes())
+//        dishesIDArrayList.add(dish.getDishID());
+//        bundle.putStringArrayList("dishes",dishesIDArrayList);
         EditEventDishesFragment fragment = new EditEventDishesFragment();
         fragment.setArguments(bundle);
         getParentFragment().getChildFragmentManager().beginTransaction()
