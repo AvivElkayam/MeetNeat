@@ -4,6 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
@@ -53,6 +59,16 @@ public class CameraBasics {
         this.context = context;
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(image));
+
+//        takePictureIntent.putExtra("crop", "true");
+//        //takePictureIntent.putExtra("circleCrop", true);
+//        takePictureIntent.putExtra("outputX",600);
+//        takePictureIntent.putExtra("outputY", 600);
+//        takePictureIntent.putExtra("aspectX", 1);
+//        takePictureIntent.putExtra("aspectY", 1);
+//        takePictureIntent.putExtra("scale", true);
+//        takePictureIntent.putExtra("return-data", true);
+
         if (takePictureIntent.resolveActivity(((Activity)context).getPackageManager()) != null) {
             f.startActivityForResult(takePictureIntent, 1);
         }
@@ -62,6 +78,9 @@ public class CameraBasics {
         Bitmap[] imageBitmaps = new Bitmap[2];
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode==((Activity)context).RESULT_OK) {
+
+
+
 
 
             try {
@@ -78,5 +97,26 @@ public class CameraBasics {
 
         }
         return imageBitmaps;
+    }
+    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
+                .getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+        final float roundPx = pixels;
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+
+        return output;
     }
 }

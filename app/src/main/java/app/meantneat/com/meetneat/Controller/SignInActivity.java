@@ -1,6 +1,8 @@
 package app.meantneat.com.meetneat.Controller;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,14 +10,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import app.meantneat.com.meetneat.Camera.CameraBasics;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 
 public class SignInActivity extends ActionBarActivity {
     EditText userNameEditText,emailEditText,passwordEditText;
+    ImageView userImage;
     Button signInButton;
+    CameraBasics cameraBasics;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +34,16 @@ public class SignInActivity extends ActionBarActivity {
         userNameEditText = (EditText)findViewById(R.id.sign_in_activity_user_name_text_field_id);
         emailEditText = (EditText)findViewById(R.id.sign_in_activity_email_text_field_id);
         passwordEditText = (EditText)findViewById(R.id.sign_in_activity_password_field_id);
+        userImage = (ImageView)findViewById(R.id.sign_in_activity_user_image);
+
+        userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //88888888// start camera
+                //dispatchTakePictureIntent();
+
+            }
+        });
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,5 +97,35 @@ public class SignInActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+//    private void dispatchTakePictureIntent() {
+//        cameraBasics.setF(this);
+//
+//        cameraBasics.dispatchTakePictureIntent(this);
+////        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+////        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+//        //          startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+////        }
+//    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        //New image for a dish
+//        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+//            bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
+//            new AsyncTask<Void, Void, Void>() {
+//                @Override
+//                protected Void doInBackground(Void... params) {
+////                    dishArrayList.get(currentPosition).setFullsizeImg(bitmapToByteArr(bitmapArray[0])); //Full size to Bytearray
+////
+////                    dishArrayList.get(currentPosition).setThumbnailImg(bitmapToByteArr(bitmapArray[1])); //Thumbnail to Bytearray
+//                    newDish.setFullsizeImg(bitmapToByteArr(bitmapArray[0]));
+//                    newDish.setThumbnailImg(bitmapToByteArr(bitmapArray[1]));
+//                    return null;
+//
+//                }
+//            }.execute();
+//            addDishImageView.setImageBitmap(bitmapArray[1]);
+//        }
+//    }
 
 }

@@ -157,6 +157,7 @@ public class ParseModel implements MyModel.ModelInterface {
                 Date startingDate = new Date(event.getEventYear(), event.getEventMonth(), event.getEventDay(), event.getStartingHour(), event.getStartingMinute());
 
                 eventObject.put(AppConstants.EVENT_MEALS_CHEF_ID, ParseUser.getCurrentUser().getObjectId());
+                eventObject.put(AppConstants.EVENT_DISHES_CHEF_NAME,ParseUser.getCurrentUser().getUsername());
                 eventObject.put(AppConstants.EVENT_MEALS_START_DATE, startingDate);
                 eventObject.put(AppConstants.EVENT_MEALS_LOCATION, event.getLocation());
                 eventObject.put(AppConstants.EVENT_MEALS_APARTMENT_NUMBER, event.getApartmentNumber());
@@ -187,7 +188,7 @@ public class ParseModel implements MyModel.ModelInterface {
             @Override
             protected Void doInBackground(Void... params) {
                 ParseQuery<ParseObject> eventQuery = new ParseQuery<ParseObject>(AppConstants.EVENT_DISHES);
-               // eventQuery.whereEqualTo(AppConstants.EVENT_DISHES_CHEF_ID,ParseUser.getCurrentUser().getObjectId());
+                //eventQuery.whereEqualTo(AppConstants.EVENT_DISHES_CHEF_ID,ParseUser.getCurrentUser().getObjectId());
                 List<ParseObject> tempEventArray;
                 try {
                      tempEventArray = eventQuery.find();
@@ -284,7 +285,7 @@ public class ParseModel implements MyModel.ModelInterface {
                 try
                 {
                     ParseObject dish = query.get(dishID);
-                    ParseFile applicantResume = (ParseFile)dish.get(AppConstants.DISH_IMG_FULL);
+                    ParseFile applicantResume = dish.getParseFile(AppConstants.DISH_IMG_FULL);
                     byte[] bytes = applicantResume.getData();
 
                     bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -342,6 +343,7 @@ public class ParseModel implements MyModel.ModelInterface {
         eventDishes.setEventId(object.getObjectId());
         eventDishes.setTitle(object.getString(AppConstants.EVENT_DISHES_TITLE));
         eventDishes.setChefID(object.getString(AppConstants.EVENT_DISHES_CHEF_ID));
+        eventDishes.setChefName(object.getString(AppConstants.EVENT_DISHES_CHEF_NAME));
         Date startingDate = object.getDate(AppConstants.EVENT_DISHES_START_DATE);
         String s = startingDate.toString();
         eventDishes.setEventDay(startingDate.getDay());
@@ -369,61 +371,50 @@ public class ParseModel implements MyModel.ModelInterface {
 
         return eventDishes;
     }
-//    public void getClosestChefsRadius(final HungryMapFragment.GetEventDishesCallback callback) {
-//        new AsyncTask<Void, Void, Void>() {
-//            ArrayList<EventDishes> eventDishesArrayList = new ArrayList<>();
-//            @Override
-//            protected Void doInBackground(Void... params) {
-//                ParseQuery<ParseObject> eventQuery = new ParseQuery<ParseObject>(AppConstants.EVENT_DISHES);
-//                eventQuery.whereEqualTo(AppConstants.EVENT_DISHES_CHEF_ID,ParseUser.getCurrentUser().getObjectId());
-//                List<ParseObject> tempEventArray;
-//                try {
-//                    tempEventArray = eventQuery.find();
-//                    for(ParseObject object : tempEventArray)
-//                    {
-//                        EventDishes eventDishes = new EventDishes();
-//                        eventDishes.setEventId(object.getObjectId());
-//                        eventDishes.setTitle(object.getString(AppConstants.EVENT_DISHES_TITLE));
-//
-//                        Date startingDate = object.getDate(AppConstants.EVENT_DISHES_START_DATE);
-//                        String s = startingDate.toString();
-//                        eventDishes.setEventDay(startingDate.getDay());
-//                        eventDishes.setEventMonth(startingDate.getMonth());
-//                        eventDishes.setEventYear(startingDate.getYear());
-//                        eventDishes.setStartingHour(startingDate.getHours());
-//                        eventDishes.setStartingMinute(startingDate.getMinutes());
-//
-//                        Date endingDate = object.getDate(AppConstants.EVENT_DISHES_END_DATE);
-//                        eventDishes.setEventYear(endingDate.getYear());
-//                        eventDishes.setEventMonth(endingDate.getMonth());
-//                        eventDishes.setEventDay(endingDate.getDay());
-//                        eventDishes.setEndingHour(endingDate.getHours());
-//                        eventDishes.setEndingMinute(endingDate.getMinutes());
-//
-//                        ParseGeoPoint point = object.getParseGeoPoint(AppConstants.EVENT_DISHES_GEO_POINT);
-//                        eventDishes.setLatitude(point.getLatitude());
-//                        eventDishes.setLongitude(point.getLongitude());
-//                        eventDishes.setLocation(object.getString(AppConstants.EVENT_DISHES_LOCATION));
-//                        eventDishes.setApartmentNumber(object.getString(AppConstants.EVENT_DISHES_APARTMENT_NUMBER));
-//                        //finished the event, now all the event's dishes =\
-//                        eventDishes.setEventsDishes(getDishesForEvent(eventDishes.getEventId()));
-//
-//                        eventDishesArrayList.add(eventDishes);
-//
-//                    }
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-//                return null;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(Void aVoid) {
-//                super.onPostExecute(aVoid);
-//                callback.done(eventDishesArrayList);
-//            }
-//        }.execute();
-//    }
+
+    @Override
+    public void getClosestChefsRadius(final ChefEventDishesFragment.GetEventDishesCallback callback, final LatLng centerLocation) {
+
+
+        new AsyncTask<Void, Void, Void>() {
+            ArrayList<EventDishes> eventDishesArrayList = new ArrayList<>();
+
+            @Override
+            protected Void doInBackground(Void... params) {
+
+
+                ParseQuery<ParseObject> eventQuery = new ParseQuery<ParseObject>(AppConstants.EVENT_DISHES);
+                LatLng l = centerLocation;
+                eventQuery.whereWithinKilometers(AppConstants.EVENT_DISHES_GEO_POINT,
+                        new ParseGeoPoint(centerLocation.latitude,centerLocation.longitude)
+                        ,5);
+
+
+                //eventQuery.whereEqualTo(AppConstants.EVENT_DISHES_CHEF_ID,ParseUser.getCurrentUser().getObjectId());
+                List<ParseObject> tempEventArray;
+                try {
+                    tempEventArray = eventQuery.find();
+                    if( ! (HungryMapFragment.lastCenterStatic.equals(centerLocation ))  )
+                        return null;
+                    for(ParseObject object : tempEventArray)
+                    {
+
+                        eventDishesArrayList.add(ParseObjectToEventDishes(object));
+
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                callback.done(eventDishesArrayList);
+            }
+        }.execute();
+    }
     @Override
     public void getSpecifiecChefsEventFromServer(final String chefId, final LatLng coordinates, final SpecifiecChefEventsDialogBox.getEventsByType callback) {
         //Get by ChefId + Coordinates
@@ -459,4 +450,7 @@ public class ParseModel implements MyModel.ModelInterface {
             }
         }.execute();
     }
+
+
+
 }

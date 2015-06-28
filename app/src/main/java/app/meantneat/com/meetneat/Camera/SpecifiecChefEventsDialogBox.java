@@ -3,10 +3,13 @@ package app.meantneat.com.meetneat.Camera;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +22,7 @@ import java.util.ArrayList;
 import app.meantneat.com.meetneat.EventDishes;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by mac on 6/24/15.
@@ -27,7 +31,7 @@ public class SpecifiecChefEventsDialogBox {
 
     private Context context;
     private Dialog dialog;
-    private String chefId;
+    private String chefId,chefName;
     private String date;
     private String eventTitle;
     private LatLng coordinates;
@@ -40,11 +44,12 @@ public class SpecifiecChefEventsDialogBox {
 
 
 
-    public SpecifiecChefEventsDialogBox(Context context,String chefId,LatLng coordinates) {
+    public SpecifiecChefEventsDialogBox(Context context,String chefId,String chefName,LatLng coordinates) {
 
         eventDishesArr = new ArrayList<>();
         this.context=context;
         this.chefId = chefId;
+        this.chefName=chefName;
         this.coordinates = coordinates;
         dialog = new Dialog(context);
         initDialogBoxAndShow();
@@ -58,9 +63,17 @@ public class SpecifiecChefEventsDialogBox {
 
         eventDishesLayout = (LinearLayout)dialog.findViewById(R.id.hungry_specifiec_chef_events_dialog_box_Event_Dishes_layout);
         TextView chefNameTextView = (TextView)dialog.findViewById(R.id.hungry_specifiec_chef_events_dialog_box_chef_name_text);
-        chefNameTextView.setText("Chef: "+ "Dan Later");
+        chefNameTextView.setText("Chef: "+ chefName);
 
-        initEventDishesList(chefId,coordinates);
+        final CircleImageView chefImageView  = (CircleImageView)dialog.findViewById(R.id.hungry_specifiec_chef_events_dialog_box_chef_image);
+        MyModel.getInstance().getModel().getChefPicture(chefId,new MyModel.PictureCallback() {
+            @Override
+            public void pictureHasBeenFetched(Bitmap bitmap) {
+
+                chefImageView.setBackground(new BitmapDrawable(bitmap));
+            }
+        });
+        initEventDishesList(chefId, coordinates);
         initEventMealsList();
         initImagesCollection();
 
@@ -86,18 +99,18 @@ public class SpecifiecChefEventsDialogBox {
         TextView timeText = (TextView)v.findViewById(R.id.hungry_specifiec_chef_events_dialog_box_event_dishes_cell_Time);
         TextView descriptionText = (TextView)v.findViewById(R.id.hungry_specifiec_chef_events_dialog_box_event_dishes_cell_Description);
 
-        dateText.setText(Integer.toString(event.getEventDay()));
+        dateText.setText(event.getEventDay()+"."+event.getEventMonth()+"."+event.getEventYear());
         final String time = (Integer.toString(event.getStartingHour())) + ":" +
                     (Integer.toString(event.getStartingMinute())) + "-" +
                      (Integer.toString(event.getEndingHour())) + ":" +
                      (Integer.toString(event.getEndingMinute()));
-
+        descriptionText.setText(event.getTitle());
         timeText.setText(time);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SpecificEventDishesDialogBox eventDialog = new SpecificEventDishesDialogBox(context
-                        ,event.getEventId(),"TODO",time,event.getTitle(),event.getEventsDishes());
+                        ,event);
                 eventDialog.getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {

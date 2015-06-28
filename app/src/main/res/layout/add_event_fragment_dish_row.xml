@@ -15,5 +15,6 @@
         android:text="New Text"
         android:id="@+id/add_fragment_fragment_dish_row_title_text_view"
         android:gravity="left|center_vertical"
-        android:layout_marginLeft="5dp" />
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/eat_white" />
 </LinearLayout>

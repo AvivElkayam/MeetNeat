@@ -175,10 +175,7 @@ public class ChefEventDishesFragment extends Fragment
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==R.id.chef_fragment_menu_add_button)
-        {
 
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -200,7 +197,7 @@ public class ChefEventDishesFragment extends Fragment
         bundle.putBoolean("is_new", false);
         EditEventDishesFragment fragment = new EditEventDishesFragment();
         fragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction()
+        getChildFragmentManager().beginTransaction()
                 .replace(R.id.chef_event_dishes_fragment_container, fragment, "add_event")
                 .commit();
     }

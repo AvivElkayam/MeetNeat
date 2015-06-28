@@ -1,32 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="wrap_content"
-    android:layout_height="150dp">
+    android:layout_height="110dp"
+    android:gravity="center">
 
     <ImageView
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:id="@+id/imageView8"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/chef_48_red"
+        android:layout_marginTop="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
-        android:id="@+id/hungry_specifiec_chef_events_dialog_box_event_dishes_cell_Date" />
+        android:id="@+id/hungry_specifiec_chef_events_dialog_box_event_dishes_cell_Date"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
-        android:id="@+id/hungry_specifiec_chef_events_dialog_box_event_dishes_cell_Time" />
+        android:id="@+id/hungry_specifiec_chef_events_dialog_box_event_dishes_cell_Time"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
-        android:id="@+id/hungry_specifiec_chef_events_dialog_box_event_dishes_cell_Description" />
+        android:id="@+id/hungry_specifiec_chef_events_dialog_box_event_dishes_cell_Description"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
 </LinearLayout>

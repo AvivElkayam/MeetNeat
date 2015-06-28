@@ -15,7 +15,15 @@ public class EventDishes {
     private String eventId;
     private ArrayList<Dish> eventsDishes;
     private double longitude,latitude;
-    private String chefID;
+    private String chefID,chefName;
+
+    public String getChefName() {
+        return chefName;
+    }
+
+    public void setChefName(String chefName) {
+        this.chefName = chefName;
+    }
 
     public String getChefID() {
         return chefID;

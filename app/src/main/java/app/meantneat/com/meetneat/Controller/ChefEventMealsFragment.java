@@ -118,14 +118,14 @@ public class ChefEventMealsFragment extends Fragment
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==R.id.chef_fragment_menu_add_button)
-        {
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.chef_event_meals_fragment_container,new AddMealsEventFragment(), "add_meal_event")
-                            // Add this transaction to the back stack
-                    .addToBackStack("add_meal_event")
-                    .commit();
-        }
+//        if(item.getItemId()==R.id.chef_fragment_menu_add_button)
+//        {
+//            getActivity().getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.chef_event_meals_fragment_container,new AddMealsEventFragment(), "add_meal_event")
+//                            // Add this transaction to the back stack
+//                    .addToBackStack("add_meal_event")
+//                    .commit();
+//        }
 
         return super.onOptionsItemSelected(item);
     }

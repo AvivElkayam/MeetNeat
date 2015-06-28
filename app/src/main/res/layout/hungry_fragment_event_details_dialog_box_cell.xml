@@ -16,8 +16,6 @@
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:layout_gravity="bottom"
-        android:background="@color/eat_black"
-        android:alpha="0.4"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
 
@@ -32,7 +30,9 @@
             android:textSize="15dp"
             android:layout_gravity="left"
             android:textColor="@color/eat_white"
-            android:layout_weight="3" />
+            android:layout_weight="3"
+            android:background="@color/eat_black"
+            android:alpha="0.4" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,6 +44,7 @@
             android:textSize="15dp"
             android:layout_gravity="right"
             android:textColor="@color/eat_white"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@drawable/yellow_circle" />
     </LinearLayout>
 </FrameLayout>

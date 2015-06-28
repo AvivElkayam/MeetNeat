@@ -46,14 +46,16 @@ public class SpecificEventDishesDialogBox {
     private ImageView chefImageView;
     private ArrayList<Dish> dishArrayList;
     private DishAdapter dishAdapter;
-    public SpecificEventDishesDialogBox(Context context,String eventID,String chefName,String eventDate,String eventTitle,ArrayList<Dish> dishArrayList) {
+    private EventDishes eventDishes;
+    public SpecificEventDishesDialogBox(Context context,EventDishes eventDishes) {
         this.context=context;
         this.eventID=eventID;
         this.chefName=chefName;
-        this.date=eventDate;
+        //this.date=eventDate;
         this.eventTitle=eventTitle;
         dialogBox = new Dialog(context);
-        this.dishArrayList = dishArrayList;
+        this.dishArrayList = eventDishes.getEventsDishes();
+        this.eventDishes=eventDishes;
         initDialogBoxAndShow();
 
     }
@@ -68,17 +70,39 @@ public class SpecificEventDishesDialogBox {
         GridView gridview = (GridView) dialogBox.findViewById(R.id.hungry_fragment_dialog_box_grid_view);
         dishAdapter = new DishAdapter(context);
         gridview.setAdapter(dishAdapter);
+        dishAdapter.notifyDataSetChanged();
         dialogBox.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
          chefNameTextView = (TextView)dialogBox.findViewById(R.id.speceific_event_dialog_box_chef_text_view);
-        chefNameTextView.setText("Chef: "+chefName);
+        chefNameTextView.setText("Chef: "+eventDishes.getChefName());
 
         chefImageView = (ImageView)dialogBox.findViewById(R.id.events_dialog_box_chef_image_view);
-        dateTextView = (TextView)dialogBox.findViewById(R.id.speceific_event_dialog_box_date_text_view);
-        //dateTextView.setText(date);
+        MyModel.getInstance().getModel().getChefPicture(eventDishes.getChefID(),new MyModel.PictureCallback() {
+            @Override
+            public void pictureHasBeenFetched(Bitmap bitmap) {
+                if(bitmap!=null
+                        )
+                    chefImageView.setBackground(new BitmapDrawable(bitmap));
+            }
+        });
+        TextView titleTextView = (TextView)dialogBox.findViewById(R.id.speceific_event_dialog_box_title_text_view);
+        titleTextView.setText(eventDishes.getTitle());
+        TextView dateTextView = (TextView)dialogBox.findViewById(R.id.speceific_event_dialog_box_date_text_view);
+        dateTextView.setText(eventDishes.getEventYear()
+                        +"."
+                        +eventDishes.getEventMonth()
+                        + "."
+                        +eventDishes.getEventDay()
+                        +" | "
+                        +eventDishes.getStartingHour()
+                        +":"
+                        +eventDishes.getStartingMinute()
+                        +"-"
+                        +eventDishes.getEndingHour()
+                        +":"
+                        +eventDishes.getEndingMinute()
 
-        titleTextView = (TextView)dialogBox.findViewById(R.id.speceific_event_dialog_box_title_text_view);
-        //titleTextView.setText(eventTitle);
+        );
 
         getEventFromserver();
 
@@ -103,7 +127,8 @@ public class SpecificEventDishesDialogBox {
             mContext = c;
         }
 
-        public int getCount() {
+        public int getCount()
+        {
             return dishArrayList.size();
         }
 
@@ -160,39 +185,10 @@ public class SpecificEventDishesDialogBox {
     }
     private void getEventFromserver()
     {
-        MyModel.getInstance().getModel().getDishEventDetailsByID(eventID,new DishEventCallback() {
-            @Override
-            public void eventHasBeenFetched(EventDishes event) {
-                titleTextView.setText(event.getTitle());
-                dateTextView.setText(event.getEventYear()
-                        +"."
-                        +event.getEventMonth()
-                        + "."
-                        +event.getEventDay()
-                        +" | "
-                        +event.getStartingHour()
-                        +":"
-                        +event.getStartingMinute()
-                        +"-"
-                        +event.getEndingHour()
-                        +":"
-                        +event.getEndingMinute()
 
-                );
-                dishArrayList.clear();
-                dishArrayList.addAll(event.getEventsDishes());
-                dishAdapter.notifyDataSetChanged();
-                MyModel.getInstance().getModel().getChefPicture(event.getChefID(),new MyModel.PictureCallback() {
-                    @Override
-                    public void pictureHasBeenFetched(Bitmap bitmap) {
-                        if(bitmap!=null
-                                )
-                        chefImageView.setBackground(new BitmapDrawable(bitmap));
-                    }
-                });
 
-            }
-        });
+
+
     }
 
         public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {

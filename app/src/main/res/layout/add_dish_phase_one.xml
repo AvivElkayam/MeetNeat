@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="250dp" android:layout_height="300dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/eat_black">
 
     <TextView
         android:layout_width="fill_parent"
@@ -10,12 +11,19 @@
         android:text="Dish Title"
         android:id="@+id/dd"
         android:gravity="center_vertical"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:textColor="@color/eat_orange"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
 
     <EditText
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/add_dish_phase_one_title_edit_text_id" />
+        android:layout_height="40dp"
+        android:id="@+id/add_dish_phase_one_title_edit_text_id"
+        android:background="@drawable/gray_text_field"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingLeft="5dp" />
 
     <TextView
         android:layout_width="fill_parent"
@@ -24,12 +32,19 @@
         android:id="@+id/ff"
         android:layout_gravity="center_horizontal"
         android:gravity="center_vertical"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:textColor="@color/eat_orange"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
 
     <EditText
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:id="@+id/add_dish_phase_one_description_edit_text_id"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/gray_text_field"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingLeft="5dp" />
 
 </LinearLayout>

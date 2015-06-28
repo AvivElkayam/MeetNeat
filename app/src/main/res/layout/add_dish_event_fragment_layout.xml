@@ -28,7 +28,10 @@
             android:layout_height="48dp"
             android:id="@+id/imageView2"
             android:background="@drawable/calander"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="2dp" />
 
         <TextView
             android:layout_width="fill_parent"
@@ -57,7 +60,10 @@
             android:id="@+id/imageView3"
             android:background="@drawable/time1"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="2dp" />
 
         <TextView
             android:layout_width="fill_parent"
@@ -86,7 +92,10 @@
             android:id="@+id/imageView4"
             android:background="@drawable/time2"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="2dp" />
 
         <TextView
             android:layout_width="fill_parent"
@@ -114,7 +123,10 @@
             android:layout_height="48dp"
             android:id="@+id/imageView5"
             android:background="@drawable/location"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="2dp" />
 
         <EditText
             android:layout_width="fill_parent"
@@ -141,7 +153,7 @@
             android:id="@+id/add_dish_event_fragment_appartment_number_text_view_id"
             android:background="@drawable/gray_text_field"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="53dp"
+            android:layout_marginLeft="60dp"
             android:textSize="15dp"
             android:hint="Specific adress instructions"
             android:paddingLeft="5dp"

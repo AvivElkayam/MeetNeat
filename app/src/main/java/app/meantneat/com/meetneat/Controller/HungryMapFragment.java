@@ -1,9 +1,8 @@
 package app.meantneat.com.meetneat.Controller;
 
-import android.app.ActionBar;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -11,13 +10,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
-import android.support.v4.app.FragmentTabHost;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TabHost;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -28,11 +29,11 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -44,7 +45,6 @@ import java.util.Map;
 import app.meantneat.com.meetneat.Camera.SpecifiecChefEventsDialogBox;
 import app.meantneat.com.meetneat.EventDishes;
 import app.meantneat.com.meetneat.Model.MyModel;
-import app.meantneat.com.meetneat.Camera.SpecificEventDishesDialogBox;
 import app.meantneat.com.meetneat.R;
 //import com.google.android.gms.maps.*;
 //import com.google.android.gms.maps.model.*;
@@ -61,13 +61,19 @@ import app.meantneat.com.meetneat.R;
     private Map<Marker, EventDishes> allMarkersMap = new HashMap<Marker, EventDishes>();
     private ArrayList<EventDishes> eventsArray = new ArrayList<>();
     private ArrayList<LatLng> coordinatesArray = new ArrayList<>();
-    private GoogleMap googleMap;
+    private GoogleMap googleMapHungry;
     private GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
+    ViewGroup fragmentViewGroup;
+    public LatLng lastCenter;
+    public static LatLng lastCenterStatic;
+    boolean firstTime = true;
+    Marker lastMarker;
+    BitmapDescriptor fixed;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-
+        this.fragmentViewGroup=container;
         if (view != null) {
             ViewGroup parent = (ViewGroup) view.getParent();
             if (parent != null)
@@ -122,11 +128,72 @@ import app.meantneat.com.meetneat.R;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        this.googleMap = googleMap;
-        googleMap.setMyLocationEnabled(true);
+
+        Drawable dr = getResources().getDrawable(R.drawable.logo1);
+        final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+        fixed = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 150, 150, true));
 
 
-        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        this.googleMapHungry = googleMap;
+        googleMapHungry.setMyLocationEnabled(true);
+        //LatLng NEWARK = new LatLng(40.714086, -74.228697);
+
+//        GroundOverlayOptions newarkMap = new GroundOverlayOptions()
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922))
+//                .position(NEWARK, 8600f, 6500f);
+        googleMapHungry.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+
+
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition) {
+
+
+                if(firstTime == true) {
+                    lastCenter = new LatLng(50, 50);
+                    lastCenterStatic = lastCenter;
+                    firstTime = false;
+
+                }
+
+
+                    // CENTER MARKER //
+                //Drawable dr = getResources().getDrawable(R.drawable.logo1);
+                //final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+                //BitmapDescriptor fixed = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 150, 150, true));
+
+                if(lastMarker != null)
+                    lastMarker.remove();
+                lastMarker = googleMapHungry.addMarker(new MarkerOptions()
+                                .position(googleMapHungry.getCameraPosition().target)
+                                .title("Center")
+
+                                .icon(fixed)
+                );
+
+
+
+                float[] results = new float[10];
+                Location.distanceBetween(
+                        lastCenter.latitude,
+                        lastCenter.longitude,
+                        cameraPosition.target.latitude,
+                        cameraPosition.target.longitude,
+                        results);
+
+                //results[0] = distance in Meters
+                if(results[0] > 0)
+
+                    getClosestCoordinatesFromServer();
+
+
+
+                lastCenter = googleMapHungry.getCameraPosition().target;
+                lastCenterStatic = lastCenter;
+            }
+
+        });
+
+        googleMapHungry.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
 
@@ -134,7 +201,7 @@ import app.meantneat.com.meetneat.R;
 //                        getActivity(),"pFubDWWXGT",marker.getPosition());
                 EventDishes eventByMarker =  allMarkersMap.get(marker);
                 final SpecifiecChefEventsDialogBox dialogBox = new SpecifiecChefEventsDialogBox(
-                        getActivity(),eventByMarker.getChefID(),marker.getPosition());
+                        getActivity(),eventByMarker.getChefID(),eventByMarker.getChefName(),marker.getPosition());
 
 
 //                final SpecificEventDishesDialogBox dialogBox = new SpecificEventDishesDialogBox(getActivity(),"7k60BVnPPQ","Jonathan Roshfeld","01.08.2004 - 03.09.2014","Italian Party");
@@ -149,30 +216,35 @@ import app.meantneat.com.meetneat.R;
                 return false;
             }
         });
-        //googleMap.animateCamera(Cmera);
+        //googleMapHungry.animateCamera(Cmera);
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(32.073776, 34.781890), 16));
         //ArrayList<LatLng> coordinatesArr = getClosestCoordinatesFromServer();
-        getClosestCoordinatesFromServer();
+        //getClosestCoordinatesFromServer();
 
     }
 
     private void getClosestCoordinatesFromServer() {
-        MyModel.getInstance().getModel().getChefsEventFromServer(new ChefEventDishesFragment.GetEventDishesCallback() {
-            @Override
-            public void done(ArrayList<EventDishes> eventDisheses) {
-                eventsArray = eventDisheses;
-                ArrayList<LatLng> coordinatesArrayTmp = new ArrayList<>();
-                for (EventDishes e : eventsArray) {
-                    LatLng tmp = new LatLng(e.getLatitude(), e.getLongitude());
-                    coordinatesArrayTmp.add(tmp);
+
+        MyModel.getInstance().getModel().getClosestChefsRadius(
+                new ChefEventDishesFragment.GetEventDishesCallback() { //Callback
+                    @Override
+                    public void done(ArrayList<EventDishes> eventDisheses) {
+
+                        eventsArray = eventDisheses;
+                        ArrayList<LatLng> coordinatesArrayTmp = new ArrayList<>();
+                        for (EventDishes e : eventsArray) {
+
+                            LatLng tmp = new LatLng(e.getLatitude(), e.getLongitude());
+                            coordinatesArrayTmp.add(tmp);
 
 
-
+                        }
+                        coordinatesArray = coordinatesArrayTmp;
+                        showClosestEvents();
+                    }
                 }
-                coordinatesArray = coordinatesArrayTmp;
-                showClosestEvents();
-            }
-        });
+                , googleMapHungry.getCameraPosition().target); //MapCenter
+
     }
 
     private void showClosestEvents()
@@ -182,16 +254,33 @@ import app.meantneat.com.meetneat.R;
         // if there same chef in the same location diffrent events - add only one event...
 
 
-        Drawable dr = getResources().getDrawable(R.drawable.logo1);
-        final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+
+
+        // dr = getResources().getDrawable(R.drawable.logo1);
+        //final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+        //BitmapDescriptor fixed = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 150, 150, true));
         int i=0;
+        googleMapHungry.clear();
+        lastMarker = googleMapHungry.addMarker(new MarkerOptions()
+                        .position(googleMapHungry.getCameraPosition().target)
+                        .title("Center")
+
+                        .icon(fixed)
+        );
+
+        allMarkersMap.clear();
         for (i = 0;i< coordinatesArray.size(); i++) {
-            Marker m = googleMap.addMarker(new MarkerOptions()
+
+
+
+
+            Marker m = googleMapHungry.addMarker(new MarkerOptions()
                             .position(coordinatesArray.get(i))
                             .title("Marker")
                             .rotation((float)90.0)
-                            .icon(BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 150, 150, true)))
+                            .icon(fixed)
             );
+
             allMarkersMap.put(m, eventsArray.get(i));
         }
     }
@@ -200,8 +289,10 @@ import app.meantneat.com.meetneat.R;
     @Override
     public void onConnected(Bundle bundle) {
         Log.e("LNGLTD", "Connected");
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-               mGoogleApiClient, mLocationRequest, this);
+
+        // on location update by time - (listener in the class)
+        //LocationServices.FusedLocationApi.requestLocationUpdates(
+           //    mGoogleApiClient, mLocationRequest, this);
     }
 
     @Override
@@ -217,7 +308,9 @@ import app.meantneat.com.meetneat.R;
     @Override
     public void onLocationChanged(Location location) {
         Toast.makeText(getActivity(),"Location Updated",Toast.LENGTH_SHORT).show();
-        //googleMap.clear();
+        googleMapHungry.clear();
+        getClosestCoordinatesFromServer();
+        //googleMapHungry.clear();
     }
 //        @Override
 //        public void onCreate(Bundle savedInstanceState) {
@@ -244,6 +337,50 @@ import app.meantneat.com.meetneat.R;
 //        }
 //    }
 
+
+private Bitmap createChefTemplate(Bitmap chefImage)
+{
+    View v = getActivity().getLayoutInflater().inflate(R.layout.chef_template,fragmentViewGroup,false);
+    ImageView imageView = new ImageView(getActivity());
+    DisplayMetrics displayMetrics = getActivity().getResources().getDisplayMetrics();
+    //int px = Math.round(256 * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(1048,1048);
+    params.gravity= Gravity.CENTER;
+    imageView.setLayoutParams(params);
+    imageView.setBackground(getResources().getDrawable(R.drawable.eyal_shani));
+    FrameLayout layout = (FrameLayout)v.findViewById(R.id.chef_template_container);
+    layout.addView(imageView);
+
+   // if the view wasn't displayed before the size of it will be zero. Its possible to measure it like this:
+    Bitmap b;
+    if (v.getMeasuredHeight() <= 0) {
+        v.measure(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        b = Bitmap.createBitmap(1048, 1512, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+        v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
+        v.draw(c);
+        return b;
+    }
+    else
+    {
+         b = Bitmap.createBitmap( v.getLayoutParams().width, v.getLayoutParams().height, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+        v.layout(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
+        v.draw(c);
+    }
+
+
+return b;
+
+}
+
+    private Bitmap overlay(Bitmap bmp1, Bitmap bmp2) {
+        Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
+        Canvas canvas = new Canvas(bmOverlay);
+        canvas.drawBitmap(bmp1, new Matrix(), null);
+        canvas.drawBitmap(bmp2, new Matrix(), null);
+        return bmOverlay;
+    }
 
 
 }

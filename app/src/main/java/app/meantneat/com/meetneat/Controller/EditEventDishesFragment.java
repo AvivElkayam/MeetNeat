@@ -9,8 +9,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -32,6 +34,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.camera.CropImageIntentBuilder;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -43,6 +46,8 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -62,6 +67,9 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
 
     int PLACE_PICKER_REQUEST = 2;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    private static int REQUEST_PICTURE = 1;
+    private static int REQUEST_CROP_PICTURE = 2;
     LocationAutoComplete lAC;
     FloatingActionButton addNewDishFloatingButton;
     Bitmap[] bitmapArray;
@@ -437,12 +445,12 @@ private void initViews()
         addDishImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //dispatchTakePictureIntent();
-                Bitmap b = BitmapFactory.decodeResource(getResources(),R.drawable.logo1);
-                addDishImageView.setImageBitmap(b);
-                byte[] ba = bitmapToByteArr(b);
-                newDish.setThumbnailImg(ba);
-                newDish.setFullsizeImg(ba);
+                dispatchTakePictureIntent();
+//                Bitmap b = BitmapFactory.decodeResource(getResources(),R.drawable.logo1);
+//                addDishImageView.setImageBitmap(b);
+//                byte[] ba = bitmapToByteArr(b);
+//                newDish.setThumbnailImg(ba);
+//                newDish.setFullsizeImg(ba);
             }
         });
         dialogBoxLayoutContainer.addView(v1);
@@ -537,22 +545,50 @@ private void initViews()
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //New image for a dish
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode==Activity.RESULT_OK) {
-            bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
-            new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... params) {
-//                    dishArrayList.get(currentPosition).setFullsizeImg(bitmapToByteArr(bitmapArray[0])); //Full size to Bytearray
-//
-//                    dishArrayList.get(currentPosition).setThumbnailImg(bitmapToByteArr(bitmapArray[1])); //Thumbnail to Bytearray
-                    newDish.setFullsizeImg(bitmapToByteArr(bitmapArray[0]));
-                    newDish.setThumbnailImg(bitmapToByteArr(bitmapArray[1]));
-                    return null;
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File croppedImageFile = null;
+        try {
 
-                }
-            }.execute();
-            addDishImageView.setImageBitmap(bitmapArray[1]);
+             croppedImageFile = File.createTempFile("test",".jpg",storageDir);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        if ((requestCode == REQUEST_PICTURE) && (resultCode == Activity.RESULT_OK)) {
+            // When the user is done picking a picture, let's start the CropImage Activity,
+            // setting the output image file and size to 200x200 pixels square.
+            Uri croppedImage = Uri.fromFile(croppedImageFile);
+
+            CropImageIntentBuilder cropImage = new CropImageIntentBuilder(200, 200, croppedImage);
+            cropImage.setOutlineColor(0xFF03A9F4);
+            cropImage.setSourceImage(data.getData());
+
+
+                  this.startActivityForResult(cropImage.getIntent(getActivity()), REQUEST_CROP_PICTURE);
+        } else if ((requestCode == REQUEST_CROP_PICTURE) && (resultCode == Activity.RESULT_OK)) {
+            // When we are done cropping, display it in the ImageView.
+            addDishImageView.setImageBitmap(BitmapFactory.decodeFile(croppedImageFile.getAbsolutePath()));
+        }
+
+
+
+//        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode==Activity.RESULT_OK) {
+//            bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
+//            new AsyncTask<Void, Void, Void>() {
+//                @Override
+//                protected Void doInBackground(Void... params) {
+////                    dishArrayList.get(currentPosition).setFullsizeImg(bitmapToByteArr(bitmapArray[0])); //Full size to Bytearray
+////
+////                    dishArrayList.get(currentPosition).setThumbnailImg(bitmapToByteArr(bitmapArray[1])); //Thumbnail to Bytearray
+//                    newDish.setFullsizeImg(bitmapToByteArr(bitmapArray[0]));
+//                    newDish.setThumbnailImg(bitmapToByteArr(bitmapArray[1]));
+//                    return null;
+//
+//                }
+//            }.execute();
+//            addDishImageView.setImageBitmap(bitmapArray[1]);
+//        }
         //Location from google picker
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {

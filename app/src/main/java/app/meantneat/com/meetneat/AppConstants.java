@@ -21,6 +21,7 @@ public class AppConstants {
     public static String EVENT_DISHES_START_DATE = "start_date";
     public static String EVENT_DISHES_END_DATE = "end_date";
     public static String EVENT_DISHES_CHEF_ID = "chef_id";
+    public static String EVENT_DISHES_CHEF_NAME = "chef_name";
     public static String EVENT_DISHES_LOCATION = "location";
     public static String EVENT_DISHES_APARTMENT_NUMBER = "apartment_number";
     public static String EVENT_DISHES_GEO_POINT = "geo_point";
