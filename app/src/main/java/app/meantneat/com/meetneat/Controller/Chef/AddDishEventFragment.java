@@ -53,7 +53,7 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
-        v = inflater.inflate(R.layout.chef_add_dish_event_fragment_layout,container,false);
+        v = inflater.inflate(R.layout.chef_add_event_dishes_fragment_layout,container,false);
         calendar=Calendar.getInstance();
         dateTextView = (TextView)v.findViewById(R.id.add_dish_event_fragment_date_text_view_id);
         startingTime = (TextView)v.findViewById(R.id.add_dish_event_fragment_starting_time_text_view_id);

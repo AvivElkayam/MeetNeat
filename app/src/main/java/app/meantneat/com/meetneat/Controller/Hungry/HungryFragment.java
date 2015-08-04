@@ -61,7 +61,7 @@ public class HungryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        View v = inflater.inflate(R.layout.hungry_fragment_layout,container,false);
+        View v = inflater.inflate(R.layout.hungry_main_fragment_layout,container,false);
         //View view = initTabs(v);
         initTabs2(v);
 //        mTabHost = (FragmentTabHost)v.findViewById(R.id.hungryTabHost);

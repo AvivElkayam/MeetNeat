@@ -37,7 +37,7 @@ public class AddMealsEventFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.chef_add_meals_event_fragment_layout, container, false);
+        v = inflater.inflate(R.layout.chef_add_event_meals_fragment_layout, container, false);
         calendar=Calendar.getInstance();
         dateTextView = (TextView)v.findViewById(R.id.add_meals_event_fragment_date_text_view_id);
         startingTime = (TextView)v.findViewById(R.id.add_meals_event_fragment_starting_time_text_view_id);

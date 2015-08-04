@@ -41,7 +41,7 @@ public interface DishEventCallback
     private void initDialogBoxAndShow()
     {
         dialogBox.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialogBox.setContentView(R.layout.specific_dish_dialog_box);
+        dialogBox.setContentView(R.layout.hungry_specific_dish_dialog_box);
         dialogBox.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
 

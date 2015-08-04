@@ -60,7 +60,7 @@ public class SpecificEventDishesDialogBox {
     private void initDialogBoxAndShow()
     {
         dialogBox.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialogBox.setContentView(R.layout.hungry_fragment_event_details_dialog_box);
+        dialogBox.setContentView(R.layout.hungry_specifiec_event_dishes_details_dialog_box);
         GridView gridview = (GridView) dialogBox.findViewById(R.id.hungry_fragment_dialog_box_grid_view);
         dishAdapter = new DishAdapter(context);
         gridview.setAdapter(dishAdapter);
@@ -141,7 +141,7 @@ public class SpecificEventDishesDialogBox {
             if(itemView==null)
             {
 //                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                itemView = dialogBox.getLayoutInflater().inflate(R.layout.hungry_fragment_event_details_dialog_box_cell,parent,false);
+                itemView = dialogBox.getLayoutInflater().inflate(R.layout.hungry_specifiec_event_dishes_details_dialog_box_cell,parent,false);
             }
             final Dish dish = dishArrayList.get(position);
             TextView dishNameTextView = (TextView)itemView.findViewById(R.id.hungry_fragment_event_dishes_dialog_box_cell_dish_name_text_view);
