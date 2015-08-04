@@ -500,7 +500,6 @@ private void initViews()
         addDishDialog = new Dialog(getActivity());
         addDishDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         addDishDialog.setContentView(R.layout.chef_add_dish_dialog_box_pahses_container_layout);
-        nextButton = (Button)addDishDialog.findViewById(R.id.add_dish_dialog_next_button_id);
         dialogBoxLayoutContainer = (LinearLayout)addDishDialog.findViewById(R.id.add_dish_dialog_box_linear_layout_id);
         nextButton = (Button)addDishDialog.findViewById(R.id.add_dish_dialog_box_next_button_id);
         backButton = (Button)addDishDialog.findViewById(R.id.add_dish_dialog_box_back_button_id);

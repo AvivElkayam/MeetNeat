@@ -20,7 +20,7 @@ public class HungryListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        View view = inflater.inflate(R.layout.hungry_menu_fragment,container,false);
+        View view = inflater.inflate(R.layout.hungry_map_fragment,container,false);
 
         return view;
     }
