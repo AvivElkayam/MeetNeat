@@ -66,7 +66,7 @@ public class CameraBasics {
 //       takePictureIntent.putExtra("return-data", true);
 
         if (takePictureIntent.resolveActivity(((Activity)context).getPackageManager()) != null) {
-            f.startActivityForResult(takePictureIntent, 1);
+            f.getParentFragment().startActivityForResult(takePictureIntent, 1);
         }
     }
 

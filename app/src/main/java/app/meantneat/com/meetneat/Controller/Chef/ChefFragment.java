@@ -1,5 +1,6 @@
 package app.meantneat.com.meetneat.Controller.Chef;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
 
+
+import java.util.List;
 
 import app.meantneat.com.meetneat.R;
 
@@ -76,6 +79,17 @@ public class ChefFragment extends Fragment {
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) v.findViewById(R.id.chef_view_pager_tabs);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        List<Fragment> fragments = getChildFragmentManager().getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                fragment.onActivityResult(requestCode, resultCode, data);
+            }
+        }
     }
 
 

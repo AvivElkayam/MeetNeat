@@ -665,9 +665,11 @@ private void initViews()
 //
 //                }
 //            }.execute();
-            dishImageView.setImageBitmap(bitmapArray[1]);
+            newDish.setFullsizeImg(bitmapToByteArr(bitmapArray[0]));
+            newDish.setThumbnailImg(bitmapToByteArr(bitmapArray[1]));
+            addDishImageView.setImageBitmap(bitmapArray[1]);
 
-            startActivityForResult(cropImage.getIntent(getActivity()), REQUEST_CROP_PICTURE);
+           // startActivityForResult(cropImage.getIntent(getActivity()), REQUEST_CROP_PICTURE);
 
 
         } else if ((requestCode == REQUEST_CROP_PICTURE) && (resultCode == Activity.RESULT_OK)) {

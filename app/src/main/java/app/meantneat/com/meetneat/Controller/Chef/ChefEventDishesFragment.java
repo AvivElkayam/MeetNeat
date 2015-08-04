@@ -1,5 +1,6 @@
 package app.meantneat.com.meetneat.Controller.Chef;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import app.meantneat.com.meetneat.Entities.EventDishes;
 import app.meantneat.com.meetneat.Model.MyModel;
@@ -92,6 +94,8 @@ public class ChefEventDishesFragment extends Fragment
         initSwipeRefresh();
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -149,8 +153,9 @@ public class ChefEventDishesFragment extends Fragment
                 FragmentManager fragmentManager = getParentFragment().getChildFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 AddDishEventFragment fragment = new AddDishEventFragment();
-                fragmentTransaction.add(R.id.chef_event_dishes_fragment_container, fragment).addToBackStack("addNewEventDish");
+                fragmentTransaction.replace(R.id.chef_event_dishes_fragment_container, fragment).addToBackStack("addNewEventDish");
                 fragmentTransaction.commit();
+                floatingAddButton.hide();
             }
         });
     }
@@ -168,6 +173,18 @@ public class ChefEventDishesFragment extends Fragment
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        floatingAddButton.show();
+    }
+
+
+
+
+
 
     private void packDataToBundleAndPassToEditScreen(int index)
     {
@@ -217,4 +234,16 @@ public class ChefEventDishesFragment extends Fragment
 
 
     }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+////        List<Fragment> fragments = getChildFragmentManager().getFragments();
+////        if (fragments != null) {
+////            for (Fragment fragment : fragments) {
+////                fragment.onActivityResult(requestCode, resultCode, data);
+////            }
+////        }
+//    }
 }
