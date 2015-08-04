@@ -470,6 +470,7 @@ public class ParseModel implements MyModel.ModelInterface {
                 }
                 Date startingDate = new Date(event.getEventYear(), event.getEventMonth(), event.getEventDay(), event.getStartingHour(), event.getStartingMinute());
                 Date endingDate = new Date(event.getEventYear(), event.getEventMonth(), event.getEventDay(), event.getEndingHour(), event.getEndingMinute());
+                String s = ParseUser.getCurrentUser().getObjectId();
                 eventObject.put(AppConstants.EVENT_DISHES_CHEF_ID, ParseUser.getCurrentUser().getObjectId());
                 eventObject.put(AppConstants.EVENT_DISHES_START_DATE, startingDate);
                 eventObject.put(AppConstants.EVENT_DISHES_END_DATE, endingDate);

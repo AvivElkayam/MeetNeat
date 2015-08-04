@@ -269,11 +269,12 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
 //        {
 //            dishesIDArrayList=getArguments().getStringArrayList("dishes");
 //        }
-        //eventLocationEditText.setText(location);
+//        eventLocationEditText.setText(location);
 
     }
 private void initViews()
 {
+
     createEventButton = (Button)getActivity().findViewById(R.id.add_event_fragment_add_event_button_id);
     eventTitleEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_title_edit_text_id);
     eventLocationEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_location_edit_text_id);
@@ -376,17 +377,18 @@ private void initViews()
     endingTimeTextView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(final View v) {
-            timePickerDialog = new TimePickerDialog(getActivity(),new TimePickerDialog.OnTimeSetListener() {
+            timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                     endingHour = hourOfDay;
-                    endingMinute=minute;
-                    ((TextView) v).setText(hourOfDay+":"+minute);
+                    endingMinute = minute;
+                    ((TextView) v).setText(hourOfDay + ":" + minute);
                 }
-            },calendar.get(Calendar.HOUR),calendar.get(Calendar.MINUTE),true);
+            }, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), true);
             timePickerDialog.show();
         }
     });
+
     dishImageView = (ImageView)getActivity().findViewById(R.id.add_event_fragment_dish_image_view);
     dishImageView.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -394,7 +396,8 @@ private void initViews()
             dispatchTakePictureIntent();
         }
     });
-    if(getArguments().getBoolean("isNew")==true) {
+    getEventDetailsFromBundle();
+    if(isNew==true) {
         createEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -440,7 +443,7 @@ private void initViews()
 
     }
     initListView();
-    getEventDetailsFromBundle();
+
     if(isNew==false)
     {
         MyModel.getInstance().getModel().getEventsDishes(getArguments().getString("eventID"),new MyModel.DishesCallback() {
@@ -669,7 +672,7 @@ private void initViews()
             newDish.setThumbnailImg(bitmapToByteArr(bitmapArray[1]));
             addDishImageView.setImageBitmap(bitmapArray[1]);
 
-           // startActivityForResult(cropImage.getIntent(getActivity()), REQUEST_CROP_PICTURE);
+            startActivityForResult(cropImage.getIntent(getActivity()), REQUEST_CROP_PICTURE);
 
 
         } else if ((requestCode == REQUEST_CROP_PICTURE) && (resultCode == Activity.RESULT_OK)) {

@@ -20,6 +20,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
+import com.parse.ParseUser;
 
 import java.util.Calendar;
 
@@ -52,7 +53,7 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
+    //String s = ParseUser.getCurrentUser().getObjectId();
         v = inflater.inflate(R.layout.chef_add_event_dishes_fragment_layout,container,false);
         calendar=Calendar.getInstance();
         dateTextView = (TextView)v.findViewById(R.id.add_dish_event_fragment_date_text_view_id);
