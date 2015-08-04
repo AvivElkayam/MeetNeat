@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -22,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -567,6 +570,8 @@ private void initViews()
                             v2.setVisibility(View.VISIBLE);
                             v3.setVisibility(View.GONE);
                             backButton.setVisibility(View.VISIBLE);
+                            hideKeyboard(addDishTitleEditText);
+                            hideKeyboard(addDishDescriptionEditText);
                         }
                         break;
                     }
@@ -587,6 +592,9 @@ private void initViews()
                             v2.setVisibility(View.GONE);
                             v3.setVisibility(View.VISIBLE);
                             backButton.setVisibility(View.VISIBLE);
+                            hideKeyboard(addDishPriceEditText);
+                            hideKeyboard(addDishDishesLeftEditText);
+
                         }
                         break;
                     }
@@ -609,8 +617,12 @@ private void initViews()
                         break;
                     }
                 }
+                //hide key board
+
             }
-        });
+        }
+
+        );
     }
 
     @Override
@@ -751,6 +763,12 @@ private void initViews()
     public interface SaveToServerCallback
     {
         public void onResult();
+    }
+    public void hideKeyboard(View view)
+    {
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if(view!=null)
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 }

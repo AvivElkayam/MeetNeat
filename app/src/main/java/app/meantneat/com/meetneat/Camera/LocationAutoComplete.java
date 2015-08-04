@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -75,6 +76,13 @@ public class LocationAutoComplete implements AdapterView.OnItemClickListener {
     public void setAutoCompleteTextView(String location)
     {
         autoCompView.setText(location);
+        hideKeyboard(autoCompView);
+    }
+    public void hideKeyboard(View view)
+    {
+        InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if(view!=null)
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -102,6 +110,7 @@ public class LocationAutoComplete implements AdapterView.OnItemClickListener {
 
 
         Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
+        hideKeyboard(autoCompView);
     }
 
 
