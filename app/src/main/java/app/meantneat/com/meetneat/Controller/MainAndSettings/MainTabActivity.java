@@ -97,7 +97,7 @@ private FragmentTabHost mTabHost;
         FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)
                 .build();
-
+actionButton.
         SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
 // repeat many times:
         ImageView itemIcon1 = new ImageView(this);
