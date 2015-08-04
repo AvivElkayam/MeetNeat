@@ -138,7 +138,7 @@ public class EditEventMealsFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        v =  inflater.inflate(R.layout.edit_chef_event_meals_fragment_layout, container, false);
+        v =  inflater.inflate(R.layout.chef_edit_event_meals_fragment_layout, container, false);
         loadPhotos();
         initViews(v);
         return v;

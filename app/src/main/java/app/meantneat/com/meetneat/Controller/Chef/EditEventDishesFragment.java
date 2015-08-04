@@ -126,7 +126,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     {
         public DishRowListAdapter()
         {
-            super(getActivity(), R.layout.add_event_fragment_dish_row, dishArrayList);
+            super(getActivity(), R.layout.chef_edit_event_dishes_fragment_dish_row, dishArrayList);
 
         }
 
@@ -136,7 +136,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
 
             if(itemView==null)
             {
-                itemView = getActivity().getLayoutInflater().inflate(R.layout.add_event_fragment_dish_row,parent,false);
+                itemView = getActivity().getLayoutInflater().inflate(R.layout.chef_edit_event_dishes_fragment_dish_row,parent,false);
             }
             final Dish dish = dishArrayList.get(position);
             final String title = dish.getTitle();
@@ -237,7 +237,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.add_event_fragment, container, false);
+        View view = inflater.inflate(R.layout.chef_edit_event_dishes_fragment, container, false);
 
 
         // Inflate the layout for this fragment
@@ -499,7 +499,7 @@ private void initViews()
     {
         addDishDialog = new Dialog(getActivity());
         addDishDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        addDishDialog.setContentView(R.layout.add_dish_dialog_box_layout);
+        addDishDialog.setContentView(R.layout.chef_add_dish_dialog_box_pahses_container_layout);
         nextButton = (Button)addDishDialog.findViewById(R.id.add_dish_dialog_next_button_id);
         dialogBoxLayoutContainer = (LinearLayout)addDishDialog.findViewById(R.id.add_dish_dialog_box_linear_layout_id);
         nextButton = (Button)addDishDialog.findViewById(R.id.add_dish_dialog_box_next_button_id);
@@ -515,14 +515,14 @@ private void initViews()
     }
     private void buildDialogBoxPhases()
     {
-        v1 = getActivity().getLayoutInflater().inflate(R.layout.add_dish_phase_one,dialogBoxLayoutContainer,false);
+        v1 = getActivity().getLayoutInflater().inflate(R.layout.chef_add_dish_phase_one,dialogBoxLayoutContainer,false);
         addDishTitleEditText = (EditText)v1.findViewById(R.id.add_dish_phase_one_title_edit_text_id);
         addDishDescriptionEditText = (EditText)v1.findViewById(R.id.add_dish_phase_one_description_edit_text_id);
-        v2 = getActivity().getLayoutInflater().inflate(R.layout.add_dish_phase_two,dialogBoxLayoutContainer,false);
+        v2 = getActivity().getLayoutInflater().inflate(R.layout.chef_add_dish_phase_two,dialogBoxLayoutContainer,false);
         addDishPriceEditText = (EditText)v2.findViewById(R.id.add_dish_phase_two_price_edit_text_id);
         addDishDishesLeftEditText = (EditText)v2.findViewById(R.id.add_dish_phase_two_quantity_edit_text_id);
 
-        v3 = getActivity().getLayoutInflater().inflate(R.layout.add_dish_phase_three,dialogBoxLayoutContainer,false);
+        v3 = getActivity().getLayoutInflater().inflate(R.layout.chef_add_dish_phase_three,dialogBoxLayoutContainer,false);
         addDishImageView = (ImageView)v3.findViewById(R.id.add_dish_phase_three_dish_image_view_id);
         addDishImageView.setOnClickListener(new View.OnClickListener() {
             @Override

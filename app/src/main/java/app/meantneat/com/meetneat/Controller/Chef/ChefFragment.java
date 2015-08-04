@@ -63,7 +63,7 @@ public class ChefFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        View v = inflater.inflate(R.layout.chef_fragment_layout,container,false);
+        View v = inflater.inflate(R.layout.chef_main_fragment_layout,container,false);
         initTabs(v);
         return v;
     }
