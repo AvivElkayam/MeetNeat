@@ -2,22 +2,14 @@ package app.meantneat.com.meetneat.Camera;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
-import app.meantneat.com.meetneat.Dish;
-import app.meantneat.com.meetneat.EventDishes;
+import app.meantneat.com.meetneat.Entities.EventDishes;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 

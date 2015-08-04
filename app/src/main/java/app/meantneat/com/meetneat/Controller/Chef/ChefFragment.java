@@ -1,4 +1,4 @@
-package app.meantneat.com.meetneat.Controller;
+package app.meantneat.com.meetneat.Controller.Chef;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
+
 
 import app.meantneat.com.meetneat.R;
 
@@ -26,7 +27,7 @@ public class ChefFragment extends Fragment {
         public SampleFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
+        
         @Override
         public int getCount() {
             return PAGE_COUNT;

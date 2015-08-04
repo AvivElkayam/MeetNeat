@@ -6,20 +6,17 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
-import javax.security.auth.callback.Callback;
-
 import app.meantneat.com.meetneat.Camera.SpecificEventDishesDialogBox;
 import app.meantneat.com.meetneat.Camera.SpecifiecChefEventsDialogBox;
-import app.meantneat.com.meetneat.Controller.ChefEventDishesFragment;
-import app.meantneat.com.meetneat.Controller.EditEventDishesFragment;
-import app.meantneat.com.meetneat.Controller.EditEventMealsFragment;
-import app.meantneat.com.meetneat.Controller.LoginActivity;
-import app.meantneat.com.meetneat.Controller.SignInActivity;
+import app.meantneat.com.meetneat.Controller.Chef.ChefEventDishesFragment;
+import app.meantneat.com.meetneat.Controller.Chef.EditEventDishesFragment;
+import app.meantneat.com.meetneat.Controller.Chef.EditEventMealsFragment;
+import app.meantneat.com.meetneat.Controller.Login.LoginActivity;
+import app.meantneat.com.meetneat.Controller.Login.SignInActivity;
 
-import app.meantneat.com.meetneat.Dish;
-import app.meantneat.com.meetneat.EventDishes;
-import app.meantneat.com.meetneat.EventDishes;
-import app.meantneat.com.meetneat.EventMeals;
+import app.meantneat.com.meetneat.Entities.Dish;
+import app.meantneat.com.meetneat.Entities.EventDishes;
+import app.meantneat.com.meetneat.Entities.EventMeals;
 
 /**
  * Created by mac on 5/25/15.

@@ -1,14 +1,10 @@
-package app.meantneat.com.meetneat.Controller;
+package app.meantneat.com.meetneat.Controller.Chef;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.os.Environment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,20 +15,16 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
+//import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Calendar;
 
-import app.meantneat.com.meetneat.Dish;
-import app.meantneat.com.meetneat.EventDishes;
-import app.meantneat.com.meetneat.EventMeals;
+import app.meantneat.com.meetneat.Entities.EventMeals;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 

@@ -1,7 +1,6 @@
-package app.meantneat.com.meetneat.Controller;
+package app.meantneat.com.meetneat.Controller.MainAndSettings;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
@@ -18,6 +16,9 @@ import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import app.meantneat.com.meetneat.Camera.CameraBasics;
+import app.meantneat.com.meetneat.Controller.Chef.ChefFragment;
+import app.meantneat.com.meetneat.Controller.Hungry.HungryFragment;
+import app.meantneat.com.meetneat.Controller.Login.SignInActivity;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 

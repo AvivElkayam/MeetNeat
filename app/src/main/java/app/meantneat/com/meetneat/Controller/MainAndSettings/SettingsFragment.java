@@ -1,4 +1,4 @@
-package app.meantneat.com.meetneat.Controller;
+package app.meantneat.com.meetneat.Controller.MainAndSettings;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import app.meantneat.com.meetneat.Controller.Login.SignInActivity;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 

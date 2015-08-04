@@ -1,4 +1,4 @@
-package app.meantneat.com.meetneat.Controller;
+package app.meantneat.com.meetneat.Controller.Hungry;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import app.meantneat.com.meetneat.Dish;
+import app.meantneat.com.meetneat.Entities.Dish;
 import app.meantneat.com.meetneat.R;
 
 

@@ -1,4 +1,4 @@
-package app.meantneat.com.meetneat;
+package app.meantneat.com.meetneat.Entities;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package app.meantneat.com.meetneat.Controller;
+package app.meantneat.com.meetneat.Controller.MainAndSettings;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;

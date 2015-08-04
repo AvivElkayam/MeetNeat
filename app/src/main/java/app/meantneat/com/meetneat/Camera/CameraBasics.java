@@ -12,17 +12,13 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
-import app.meantneat.com.meetneat.Controller.EditEventDishesFragment;
+import app.meantneat.com.meetneat.Controller.Chef.EditEventDishesFragment;
 
 /**
  * Created by DanltR on 09/06/2015.

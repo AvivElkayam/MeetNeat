@@ -1,7 +1,6 @@
-package app.meantneat.com.meetneat.Controller;
+package app.meantneat.com.meetneat.Controller.Hungry;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
@@ -38,14 +37,14 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import app.meantneat.com.meetneat.Camera.SpecifiecChefEventsDialogBox;
-import app.meantneat.com.meetneat.EventDishes;
+import app.meantneat.com.meetneat.Controller.Chef.ChefEventDishesFragment;
+import app.meantneat.com.meetneat.Entities.EventDishes;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 //import com.google.android.gms.maps.*;

@@ -3,13 +3,9 @@ package app.meantneat.com.meetneat.Model;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.parse.GetCallback;
-import com.parse.GetDataCallback;
 import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -17,7 +13,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-import com.parse.SignUpCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -27,16 +22,16 @@ import java.util.List;
 import app.meantneat.com.meetneat.AppConstants;
 import app.meantneat.com.meetneat.Camera.SpecificEventDishesDialogBox;
 import app.meantneat.com.meetneat.Camera.SpecifiecChefEventsDialogBox;
-import app.meantneat.com.meetneat.Controller.ChefEventDishesFragment;
-import app.meantneat.com.meetneat.Controller.EditEventDishesFragment;
-import app.meantneat.com.meetneat.Controller.EditEventMealsFragment;
-import app.meantneat.com.meetneat.Controller.HungryMapFragment;
-import app.meantneat.com.meetneat.Controller.LoginActivity;
-import app.meantneat.com.meetneat.Controller.SignInActivity;
-import app.meantneat.com.meetneat.Dish;
+import app.meantneat.com.meetneat.Controller.Chef.ChefEventDishesFragment;
+import app.meantneat.com.meetneat.Controller.Chef.EditEventDishesFragment;
+import app.meantneat.com.meetneat.Controller.Chef.EditEventMealsFragment;
+import app.meantneat.com.meetneat.Controller.Hungry.HungryMapFragment;
+import app.meantneat.com.meetneat.Controller.Login.LoginActivity;
+import app.meantneat.com.meetneat.Controller.Login.SignInActivity;
+import app.meantneat.com.meetneat.Entities.Dish;
 
-import app.meantneat.com.meetneat.EventDishes;
-import app.meantneat.com.meetneat.EventMeals;
+import app.meantneat.com.meetneat.Entities.EventDishes;
+import app.meantneat.com.meetneat.Entities.EventMeals;
 
 
 /**

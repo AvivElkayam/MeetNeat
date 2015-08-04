@@ -8,18 +8,14 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
-import app.meantneat.com.meetneat.EventDishes;
+import app.meantneat.com.meetneat.Entities.EventDishes;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 import de.hdodenhof.circleimageview.CircleImageView;

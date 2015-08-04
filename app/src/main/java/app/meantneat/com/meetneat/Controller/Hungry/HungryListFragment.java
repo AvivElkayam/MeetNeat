@@ -1,4 +1,4 @@
-package app.meantneat.com.meetneat.Controller;
+package app.meantneat.com.meetneat.Controller.Hungry;
 
 import android.graphics.Color;
 import android.os.Bundle;

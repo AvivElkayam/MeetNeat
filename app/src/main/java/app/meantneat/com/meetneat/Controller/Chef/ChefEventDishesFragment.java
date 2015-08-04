@@ -1,9 +1,5 @@
-package app.meantneat.com.meetneat.Controller;
+package app.meantneat.com.meetneat.Controller.Chef;
 
-import android.app.ActionBar;
-import android.app.Dialog;
-import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,14 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -32,9 +22,7 @@ import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 
-import app.meantneat.com.meetneat.Camera.SpecificEventDishesDialogBox;
-import app.meantneat.com.meetneat.Dish;
-import app.meantneat.com.meetneat.EventDishes;
+import app.meantneat.com.meetneat.Entities.EventDishes;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 

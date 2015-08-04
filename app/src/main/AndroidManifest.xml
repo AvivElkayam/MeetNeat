@@ -29,7 +29,7 @@
             android:value="AIzaSyCEth1L6SakO7xrhtXtb3Z2G7J1yP4MPLI" />
 
         <activity
-            android:name=".Controller.MainTabActivity"
+            android:name=".Controller.MainAndSettings.MainTabActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Controller.SignInActivity"
+            android:name=".Controller.Login.SignInActivity"
             android:label="@string/title_activity_sign_in"
             android:screenOrientation="portrait" >
         </activity>
@@ -47,7 +47,7 @@
         <activity android:name="com.android.camera.CropImage"/>
 
         <activity
-            android:name=".Controller.SplashScreenActivity"
+            android:name=".Controller.MainAndSettings.SplashScreenActivity"
             android:label="@string/title_activity_splash_screen" >
             <intent-filter>
                 <action android:name="android.intent.action.SPLASH" />
@@ -56,7 +56,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Controller.LoginActivity"
+            android:name=".Controller.Login.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
     </application>

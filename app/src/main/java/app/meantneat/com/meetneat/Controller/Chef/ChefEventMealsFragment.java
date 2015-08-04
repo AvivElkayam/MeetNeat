@@ -1,4 +1,4 @@
-package app.meantneat.com.meetneat.Controller;
+package app.meantneat.com.meetneat.Controller.Chef;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,8 +16,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import app.meantneat.com.meetneat.EventDishes;
-import app.meantneat.com.meetneat.EventMeals;
+import app.meantneat.com.meetneat.Entities.EventMeals;
 import app.meantneat.com.meetneat.R;
 
 /**

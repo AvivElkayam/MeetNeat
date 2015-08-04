@@ -1,4 +1,4 @@
-package app.meantneat.com.meetneat.Controller;
+package app.meantneat.com.meetneat.Controller.Chef;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -35,7 +34,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.camera.CropImageIntentBuilder;
-import com.getbase.floatingactionbutton.FloatingActionButton;
+//import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -53,10 +52,9 @@ import java.util.Calendar;
 
 import app.meantneat.com.meetneat.Camera.CameraBasics;
 import app.meantneat.com.meetneat.Camera.LocationAutoComplete;
-import app.meantneat.com.meetneat.Camera.SpecificEventDishesDialogBox;
-import app.meantneat.com.meetneat.Dish;
+import app.meantneat.com.meetneat.Entities.Dish;
 
-import app.meantneat.com.meetneat.EventDishes;
+import app.meantneat.com.meetneat.Entities.EventDishes;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 
@@ -72,7 +70,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     private static int REQUEST_PICTURE = 1;
     private static int REQUEST_CROP_PICTURE = 2;
     LocationAutoComplete lAC;
-    FloatingActionButton addNewDishFloatingButton;
+    //FloatingActionButton addNewDishFloatingButton;
     Bitmap[] bitmapArray;
     CameraBasics cameraBasics = new CameraBasics();
     private TextView startingTimeTextView,startingDateTextView,endingTimeTextView,endingDateTextView;
@@ -204,14 +202,14 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
         setHasOptionsMenu(true);
         initViews();
 
-        addNewDishFloatingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                buildAddDishDiaglog();
-
-                addDishDialog.show();
-            }
-        });
+//        addNewDishFloatingButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                buildAddDishDiaglog();
+//
+//                addDishDialog.show();
+//            }
+//        });
         mGoogleApiClient = new GoogleApiClient
                 .Builder(getActivity())
                 .addApi(Places.GEO_DATA_API)
@@ -278,7 +276,7 @@ private void initViews()
     eventTitleEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_title_edit_text_id);
     eventLocationEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_location_edit_text_id);
     eventApartmentNumberEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_apartment_numebr_edit_text_id);
-    addNewDishFloatingButton = (FloatingActionButton) getActivity().findViewById(R.id.add_event_fragment_add_new_dish_button);
+    //addNewDishFloatingButton = (FloatingActionButton) getActivity().findViewById(R.id.add_event_fragment_add_new_dish_button);
     calendar=Calendar.getInstance();
     startingTimeTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_starting_time_label);
     startingDateTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_starting_date_label);
