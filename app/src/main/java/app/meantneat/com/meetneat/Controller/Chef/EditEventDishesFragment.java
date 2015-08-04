@@ -43,6 +43,7 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
+import com.melnykov.fab.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -71,6 +72,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     private static int REQUEST_CROP_PICTURE = 2;
     LocationAutoComplete lAC;
     //FloatingActionButton addNewDishFloatingButton;
+    FloatingActionButton addDishButton;
     Bitmap[] bitmapArray;
     CameraBasics cameraBasics = new CameraBasics();
     private TextView startingTimeTextView,startingDateTextView,endingTimeTextView,endingDateTextView;
@@ -202,14 +204,14 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
         setHasOptionsMenu(true);
         initViews();
 
-//        addNewDishFloatingButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                buildAddDishDiaglog();
-//
-//                addDishDialog.show();
-//            }
-//        });
+        addDishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                buildAddDishDiaglog();
+
+                addDishDialog.show();
+            }
+        });
         mGoogleApiClient = new GoogleApiClient
                 .Builder(getActivity())
                 .addApi(Places.GEO_DATA_API)
@@ -277,6 +279,7 @@ private void initViews()
     eventLocationEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_location_edit_text_id);
     eventApartmentNumberEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_apartment_numebr_edit_text_id);
     //addNewDishFloatingButton = (FloatingActionButton) getActivity().findViewById(R.id.add_event_fragment_add_new_dish_button);
+    addDishButton = (FloatingActionButton)getActivity().findViewById(R.id.chef_edit_events_dishes_floating_add_dish_button);
     calendar=Calendar.getInstance();
     startingTimeTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_starting_time_label);
     startingDateTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_starting_date_label);
