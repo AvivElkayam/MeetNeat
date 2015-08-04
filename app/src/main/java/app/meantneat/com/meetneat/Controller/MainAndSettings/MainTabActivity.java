@@ -25,11 +25,12 @@ import app.meantneat.com.meetneat.R;
 
 public class MainTabActivity extends ActionBarActivity {
 private FragmentTabHost mTabHost;
-    Fragment chefFragment;
-    Fragment hungryFragment;
-    Fragment settingsFragment;
+    private Fragment chefFragment;
+    private Fragment hungryFragment;
+    private Fragment settingsFragment;
     private CameraBasics cameraBasics;
-
+    private FloatingActionButton actionButton;
+    FloatingActionMenu actionMenu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,10 +95,9 @@ private FragmentTabHost mTabHost;
         ImageView icon = new ImageView(this); // Create an icon
         icon.setImageDrawable(getResources().getDrawable(R.drawable.menu_icon));
 
-        FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
+         actionButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)
                 .build();
-actionButton.
         SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
 // repeat many times:
         ImageView itemIcon1 = new ImageView(this);
@@ -111,6 +111,8 @@ actionButton.
                                 // Add this transaction to the back stack
                         .addToBackStack("replace_to_hungry")
                         .commit();
+                actionMenu.toggle(true);
+
             }
         });
 
@@ -126,6 +128,8 @@ actionButton.
                                 // Add this transaction to the back stack
                         .addToBackStack("replace_to_chef")
                         .commit();
+                actionMenu.toggle(true);
+
             }
         });
 
@@ -140,9 +144,11 @@ actionButton.
                                 // Add this transaction to the back stack
                         .addToBackStack("replace_to_settings")
                         .commit();
+                actionMenu.toggle(true);
+
             }
         });
-        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
+         actionMenu = new FloatingActionMenu.Builder(this)
                 .addSubActionView(button1)
                 .addSubActionView(button2)
                         .addSubActionView(button3)
