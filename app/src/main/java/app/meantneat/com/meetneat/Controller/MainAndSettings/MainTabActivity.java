@@ -46,7 +46,7 @@ private FragmentTabHost mTabHost;
         hungryFragment = new HungryFragment();
         settingsFragment = new SettingsFragment();
         initTabsMenu();
-
+       // getSupportFragmentManager().addOnBackStackChangedListener(getListener());
 //        Button chefButton = (Button) findViewById(R.id.activity_main_tab_chef_button);
 //        Button hungryButton = (Button) findViewById(R.id.activity_main_tab_hungry_button);
 //
@@ -84,6 +84,7 @@ private FragmentTabHost mTabHost;
 
 
     }
+
 
     private void initTabsMenu() {
         getSupportFragmentManager().beginTransaction()
@@ -156,6 +157,8 @@ private FragmentTabHost mTabHost;
                 .attachTo(actionButton)
                 .build();
 
+
+
     }
 
     @Override
@@ -208,9 +211,33 @@ private FragmentTabHost mTabHost;
                 int k = childFm.getBackStackEntryCount();
                 if (childFm.getBackStackEntryCount() > 0) {
                     childFm.popBackStack();
+                    //call the popped fragment on resume
+                    Fragment fragment = childFm.getFragments()
+                            .get(childFm.getBackStackEntryCount() - 1);
+                    fragment.onResume();
                     return;
                 }
             }
         }
         super.onBackPressed();
+    }
+    private FragmentManager.OnBackStackChangedListener getListener() {
+        FragmentManager.OnBackStackChangedListener result = new FragmentManager.OnBackStackChangedListener() {
+            public void onBackStackChanged() {
+                FragmentManager manager = getSupportFragmentManager();
+                if (manager != null) {
+                    int backStackEntryCount = manager.getBackStackEntryCount();
+                    if (backStackEntryCount == 0) {
+                        finish();
+                    }
+                    Fragment fragment = manager.getFragments()
+                            .get(backStackEntryCount - 1);
+                    fragment.onResume();
+                }
+            }
+        };
+        return result;
     }}
+
+
+

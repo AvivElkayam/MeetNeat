@@ -70,6 +70,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
 
     int PLACE_PICKER_REQUEST = 2;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+
     private static int REQUEST_PICTURE = 1;
     private static int REQUEST_CROP_PICTURE = 2;
     LocationAutoComplete lAC;
@@ -665,19 +666,21 @@ private void initViews()
 
 
             bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
-            new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... params) {
-                    dishArrayList.get(currentPosition).setFullsizeImg(bitmapToByteArr(bitmapArray[0])); //Full size to Bytearray
-
-                    dishArrayList.get(currentPosition).setThumbnailImg(bitmapToByteArr(bitmapArray[1])); //Thumbnail to Bytearray
-                    newDish.setFullsizeImg(bitmapToByteArr(bitmapArray[0]));
-                    newDish.setThumbnailImg(bitmapToByteArr(bitmapArray[1]));
-                    return null;
-
-                }
-            }.execute();
-            dishImageView.setImageBitmap(bitmapArray[1]);
+//            new AsyncTask<Void, Void, Void>() {
+//                @Override
+//                protected Void doInBackground(Void... params) {
+//                    dishArrayList.get(currentPosition).setFullsizeImg(bitmapToByteArr(bitmapArray[0])); //Full size to Bytearray
+//
+//                    dishArrayList.get(currentPosition).setThumbnailImg(bitmapToByteArr(bitmapArray[1])); //Thumbnail to Bytearray
+//                    newDish.setFullsizeImg(bitmapToByteArr(bitmapArray[0]));
+//                    newDish.setThumbnailImg(bitmapToByteArr(bitmapArray[1]));
+//                    return null;
+//
+//                }
+//            }.execute();
+            newDish.setFullsizeImg(bitmapToByteArr(bitmapArray[0]));
+            newDish.setThumbnailImg(bitmapToByteArr(bitmapArray[1]));
+            addDishImageView.setImageBitmap(bitmapArray[1]);
 
             startActivityForResult(cropImage.getIntent(getActivity()), REQUEST_CROP_PICTURE);
 
