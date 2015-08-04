@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -22,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -67,7 +70,6 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
 
     int PLACE_PICKER_REQUEST = 2;
     static final int REQUEST_IMAGE_CAPTURE = 1;
-
     private static int REQUEST_PICTURE = 1;
     private static int REQUEST_CROP_PICTURE = 2;
     LocationAutoComplete lAC;
@@ -274,6 +276,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     }
 private void initViews()
 {
+
     createEventButton = (Button)getActivity().findViewById(R.id.add_event_fragment_add_event_button_id);
     eventTitleEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_title_edit_text_id);
     eventLocationEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_location_edit_text_id);
@@ -564,6 +567,8 @@ private void initViews()
                             v2.setVisibility(View.VISIBLE);
                             v3.setVisibility(View.GONE);
                             backButton.setVisibility(View.VISIBLE);
+                            hideKeyboard(addDishTitleEditText);
+                            hideKeyboard(addDishDescriptionEditText);
                         }
                         break;
                     }
@@ -584,6 +589,9 @@ private void initViews()
                             v2.setVisibility(View.GONE);
                             v3.setVisibility(View.VISIBLE);
                             backButton.setVisibility(View.VISIBLE);
+                            hideKeyboard(addDishPriceEditText);
+                            hideKeyboard(addDishDishesLeftEditText);
+
                         }
                         break;
                     }
@@ -606,8 +614,12 @@ private void initViews()
                         break;
                     }
                 }
+                //hide key board
+
             }
-        });
+        }
+
+        );
     }
 
     @Override
@@ -653,18 +665,18 @@ private void initViews()
 
 
             bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
-//            new AsyncTask<Void, Void, Void>() {
-//                @Override
-//                protected Void doInBackground(Void... params) {
-//                    dishArrayList.get(currentPosition).setFullsizeImg(bitmapToByteArr(bitmapArray[0])); //Full size to Bytearray
-//
-//                    dishArrayList.get(currentPosition).setThumbnailImg(bitmapToByteArr(bitmapArray[1])); //Thumbnail to Bytearray
-//                    newDish.setFullsizeImg(bitmapToByteArr(bitmapArray[0]));
-//                    newDish.setThumbnailImg(bitmapToByteArr(bitmapArray[1]));
-//                    return null;
-//
-//                }
-//            }.execute();
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... params) {
+                    dishArrayList.get(currentPosition).setFullsizeImg(bitmapToByteArr(bitmapArray[0])); //Full size to Bytearray
+
+                    dishArrayList.get(currentPosition).setThumbnailImg(bitmapToByteArr(bitmapArray[1])); //Thumbnail to Bytearray
+                    newDish.setFullsizeImg(bitmapToByteArr(bitmapArray[0]));
+                    newDish.setThumbnailImg(bitmapToByteArr(bitmapArray[1]));
+                    return null;
+
+                }
+            }.execute();
             dishImageView.setImageBitmap(bitmapArray[1]);
 
             startActivityForResult(cropImage.getIntent(getActivity()), REQUEST_CROP_PICTURE);
@@ -746,6 +758,12 @@ private void initViews()
     public interface SaveToServerCallback
     {
         public void onResult();
+    }
+    public void hideKeyboard(View view)
+    {
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if(view!=null)
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 }
