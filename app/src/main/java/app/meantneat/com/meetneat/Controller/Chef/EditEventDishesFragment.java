@@ -23,6 +23,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -46,6 +47,8 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
+import com.joooonho.SelectableRoundedImageView;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
@@ -154,7 +157,15 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
             TextView titleTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_title_text_view);
             titleTextView.setText(title);
 
-            final ImageView imageView = (ImageView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_image_view);
+            TextView priceTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_price_text_view);
+            priceTextView.setText("$"+Double.toString(dish.getPrice()));
+
+            TextView quantityTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_quantity_text_view);
+            quantityTextView.setText("Dishes left: "+Double.toString(dish.getQuantity()));
+
+            //final ImageView imageView = (ImageView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_image_view);
+            //final SelectableRoundedImageView imageView = (SelectableRoundedImageView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_image_view);
+            final RoundedImageView imageView = (RoundedImageView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_image_view);
             if(dish.getThumbnailImg()==null)
             {
                 MyModel.getInstance().getModel().getDishPicture(dish.getDishID(),new MyModel.PictureCallback() {
@@ -162,12 +173,16 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                     public void pictureHasBeenFetched(Bitmap bitmap) {
                         dish.setThumbnailImage(bitmap);
                         imageView.setBackground(new BitmapDrawable(bitmap));
+                        //imageView.setImageDrawable(new BitmapDrawable(bitmap));
                     }
                 });
             }
             else {
                 imageView.setBackground(new BitmapDrawable(BitmapFactory.decodeByteArray(dish.getThumbnailImg(), 0, dish.getThumbnailImg().length)));
+                //imageView.setImageDrawable(new BitmapDrawable(BitmapFactory.decodeByteArray(dish.getThumbnailImg(), 0, dish.getThumbnailImg().length)));
             }
+
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -177,6 +192,13 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                     dishQuantityEditText.setText("DishesLeft: "+dish.getQuantityLeft());
                     dishDescriptionEditText.setText(description);
                     dishImageView.setBackground(new BitmapDrawable(dish.getThumbnailImage()));
+                }
+            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditDishDialogBox editDishDialogBox = new EditDishDialogBox(getActivity(),dish);
+                    editDishDialogBox.show();
                 }
             });
             return itemView;
@@ -277,6 +299,8 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     }
 private void initViews()
 {
+
+
 
     createEventButton = (Button)getActivity().findViewById(R.id.add_event_fragment_add_event_button_id);
     eventTitleEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_title_edit_text_id);

@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item>
+        <shape >
+            <solid android:color="@color/eat_gray" />
+        </shape>
+    </item>
 
+    <!-- main color -->
+    <item android:bottom="1.5dp"
+        android:left="1.5dp"
+        android:right="1.5dp">
+        <shape >
+            <solid android:color="@color/eat_black" />
+        </shape>
+    </item>
 
-        <corners android:radius="10dip" />
-        <solid android:color="#b3b3b3"></solid>
-        <!--<gradient android:angle="-90" android:startColor="#345953" android:endColor="#689a92"  />-->
-
-
-
-</shape>
+    <!-- draw another block to cut-off the left and right bars -->
+    <item android:bottom="15.0dp">
+        <shape >
+            <solid android:color="@color/eat_black" />
+        </shape>
+    </item>
+</layer-list>

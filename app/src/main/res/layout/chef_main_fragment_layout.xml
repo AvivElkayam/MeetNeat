@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    >
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -11,12 +18,14 @@
         app:pstsTextAllCaps="true"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:textSize="14sp"
+        android:textSize="14dp"
         android:background="@color/eat_black"
         android:textColor="@color/eat_orange"
         app:pstsDividerColor="@color/eat_orange"
         app:pstsIndicatorColor="@color/eat_orange"
         app:pstsUnderlineColor="@color/eat_orange"
+        app:pstsUnderlineHeight="4dp"
+        app:pstsIndicatorHeight="4dp"
         app:pstsTabPaddingLeftRight="14dp">
     </com.astuetz.PagerSlidingTabStrip>
 
@@ -27,3 +36,4 @@
         android:background="@android:color/white" />
 
 </LinearLayout>
+    </RelativeLayout>

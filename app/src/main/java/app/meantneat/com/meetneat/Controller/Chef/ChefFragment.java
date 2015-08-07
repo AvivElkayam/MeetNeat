@@ -23,7 +23,7 @@ import app.meantneat.com.meetneat.R;
  */
 public class ChefFragment extends Fragment {
 
-    public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter {
+    public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
         final int PAGE_COUNT = 2;
         private String tabTitles[] = new String[] { "EventDishes", "EventMeals" };
 
@@ -62,6 +62,24 @@ public class ChefFragment extends Fragment {
             return tabTitles[position];
         }
 
+
+        @Override
+        public int getPageIconResId(int i) {
+            switch (i)
+            {
+                case 0:
+                {
+                    return R.drawable.event_dishes_orange;
+                }
+                case 1:
+                {
+                    return R.drawable.event_meals_orange;
+                }
+
+
+            }
+            return 0;
+        }
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -79,6 +97,8 @@ public class ChefFragment extends Fragment {
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) v.findViewById(R.id.chef_view_pager_tabs);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
+
+
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

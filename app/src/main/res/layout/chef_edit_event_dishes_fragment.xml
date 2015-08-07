@@ -62,7 +62,9 @@
                                 android:textSize="15dp"
                                 android:textColor="@color/eat_white"
                                 android:gravity="left|center_vertical"
-                                android:layout_marginLeft="5dp" />
+                                android:layout_marginLeft="5dp"
+                                android:background="@drawable/gray_text_field"
+                                android:paddingLeft="5dp" />
 
                             <LinearLayout
                                 android:orientation="horizontal"
@@ -80,7 +82,9 @@
                                     android:textSize="15dp"
                                     android:textColor="@color/eat_white"
                                     android:gravity="left|center_vertical"
-                                    android:layout_marginLeft="5dp" />
+                                    android:layout_marginLeft="5dp"
+                                    android:background="@drawable/gray_text_field"
+                                    android:paddingLeft="5dp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -91,7 +95,10 @@
                                     android:layout_weight="1"
                                     android:textSize="15dp"
                                     android:textColor="@color/eat_white"
-                                    android:gravity="left|center_vertical" />
+                                    android:gravity="left|center_vertical"
+                                    android:background="@drawable/gray_text_field"
+                                    android:layout_marginLeft="5dp"
+                                    android:paddingLeft="5dp" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -102,8 +109,8 @@
                             android:layout_weight="1">
 
                             <ImageView
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
                                 android:id="@+id/imageView6"
                                 android:layout_gravity="center"
                                 android:background="@drawable/location" />
@@ -120,7 +127,9 @@
                                 android:layout_weight="1"
                                 android:textColor="@color/eat_white"
                                 android:textColorHint="@color/eat_white"
-                                android:hint="Google location" />
+                                android:hint="Google location"
+                                android:background="@drawable/gray_text_field"
+                                android:paddingLeft="5dp" />
 
                         </LinearLayout>
 
@@ -139,7 +148,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/add_event_fragment_location_edit_text_id"
-                android:layout_weight="1"
                 android:text="Location"
                 android:textSize="15dp"
                 android:background="@drawable/gray_text_field"
@@ -149,11 +157,12 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/add_event_fragment_apartment_numebr_edit_text_id"
-                android:layout_weight="2"
                 android:text="Appartment Number"
                 android:textSize="12dp"
                 android:textIsSelectable="false"
-                android:textColor="@color/eat_white" />
+                android:textColor="@color/eat_white"
+                android:background="@drawable/gray_text_field"
+                android:paddingLeft="5dp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -170,7 +179,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="180dp"
                 android:orientation="vertical"
-                android:background="#ff3b3b3b">
+                android:background="#ff3b3b3b"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:orientation="horizontal"

@@ -61,7 +61,9 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
         endingTime = (TextView)v.findViewById(R.id.add_dish_event_fragment_ending_time_text_view_id);
         //location = (EditText)v.findViewById(R.id.add_dish_event_fragment_location_text_view_id);
         apartmentNumber = (EditText)v.findViewById(R.id.add_dish_event_fragment_appartment_number_text_view_id);
+        apartmentNumber.setPadding(5,0,0,0);
         titleEditText = (EditText)v.findViewById(R.id.add_dish_event_fragment_title_edit_text_id);
+        titleEditText.setPadding(5,0,0,0);
         continueButton = (Button)v.findViewById(R.id.buttadd_dish_event_fragment_continue_button_idon3);
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,6 +185,7 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
                 .build();
 
         lAC  = new LocationAutoComplete(getActivity(),mGoogleApiClient,1);
+
     }
 
     @Override

@@ -1,48 +1,56 @@
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mainFrame"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    >
 
-    <LinearLayout
-        android:id="@+id/activity_main_tabs_container"
-        android:orientation="vertical"
+    <FrameLayout
+        android:id="@+id/mainFrame"
+
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:visibility="gone">
-
-        <Button
+        <LinearLayout
+            android:id="@+id/activity_main_tabs_container"
+            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Hungry"
-            android:id="@+id/activity_main_tab_hungry_button"
-            android:layout_gravity="bottom"
-            android:layout_weight="1" />
+            android:layout_height="fill_parent">
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Chef"
-            android:id="@+id/activity_main_tab_chef_button"
-            android:layout_gravity="bottom"
-            android:layout_weight="1" />
+        </LinearLayout>
 
-        <Button
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Settings"
-            android:id="@+id/activity_main_tab_settings_button"
-            android:layout_gravity="bottom"
-            android:layout_weight="1" />
-    </LinearLayout>
+            android:layout_gravity="bottom|center"
+            android:visibility="gone">
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Hungry"
+                android:id="@+id/activity_main_tab_hungry_button"
+                android:layout_gravity="bottom"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Chef"
+                android:id="@+id/activity_main_tab_chef_button"
+                android:layout_gravity="bottom"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Settings"
+                android:id="@+id/activity_main_tab_settings_button"
+                android:layout_gravity="bottom"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </FrameLayout>
 
 
     <!--<FrameLayout-->
@@ -65,4 +73,4 @@
             <!--android:layout_weight="0"/>-->
 
 
-</FrameLayout>
+</RelativeLayout>

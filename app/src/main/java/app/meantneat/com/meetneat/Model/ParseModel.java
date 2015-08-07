@@ -318,7 +318,7 @@ public class ParseModel implements MyModel.ModelInterface {
                 try
                 {
                     ParseObject dish = query.get(dishID);
-                    ParseFile applicantResume = dish.getParseFile(AppConstants.DISH_IMG_FULL);
+                    ParseFile applicantResume = dish.getParseFile(AppConstants.DISH_IMG_THUMBNAIL);//changed to thumbnail
                     byte[] bytes = applicantResume.getData();
 
                     bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
