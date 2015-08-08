@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="fill_parent"
-    android:layout_height="80dp"
+    android:layout_height="84dp"
     android:background="@color/eat_black">
 
     <!--<ImageView-->
@@ -26,13 +26,11 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/add_fragment_fragment_dish_row_image_view"
         android:layout_width="84dp"
-        android:layout_height="fill_parent"
-        app:riv_corner_radius="4dip"
-        app:riv_border_width="0.5dip"
-        app:riv_border_color="#ffffff"
-        app:riv_mutate_background="true"
-        app:riv_tile_mode="repeat"
-         />
+        android:layout_height="84dp"
+        android:scaleType="center"
+
+
+        />
 
     <FrameLayout
         android:orientation="vertical"
@@ -60,17 +58,32 @@
             android:textColor="@color/eat_orange"
             android:gravity="center" />
 
-        <TextView
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="204dp"
             android:layout_height="42dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/add_fragment_fragment_dish_row_quantity_text_view"
-            android:layout_gravity="left|bottom"
-            android:textColor="@color/eat_white"
-            android:textSize="15dp"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="5dp" />
+            android:layout_gravity="bottom">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/imageView14"
+                android:background="@drawable/event_dishes_orange"
+                android:layout_gravity="top|center_horizontal" />
+
+            <TextView
+                android:layout_width="204dp"
+                android:layout_height="42dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text"
+                android:id="@+id/add_fragment_fragment_dish_row_quantity_text_view"
+                android:layout_gravity="left|bottom"
+                android:textColor="@color/eat_white"
+                android:textSize="15dp"
+                android:gravity="top|center_vertical"
+                android:layout_marginLeft="5dp"
+                android:paddingTop="3dp" />
+        </LinearLayout>
 
     </FrameLayout>
 

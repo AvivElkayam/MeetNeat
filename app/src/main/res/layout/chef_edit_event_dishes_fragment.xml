@@ -38,7 +38,8 @@
                         android:layout_height="50dp"
                         android:id="@+id/add_event_fragment_title_edit_text_id"
                         android:textColor="@color/eat_orange"
-                        android:text="Event name:" />
+                        android:text="Event name:"
+                        android:background="@drawable/gray_text_field" />
 
                     <LinearLayout
                         android:orientation="horizontal"
@@ -162,7 +163,9 @@
                 android:textIsSelectable="false"
                 android:textColor="@color/eat_white"
                 android:background="@drawable/gray_text_field"
-                android:paddingLeft="5dp" />
+                android:paddingLeft="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -329,7 +332,9 @@
                 android:layout_height="fill_parent"
                 android:id="@+id/add_event_fragment_list_view"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:divider="@color/eat_white"
+                android:dividerHeight="0.5dp" />
         </LinearLayout>
 
         <TextView

@@ -16,7 +16,7 @@
     </item>
 
     <!-- draw another block to cut-off the left and right bars -->
-    <item android:bottom="15.0dp">
+    <item android:bottom="5.0dp">
         <shape >
             <solid android:color="@color/eat_black" />
         </shape>

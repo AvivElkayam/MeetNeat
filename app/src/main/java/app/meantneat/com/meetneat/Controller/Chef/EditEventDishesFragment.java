@@ -149,7 +149,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
             final Dish dish = dishArrayList.get(position);
             final String title = dish.getTitle();
             String price = "Price: "+dish.getPrice();
-            String dishesLeft = "Dishes left: "+dish.getQuantity();
+            String dishesLeft = Double.toString(dish.getQuantity());
             final String description = dish.getDescriprion();
            // dishImageView = dish.getThumbnailImg();
 
@@ -161,25 +161,26 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
             priceTextView.setText("$"+Double.toString(dish.getPrice()));
 
             TextView quantityTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_quantity_text_view);
-            quantityTextView.setText("Dishes left: "+Double.toString(dish.getQuantity()));
+            quantityTextView.setText(Double.toString(dish.getQuantity()));
 
             //final ImageView imageView = (ImageView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_image_view);
             //final SelectableRoundedImageView imageView = (SelectableRoundedImageView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_image_view);
             final RoundedImageView imageView = (RoundedImageView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_image_view);
+            //imageView.setCornerRadius(imageView.getLayoutParams().width/2);
             if(dish.getThumbnailImg()==null)
             {
                 MyModel.getInstance().getModel().getDishPicture(dish.getDishID(),new MyModel.PictureCallback() {
                     @Override
                     public void pictureHasBeenFetched(Bitmap bitmap) {
                         dish.setThumbnailImage(bitmap);
-                        imageView.setBackground(new BitmapDrawable(bitmap));
-                        //imageView.setImageDrawable(new BitmapDrawable(bitmap));
+                        //imageView.setBackground(new BitmapDrawable(bitmap));
+                        imageView.setImageDrawable(new BitmapDrawable(bitmap));
                     }
                 });
             }
             else {
-                imageView.setBackground(new BitmapDrawable(BitmapFactory.decodeByteArray(dish.getThumbnailImg(), 0, dish.getThumbnailImg().length)));
-                //imageView.setImageDrawable(new BitmapDrawable(BitmapFactory.decodeByteArray(dish.getThumbnailImg(), 0, dish.getThumbnailImg().length)));
+                //imageView.setBackground(new BitmapDrawable(BitmapFactory.decodeByteArray(dish.getThumbnailImg(), 0, dish.getThumbnailImg().length)));
+                imageView.setImageDrawable(new BitmapDrawable(BitmapFactory.decodeByteArray(dish.getThumbnailImg(), 0, dish.getThumbnailImg().length)));
             }
 
 
