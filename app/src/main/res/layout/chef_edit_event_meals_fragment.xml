@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/eat_black"
+    android:id="@+id/s">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="140dp" >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="140dp"
+                android:layout_gravity="center_horizontal|top" >
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp"
+                        android:id="@+id/editText2"
+                        android:textColor="@color/eat_orange"
+                        android:text="Event name:"
+                        android:background="@drawable/gray_text_field"
+                        android:paddingLeft="5dp" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1" >
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1" >
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_weight="1" >
+
+                                <TextView
+                                    style="@android:style/Widget.Holo.Spinner"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="Staring date"
+                                    android:id="@+id/chef_edit_event_meals_starting_date_text_view"
+                                    android:layout_weight="1"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/eat_white"
+                                    android:gravity="left|center_vertical"
+                                    android:layout_marginLeft="5dp"
+                                    android:paddingLeft="5dp" />
+
+                                <TextView
+                                    style="@android:style/Widget.Holo.Spinner"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="Starting time"
+                                    android:id="@+id/chef_edit_event_meals_starting_time_text_view"
+                                    android:layout_weight="1"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/eat_white"
+                                    android:gravity="left|center_vertical"
+                                    android:layout_marginLeft="5dp"
+                                    android:paddingLeft="5dp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="1" >
+
+                                <TextView
+                                    style="@android:style/Widget.Holo.Spinner"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="Ending date"
+                                    android:id="@+id/chef_edit_event_meals_ending_date_text_view"
+                                    android:layout_weight="1"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/eat_white"
+                                    android:gravity="left|center_vertical"
+                                    android:layout_marginLeft="5dp"
+                                    android:paddingLeft="5dp" />
+
+                                <TextView
+                                    style="@android:style/Widget.Holo.Spinner"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="Ending time"
+                                    android:id="@+id/chef_edit_event_meals_ending_time_text_view"
+                                    android:layout_weight="1"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/eat_white"
+                                    android:gravity="left|center_vertical"
+                                    android:layout_marginLeft="5dp"
+                                    android:paddingLeft="5dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1.3" >
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:id="@+id/imageView15"
+                                android:layout_gravity="center"
+                                android:background="@drawable/location" />
+
+                            <AutoCompleteTextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:id="@+id/autoCompleteTextView"
+                                android:focusable="true"
+                                android:dropDownWidth="fill_parent"
+                                android:completionThreshold="1"
+                                android:dropDownHeight="100dp"
+                                android:layout_weight="1.3"
+                                android:textColor="@color/eat_white"
+                                android:textColorHint="@color/eat_white"
+                                android:hint="Google location"
+                                android:background="@drawable/gray_text_field"
+                                android:paddingLeft="5dp"
+                                android:layout_marginRight="5dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText3"
+                android:text="Location"
+                android:textSize="15dp"
+                android:background="@drawable/gray_text_field"
+                android:visibility="gone" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/chef_edit_event_meals_apparment_number_edit_text"
+                android:text="Appartment Number"
+                android:textSize="12dp"
+                android:textIsSelectable="false"
+                android:textColor="@color/eat_white"
+                android:background="@drawable/gray_text_field"
+                android:paddingLeft="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/chef_edit_event_meals_menu_edit_text"
+            android:background="@drawable/gray_text_field"
+            android:layout_weight="1"
+            android:layout_marginBottom="150dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:text="Menu"
+            android:textSize="12dp"
+            android:paddingLeft="5dp"
+            android:textColor="@color/eat_white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Create event"
+            android:id="@+id/chef_edit_event_meals_create_event_button"
+            android:textColor="@color/eat_white"
+            android:background="@drawable/green_button"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:layout_marginTop="110dp" />
+    </LinearLayout>
+
+</LinearLayout>

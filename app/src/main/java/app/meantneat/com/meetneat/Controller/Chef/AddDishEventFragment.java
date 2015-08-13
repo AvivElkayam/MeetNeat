@@ -23,8 +23,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseUser;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import app.meantneat.com.meetneat.Camera.LocationAutoComplete;
+import app.meantneat.com.meetneat.MeetnEatDates;
 import app.meantneat.com.meetneat.R;
 
 /**
@@ -43,6 +45,10 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
     View v;
     Button continueButton;
 
+    String whereToGo;
+    public static String goToMeals = "meals";
+    public static String goToDishes = "dishes";
+
     private GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -54,6 +60,7 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
     //String s = ParseUser.getCurrentUser().getObjectId();
+        whereToGo = getArguments().getString("whereToGo");
         v = inflater.inflate(R.layout.chef_add_event_dishes_fragment_layout,container,false);
         calendar=Calendar.getInstance();
         dateTextView = (TextView)v.findViewById(R.id.add_dish_event_fragment_date_text_view_id);
@@ -90,13 +97,14 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
 
                     bundle.putBoolean("is_new", true);
                     //set Fragmentclass Arguments
-                    EditEventDishesFragment fragment = new EditEventDishesFragment();
-                    fragment.setArguments(bundle);
-                    Fragment f = getParentFragment();
-                    FragmentManager fragmentManager = f.getChildFragmentManager();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.chef_event_dishes_fragment_container, fragment, "added_event").addToBackStack("added_new")
-                            .commit();
+                    if(whereToGo.equals(goToDishes))
+                    {
+                        wrapInputsAndGoToNewDishEvent(bundle);
+                    }
+                    if(whereToGo.equals(goToMeals))
+                    {
+                        wrapInputsAndGoToNewMealsEvent(bundle);
+                    }
                 }
                 else
                 {
@@ -162,7 +170,7 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
                         eventYear=year;
                         eventMonth=monthOfYear;
                         eventDay=dayOfMonth;
-                        ((TextView) v).setText(dayOfMonth+"."+monthOfYear+"."+year);
+                        ((TextView) v).setText(MeetnEatDates.getDateString(year, monthOfYear, dayOfMonth));
                     }
                 },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.show();
@@ -201,5 +209,25 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+    }
+    public void wrapInputsAndGoToNewDishEvent(Bundle bundle)
+    {
+        EditEventDishesFragment fragment = new EditEventDishesFragment();
+        fragment.setArguments(bundle);
+        Fragment f = getParentFragment();
+        FragmentManager fragmentManager = f.getChildFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.chef_event_dishes_fragment_container, fragment, "added_event").addToBackStack("added_new")
+                .commit();
+    }
+    public void wrapInputsAndGoToNewMealsEvent(Bundle bundle)
+    {
+        EditEventMealsFragment fragment = new EditEventMealsFragment();
+        fragment.setArguments(bundle);
+        Fragment f = getParentFragment();
+        FragmentManager fragmentManager = f.getChildFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.chef_event_dishes_fragment_container, fragment, "added_event").addToBackStack("added_new")
+                .commit();
     }
 }

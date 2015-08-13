@@ -3,6 +3,8 @@ package app.meantneat.com.meetneat.Controller.Chef;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -27,7 +31,9 @@ public class ChefEventMealsFragment extends Fragment
     private ArrayList<EventMeals> eventMealsArrayList;
     private ListView eventsListView;
     private EventRowListAdapter eventsArrayAdapter;
-    View view;
+    private View view;
+    private FloatingActionButton floatingAddButton;
+
     public class EventRowListAdapter extends ArrayAdapter<EventMeals>
     {
         public EventRowListAdapter()
@@ -78,6 +84,26 @@ public class ChefEventMealsFragment extends Fragment
             return itemView;
         }
     }
+    private void initAddEventButton()
+    {
+        floatingAddButton = (FloatingActionButton) getActivity().findViewById(R.id.chef_events_meals_floating_add_button);
+        floatingAddButton.attachToListView(eventsListView);
+        floatingAddButton.setColorNormal(getResources().getColor(R.color.eat_orange));
+        floatingAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getParentFragment().getChildFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                AddDishEventFragment fragment = new AddDishEventFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("whereToGo",AddDishEventFragment.goToMeals);
+                fragment.setArguments(bundle);
+                fragmentTransaction.replace(R.id.chef_event_meals_fragment_container, fragment).addToBackStack("addNewEventMeals");
+                fragmentTransaction.commit();
+                floatingAddButton.hide();
+            }
+        });
+    }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -101,11 +127,10 @@ public class ChefEventMealsFragment extends Fragment
         //EventMeals eventDishes2 = new EventMeals("חינגה לובית",,15,8);
 
         eventMealsArrayList.add(eventMeals1);
-       // eventMealsArrayList.add(eventDishes2);
-
         eventsListView =(ListView)getActivity().findViewById(R.id.chef_events_meals_list_view);
         eventsArrayAdapter = new EventRowListAdapter();
         eventsListView.setAdapter(eventsArrayAdapter);
+        initAddEventButton();
     }
 
     @Override

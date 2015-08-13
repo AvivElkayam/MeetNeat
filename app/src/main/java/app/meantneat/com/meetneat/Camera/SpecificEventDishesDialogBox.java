@@ -161,7 +161,7 @@ public class SpecificEventDishesDialogBox {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SpecificDishDialogBox specificDishDialogBox = new SpecificDishDialogBox(context,dish.getDishID(),dish.getTitle(),Double.toString(dish.getPrice()),Double.toString(dish.getQuantityLeft()));
+                    SpecificDishDialogBox specificDishDialogBox = new SpecificDishDialogBox(context,dish);
                     specificDishDialogBox.show();
                 }
             });

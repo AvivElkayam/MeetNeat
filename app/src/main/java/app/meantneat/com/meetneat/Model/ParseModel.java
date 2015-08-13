@@ -110,8 +110,8 @@ public class ParseModel implements MyModel.ModelInterface {
 
         //save event first
         final ParseObject eventObject = new ParseObject(AppConstants.EVENT_DISHES);
-        Date startingDate = new Date(event.getEventYear(), event.getEventMonth(), event.getEventDay(), event.getStartingHour(), event.getStartingMinute());
-        Date endingDate = new Date(event.getEventYear(), event.getEventMonth(), event.getEventDay(), event.getEndingHour(), event.getEndingMinute());
+        Date startingDate = new Date(event.getEventYear()-1900, event.getEventMonth(), event.getEventDay(), event.getStartingHour(), event.getStartingMinute());
+        Date endingDate = new Date(event.getEventYear()-1900, event.getEventMonth(), event.getEventDay(), event.getEndingHour(), event.getEndingMinute());
         eventObject.put(AppConstants.EVENT_DISHES_CHEF_ID, ParseUser.getCurrentUser().getObjectId());
         eventObject.put(AppConstants.EVENT_DISHES_START_DATE, startingDate);
         eventObject.put(AppConstants.EVENT_DISHES_END_DATE, endingDate);
@@ -479,6 +479,7 @@ public class ParseModel implements MyModel.ModelInterface {
                 ParseGeoPoint geoPoint = new ParseGeoPoint(event.getLatitude(), event.getLongitude());
                 eventObject.put(AppConstants.EVENT_DISHES_GEO_POINT, geoPoint);
                 eventObject.put(AppConstants.EVENT_DISHES_TITLE, event.getTitle());
+                editDishesForEvent(event.getEventsDishes());
                 try {
                     eventObject.save();
                 } catch (ParseException e) {
@@ -496,7 +497,24 @@ public class ParseModel implements MyModel.ModelInterface {
             }
         }.execute();
     }
-
+    private void editDishesForEvent(ArrayList<Dish> dishes)
+    {
+        for(Dish dish : dishes)
+        {
+            ParseQuery query = new ParseQuery(AppConstants.DISH);
+            ParseObject object = null;
+            try {
+               object  = query.get(dish.getDishID());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            object.put(AppConstants.DISH_DISHES_LEFT,dish.getQuantityLeft());
+            object.put(AppConstants.DISH_PRICE,dish.getPrice());
+            object.put(AppConstants.DISH_TITLE,dish.getTitle());
+            object.put(AppConstants.DISH_DESCRIPTION,dish.getDescriprion());
+            object.saveInBackground();
+        }
+    }
     @Override
     public void getEventsDishes(String id, final MyModel.DishesCallback callback) {
         new AsyncTask<String, Void, Void>() {

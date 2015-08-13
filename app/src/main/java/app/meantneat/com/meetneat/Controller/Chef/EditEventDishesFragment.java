@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -62,6 +63,7 @@ import app.meantneat.com.meetneat.Camera.LocationAutoComplete;
 import app.meantneat.com.meetneat.Entities.Dish;
 
 import app.meantneat.com.meetneat.Entities.EventDishes;
+import app.meantneat.com.meetneat.MeetnEatDates;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 
@@ -71,9 +73,8 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     private GoogleApiClient mGoogleApiClient;
 
 
-    int PLACE_PICKER_REQUEST = 2;
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-
+    private int PLACE_PICKER_REQUEST = 2;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static int REQUEST_PICTURE = 1;
     private static int REQUEST_CROP_PICTURE = 2;
     LocationAutoComplete lAC;
@@ -105,7 +106,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     View v1,v2,v3;
     //add dish dialog views
     private LinearLayout dialogBoxLayoutContainer;
-    private Button nextButton,backButton;
+    private Button nextButton,backButton,continueButton;
     private EditText addDishTitleEditText,addDishPriceEditText,addDishDishesLeftEditText,addDishDescriptionEditText;
     private ImageView addDishImageView, dishImageView;
     private String dishTitle,dishPrice,dishDescription,dishQuantity;
@@ -154,13 +155,13 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
            // dishImageView = dish.getThumbnailImg();
 
 
-            TextView titleTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_title_text_view);
+            final TextView titleTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_title_text_view);
             titleTextView.setText(title);
 
-            TextView priceTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_price_text_view);
+            final TextView priceTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_price_text_view);
             priceTextView.setText("$"+Double.toString(dish.getPrice()));
 
-            TextView quantityTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_quantity_text_view);
+            final TextView quantityTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_quantity_text_view);
             quantityTextView.setText(Double.toString(dish.getQuantity()));
 
             //final ImageView imageView = (ImageView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_image_view);
@@ -198,8 +199,25 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EditDishDialogBox editDishDialogBox = new EditDishDialogBox(getActivity(),dish);
+                    dish.setDishIndex(position);
+                    final EditDishDialogBox editDishDialogBox = new EditDishDialogBox(getActivity(),dish);
                     editDishDialogBox.show();
+                    editDishDialogBox.getDialogBox().setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            dish.setTitle(editDishDialogBox.getDish().getTitle());
+                            dish.setDescriprion(editDishDialogBox.getDish().getDescriprion());
+                            dish.setPrice(editDishDialogBox.getDish().getPrice());
+                            dish.setQuantityLeft(editDishDialogBox.getDish().getQuantityLeft());
+                            titleTextView.setText(dish.getTitle());
+
+                            priceTextView.setText("$"+Double.toString(dish.getPrice()));
+
+                            quantityTextView.setText(Double.toString(dish.getQuantityLeft()));
+
+                          //  dishRowListAdapter.notifyDataSetChanged();
+                        }
+                    });
                 }
             });
             return itemView;
@@ -273,9 +291,6 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     }
     private void getEventDetailsFromBundle()
     {
-
-
-
         startingYear = getArguments().getInt("year");
         startingMonth = getArguments().getInt("month");
         startingDay = getArguments().getInt("day");
@@ -302,8 +317,8 @@ private void initViews()
 {
 
 
-
-    createEventButton = (Button)getActivity().findViewById(R.id.add_event_fragment_add_event_button_id);
+   // createEventButton = (Button)getActivity().findViewById(R.id.chef_edit_event_continue_button_id);
+    createEventButton = (Button)getActivity().findViewById(R.id.chef_edit_event_continue_button_id);
     eventTitleEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_title_edit_text_id);
     eventLocationEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_location_edit_text_id);
     eventApartmentNumberEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_apartment_numebr_edit_text_id);
@@ -364,7 +379,7 @@ private void initViews()
                     startingYear=year;
                     startingMonth=monthOfYear;
                     startingDay=dayOfMonth;
-                    ((TextView) v).setText(dayOfMonth+"."+monthOfYear+"."+year);
+                    ((TextView) v).setText(MeetnEatDates.getDateString(year,monthOfYear,dayOfMonth));
                 }
             },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.show();
@@ -379,7 +394,7 @@ private void initViews()
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 startingHour = hourOfDay;
                     startingMinute=minute;
-                    ((TextView) v).setText(hourOfDay+":"+minute);
+                    ((TextView) v).setText(MeetnEatDates.getTimeString(hourOfDay,minute));
                 }
             },calendar.get(Calendar.HOUR),calendar.get(Calendar.MINUTE),true);
             timePickerDialog.show();
@@ -410,7 +425,7 @@ private void initViews()
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                     endingHour = hourOfDay;
                     endingMinute = minute;
-                    ((TextView) v).setText(hourOfDay + ":" + minute);
+                    ((TextView) v).setText(MeetnEatDates.getTimeString(hourOfDay,minute));
                 }
             }, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), true);
             timePickerDialog.show();
@@ -425,16 +440,28 @@ private void initViews()
         }
     });
     getEventDetailsFromBundle();
-    if(isNew==true) {
-        createEventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                wrapAllDataToEventAndUpdateServer();
-            }
-        });
-    }
-    else
+    initCreateEventButton();
+    initListView();
+
+    if(isNew==false)
     {
+        getEventsDishes();
+    }
+
+
+}
+    private void initCreateEventButton()
+    {
+        if(isNew==true) {
+            createEventButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    wrapAllDataToEventAndUpdateServer();
+                }
+            });
+        }
+        else
+        {
             createEventButton.setText("Edit event");
             createEventButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -469,10 +496,9 @@ private void initViews()
             });
 
 
+        }
     }
-    initListView();
-
-    if(isNew==false)
+private void getEventsDishes()
     {
         MyModel.getInstance().getModel().getEventsDishes(getArguments().getString("eventID"),new MyModel.DishesCallback() {
             @Override
@@ -503,21 +529,11 @@ private void initViews()
             }
         });
     }
-
-
-}
-
     private void initListView() {
         dishArrayList = new ArrayList<>();
-//        dishArrayList.add(new Dish("פרגית במחבת","מנה טעימה ומשביעה עם טעמים עשירים",34,7,true,true,null));
-//        dishArrayList.add(new Dish("שניצל דה דיינר","שניצל קלאסי עם רוטב טעים",27.90,9,true,true,null));
-//        dishArrayList.add(new Dish("סלט פלחים","מבחר ירקות העונה חתוכים גס",19,10,true,true,null));
-//        dishArrayList.add(new Dish("שרימפס חמאה ושום","מנת שרימפס קלאסי עם רוטב מנצח",46.90,9,true,true,null));
-
         dishRowListAdapter = new DishRowListAdapter();
         dishesListView = (ListView)getActivity().findViewById(R.id.add_event_fragment_list_view);
         dishesListView.setAdapter(dishRowListAdapter);
-
     }
 
 
@@ -548,9 +564,11 @@ private void initViews()
     }
     private void buildDialogBoxPhases()
     {
+        //3 vies - 1 for each phase in the "add dish" part
         v1 = getActivity().getLayoutInflater().inflate(R.layout.chef_add_dish_phase_one,dialogBoxLayoutContainer,false);
         addDishTitleEditText = (EditText)v1.findViewById(R.id.add_dish_phase_one_title_edit_text_id);
         addDishDescriptionEditText = (EditText)v1.findViewById(R.id.add_dish_phase_one_description_edit_text_id);
+
         v2 = getActivity().getLayoutInflater().inflate(R.layout.chef_add_dish_phase_two,dialogBoxLayoutContainer,false);
         addDishPriceEditText = (EditText)v2.findViewById(R.id.add_dish_phase_two_price_edit_text_id);
         addDishDishesLeftEditText = (EditText)v2.findViewById(R.id.add_dish_phase_two_quantity_edit_text_id);
@@ -628,7 +646,7 @@ private void initViews()
 
                         if(newDish.getFullsizeImg()==null)
                         {
-                            Toast.makeText(getActivity(),"Please fill in details",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),"Please choose a photo to the image",Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
@@ -685,10 +703,10 @@ private void initViews()
             // setting the output image file and size to 200x200 pixels square.
             Uri croppedImage = Uri.fromFile(croppedImageFile);
 
-            CropImageIntentBuilder cropImage = new CropImageIntentBuilder(200, 200, croppedImage);
-            cropImage.setOutlineColor(0xFF03A9F4);
-            cropImage.setSourceImage(data.getData());
-            Intent a = cropImage.getIntent(getActivity());
+//            CropImageIntentBuilder cropImage = new CropImageIntentBuilder(200, 200, croppedImage);
+//            cropImage.setOutlineColor(0xFF03A9F4);
+//            cropImage.setSourceImage(data.getData());
+//            Intent a = cropImage.getIntent(getActivity());
 
 
 
@@ -709,7 +727,7 @@ private void initViews()
             newDish.setThumbnailImg(bitmapToByteArr(bitmapArray[1]));
             addDishImageView.setImageBitmap(bitmapArray[1]);
 
-            startActivityForResult(cropImage.getIntent(getActivity()), REQUEST_CROP_PICTURE);
+           // startActivityForResult(cropImage.getIntent(getActivity()), REQUEST_CROP_PICTURE);
 
 
         } else if ((requestCode == REQUEST_CROP_PICTURE) && (resultCode == Activity.RESULT_OK)) {

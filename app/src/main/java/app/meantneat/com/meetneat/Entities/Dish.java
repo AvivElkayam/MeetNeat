@@ -20,6 +20,15 @@ public class Dish {
     private byte[] fullsizeImg=null;
     private Bitmap thumbnailImage,fullImage;
     private String dishID,chefID;
+    private int dishIndex;
+
+    public int getDishIndex() {
+        return dishIndex;
+    }
+
+    public void setDishIndex(int dishIndex) {
+        this.dishIndex = dishIndex;
+    }
 
     public Bitmap getThumbnailImage() {
         return thumbnailImage;

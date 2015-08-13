@@ -153,6 +153,9 @@ public class ChefEventDishesFragment extends Fragment
                 FragmentManager fragmentManager = getParentFragment().getChildFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 AddDishEventFragment fragment = new AddDishEventFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("whereToGo",AddDishEventFragment.goToDishes);
+                fragment.setArguments(bundle);
                 fragmentTransaction.replace(R.id.chef_event_dishes_fragment_container, fragment).addToBackStack("addNewEventDish");
                 fragmentTransaction.commit();
                 floatingAddButton.hide();

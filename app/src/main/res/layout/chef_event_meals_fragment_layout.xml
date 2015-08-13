@@ -11,5 +11,15 @@
         android:id="@+id/chef_events_meals_list_view"
         android:layout_gravity="center_horizontal"
         android:layout_weight="8" />
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/chef_events_meals_floating_add_button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="left|bottom"
+        android:layout_marginBottom="20dp"
 
+        android:text="+"
+        android:textColor="@drawable/plus_icon"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/yellow_circle" />
 </LinearLayout>

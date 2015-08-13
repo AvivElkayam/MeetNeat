@@ -39,7 +39,8 @@
                         android:id="@+id/add_event_fragment_title_edit_text_id"
                         android:textColor="@color/eat_orange"
                         android:text="Event name:"
-                        android:background="@drawable/gray_text_field" />
+                        android:background="@drawable/gray_text_field"
+                        android:paddingLeft="5dp" />
 
                     <LinearLayout
                         android:orientation="horizontal"
@@ -53,28 +54,29 @@
                             android:layout_height="fill_parent"
                             android:layout_weight="1">
 
-                            <TextView
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:text="Staring date"
-                                android:id="@+id/add_event_fragment_starting_date_label"
-                                android:layout_weight="1"
-                                android:textSize="15dp"
-                                android:textColor="@color/eat_white"
-                                android:gravity="left|center_vertical"
-                                android:layout_marginLeft="5dp"
-                                android:background="@drawable/gray_text_field"
-                                android:paddingLeft="5dp" />
-
                             <LinearLayout
                                 android:orientation="horizontal"
-                                android:layout_width="fill_parent"
+                                android:layout_width="match_parent"
                                 android:layout_height="fill_parent"
+                                android:layout_gravity="center_horizontal"
                                 android:layout_weight="1">
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="Staring date"
+                                    android:id="@+id/add_event_fragment_starting_date_label"
+                                    android:layout_weight="1"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/eat_white"
+                                    android:gravity="left|center_vertical"
+                                    android:layout_marginLeft="5dp"
+                                    android:paddingLeft="5dp"
+                                    style="@android:style/Widget.Holo.Spinner" />
+
+                                <TextView
+                                    android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
                                     android:textAppearance="?android:attr/textAppearanceLarge"
                                     android:text="Starting time"
@@ -84,7 +86,28 @@
                                     android:textColor="@color/eat_white"
                                     android:gravity="left|center_vertical"
                                     android:layout_marginLeft="5dp"
-                                    android:background="@drawable/gray_text_field"
+                                    android:paddingLeft="5dp"
+                                    style="@android:style/Widget.Holo.Spinner" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    style="@android:style/Widget.Holo.Spinner"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="Ending date"
+                                    android:id="@+id/add_event_fragment_ending_date_label"
+                                    android:layout_weight="1"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/eat_white"
+                                    android:gravity="left|center_vertical"
+                                    android:layout_marginLeft="5dp"
                                     android:paddingLeft="5dp" />
 
                                 <TextView
@@ -97,9 +120,9 @@
                                     android:textSize="15dp"
                                     android:textColor="@color/eat_white"
                                     android:gravity="left|center_vertical"
-                                    android:background="@drawable/gray_text_field"
                                     android:layout_marginLeft="5dp"
-                                    android:paddingLeft="5dp" />
+                                    android:paddingLeft="5dp"
+                                    style="@android:style/Widget.Holo.Spinner" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -107,7 +130,7 @@
                             android:orientation="horizontal"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
-                            android:layout_weight="1">
+                            android:layout_weight="1.3">
 
                             <ImageView
                                 android:layout_width="32dp"
@@ -125,12 +148,13 @@
                                 android:dropDownWidth="fill_parent"
                                 android:completionThreshold="1"
                                 android:dropDownHeight="100dp"
-                                android:layout_weight="1"
+                                android:layout_weight="1.3"
                                 android:textColor="@color/eat_white"
                                 android:textColorHint="@color/eat_white"
                                 android:hint="Google location"
                                 android:background="@drawable/gray_text_field"
-                                android:paddingLeft="5dp" />
+                                android:paddingLeft="5dp"
+                                android:layout_marginRight="5dp" />
 
                         </LinearLayout>
 
@@ -314,15 +338,7 @@
                         android:layout_marginRight="10dp"
                         android:textColor="@color/eat_white" />
 
-                    <Button
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:text="Create event"
-                        android:id="@+id/add_event_fragment_add_event_button_id"
-                        android:layout_weight="4"
-                        android:textColor="@color/eat_white"
-                        android:background="@drawable/green_button"
-                        android:layout_marginRight="10dp" />
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -335,6 +351,7 @@
                 android:layout_weight="1"
                 android:divider="@color/eat_white"
                 android:dividerHeight="0.5dp" />
+
         </LinearLayout>
 
         <TextView
@@ -346,7 +363,8 @@
             android:background="@color/eat_black"
             android:gravity="center"
             android:textColor="@color/eat_white"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:layout_marginTop="10dp" />
     </FrameLayout>
 
 
@@ -405,9 +423,28 @@
         android:layout_height="64dp"
         android:layout_gravity="left|bottom"
         android:layout_marginBottom="20dp"
-
+    android:elevation="3dp"
         android:text="+"
-        android:textColor="@drawable/plus_icon"
+        android:textColor="@color/eat_white"
         android:layout_marginLeft="20dp"
         android:background="@drawable/yellow_circle" />
+
+    <!--<Button-->
+        <!--android:layout_width="150dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="Create Event"-->
+        <!--android:id="@+id/chef_edit_event_continue_button_id"-->
+
+        <!--android:textColor="@color/eat_white"-->
+        <!--android:background="@drawable/green_button"-->
+ <!--/>-->
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:text="Create event"
+        android:id="@+id/chef_edit_event_continue_button_id"
+        android:layout_gravity="bottom|center_horizontal"
+        android:textColor="@color/eat_white"
+        android:background="@drawable/green_button"
+        android:layout_marginBottom="25dp" />
 </FrameLayout>

@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 //import com.getbase.floatingactionbutton.FloatingActionButton;
+
+import com.melnykov.fab.FloatingActionButton;
 
 import java.io.File;
 import java.util.Calendar;
