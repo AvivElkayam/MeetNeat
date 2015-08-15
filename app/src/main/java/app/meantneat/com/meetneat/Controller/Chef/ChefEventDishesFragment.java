@@ -1,6 +1,6 @@
 package app.meantneat.com.meetneat.Controller.Chef;
 
-import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,9 +22,10 @@ import android.widget.TextView;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import app.meantneat.com.meetneat.AppConstants;
 import app.meantneat.com.meetneat.Entities.EventDishes;
+import app.meantneat.com.meetneat.MeetnEatDates;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 
@@ -65,12 +66,12 @@ public class ChefEventDishesFragment extends Fragment
 
             TextView titleTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_title_text_view);
             titleTextView.setText(title);
-
+            titleTextView.setTypeface(null, Typeface.BOLD);
             TextView dateTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_date_text_view);
-            dateTextView.setText(event.getEventDay()+"."+event.getEventMonth()+"."+event.getEventYear());
+            dateTextView.setText(MeetnEatDates.getDateString(event.getStartingYear(),event.getStartingMonth(),event.getStartingDay())+", "+MeetnEatDates.getTimeString(event.getStartingHour(),event.getStartingMinute()));
 
             TextView timeTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_time_text_view);
-            timeTextView.setText(event.getStartingHour()+":"+event.getStartingMinute()+" - "+event.getEndingHour()+":"+event.getEndingMinute());
+            timeTextView.setText(MeetnEatDates.getDateString(event.getEndingYear(), event.getEndingMonth(), event.getEndingDay()) + ", " + MeetnEatDates.getTimeString(event.getEndingHour(), event.getEndingMinute()));
 
             TextView locationTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_location_text_view);
             locationTextView.setText(event.getLocation());
@@ -111,7 +112,7 @@ public class ChefEventDishesFragment extends Fragment
     }
     private void getEventDishesFromServer()
     {
-        MyModel.getInstance().getModel().getChefsEventFromServer(new GetEventDishesCallback() {
+        MyModel.getInstance().getModel().getChefsEventDishesFromServer(new GetEventDishesCallback() {
             @Override
             public void done(ArrayList<EventDishes> eventDisheses) {
                 eventDishesArrayList.clear();
@@ -154,7 +155,7 @@ public class ChefEventDishesFragment extends Fragment
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 AddDishEventFragment fragment = new AddDishEventFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("whereToGo",AddDishEventFragment.goToDishes);
+                bundle.putString(AppConstants.WHERE_TO_GO,AddDishEventFragment.goToDishes);
                 fragment.setArguments(bundle);
                 fragmentTransaction.replace(R.id.chef_event_dishes_fragment_container, fragment).addToBackStack("addNewEventDish");
                 fragmentTransaction.commit();
@@ -193,18 +194,18 @@ public class ChefEventDishesFragment extends Fragment
     {
         EventDishes eventDishes = eventDishesArrayList.get(index);
         Bundle bundle = new Bundle();
-        bundle.putInt("year", eventDishes.getEventYear());
-        bundle.putInt("month", eventDishes.getEventMonth());
-        bundle.putInt("day", eventDishes.getEventDay());
-        bundle.putInt("starting_hour", eventDishes.getStartingHour());
-        bundle.putInt("starting_minute", eventDishes.getStartingMinute());
-        bundle.putInt("ending_hour", eventDishes.getEndingHour());
-        bundle.putInt("ending_minute", eventDishes.getEndingMinute());
-        bundle.putString("title", eventDishes.getTitle());
-        bundle.putString("location",eventDishes.getLocation());
-        bundle.putString("apartment_number", eventDishes.getApartmentNumber());
-        bundle.putBoolean("is_new", false);
-        bundle.putString("eventID",eventDishes.getEventId());
+        bundle.putInt(AppConstants.EVENT_STARTING_YEAR, eventDishes.getStartingYear());
+        bundle.putInt(AppConstants.EVENT_STARTING_MONTH, eventDishes.getStartingMonth());
+        bundle.putInt(AppConstants.EVENT_STARTING_DAY, eventDishes.getStartingDay());
+        bundle.putInt(AppConstants.EVENT_STARTING_HOUR, eventDishes.getStartingHour());
+        bundle.putInt(AppConstants.EVENT_STARTING_MINUTE, eventDishes.getStartingMinute());
+        bundle.putInt(AppConstants.EVENT_ENDING_HOUR, eventDishes.getEndingHour());
+        bundle.putInt(AppConstants.EVENT_ENDING_MINUTE, eventDishes.getEndingMinute());
+        bundle.putString(AppConstants.EVENT_TITLE, eventDishes.getTitle());
+        bundle.putString(AppConstants.EVENT_LOCATION,eventDishes.getLocation());
+        bundle.putString(AppConstants.EVENT_APARTMENT_NUMBER, eventDishes.getApartmentNumber());
+        bundle.putBoolean(AppConstants.IS_NEW, false);
+        bundle.putString(AppConstants.EVENT_ID,eventDishes.getEventId());
 //        ArrayList<String> dishesIDArrayList = new ArrayList<>();
 //        for(Dish dish : eventDishes.getEventsDishes())
 //        dishesIDArrayList.add(dish.getDishID());

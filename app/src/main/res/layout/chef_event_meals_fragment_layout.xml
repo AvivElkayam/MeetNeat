@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/chef_event_meals_fragment_container"
@@ -22,4 +22,4 @@
         android:textColor="@drawable/plus_icon"
         android:layout_marginLeft="20dp"
         android:background="@drawable/yellow_circle" />
-</LinearLayout>
+</FrameLayout>

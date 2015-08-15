@@ -20,7 +20,10 @@ import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 
+import app.meantneat.com.meetneat.Entities.EventDishes;
 import app.meantneat.com.meetneat.Entities.EventMeals;
+import app.meantneat.com.meetneat.MeetnEatDates;
+import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 
 /**
@@ -55,20 +58,20 @@ public class ChefEventMealsFragment extends Fragment
             //String date = eventMeal.getDate();
             //String mealsLeft = "Meals left: "+ eventMeal.getDishesLeft();
             String totalMeals = "Total meals: "+eventMeal.getTotalDishes();
-            String title = eventMeal.getTitle();
 
 
 
             TextView titleTextView = (TextView)itemView.findViewById(R.id.chef_event_meals_row_title_text_view);
-            titleTextView.setText(title);
+            titleTextView.setText(eventMeal.getTitle());
             TextView dateTextView = (TextView)itemView.findViewById(R.id.chef_event_meals_row_date_text_view);
-            //dateTextView.setText(date);
+            dateTextView.setText(MeetnEatDates.getDateString(eventMeal.getStartingYear(),eventMeal.getStartingMonth(),eventMeal.getStartingDay()));
+
             TextView timeTextView = (TextView)itemView.findViewById(R.id.chef_event_meals_row_time_text_view);
-            //timeTextView.setText(time);
+            timeTextView.setText(MeetnEatDates.getTimeString(eventMeal.getStartingHour(),eventMeal.getStartingMinute()));
             TextView mealsLeftTextView = (TextView)itemView.findViewById(R.id.chef_event_meals_row_meals_left_text_view);
-            //mealsLeftTextView.setText(mealsLeft);
-            TextView totalMealsTextView = (TextView)itemView.findViewById(R.id.chef_event_meals_row_total_meals_text_view);
-            totalMealsTextView.setText(totalMeals);
+            mealsLeftTextView.setText(totalMeals);
+//            TextView totalMealsTextView = (TextView)itemView.findViewById(R.id.chef_event_meals_row_total_meals_text_view);
+//            totalMealsTextView.setText("Total meals: "+totalMeals);
 
             Button editButton = (Button) itemView.findViewById(R.id.chef_event_meals_row_edit_button);
             editButton.setOnClickListener(new View.OnClickListener() {
@@ -104,11 +107,37 @@ public class ChefEventMealsFragment extends Fragment
             }
         });
     }
+    private void getEventMealsFromServer()
+    {
+        MyModel.getInstance().getModel().getChefsEventMealsFromServer(new GetEventMealsCallback() {
+            @Override
+            public void done(ArrayList<EventMeals> eventDisheses) {
+                eventMealsArrayList.clear();
+                eventMealsArrayList.addAll(eventDisheses);
+                eventsArrayAdapter.notifyDataSetChanged();
+//                swipeRefreshLayout.setRefreshing(false);
+//                progressBar.setVisibility(View.GONE);
+
+            }
+        });
+
+    }
+    public interface GetEventMealsCallback
+    {
+        public void done(ArrayList<EventMeals> eventMeals);
+    }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
         initViews();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getEventMealsFromServer();
+
     }
 
     @Override
@@ -154,5 +183,35 @@ public class ChefEventMealsFragment extends Fragment
         return super.onOptionsItemSelected(item);
     }
 
-
+    private void packDataToBundleAndPassToEditScreen(int index)
+    {
+        EventMeals eventMeals = eventMealsArrayList.get(index);
+        Bundle bundle = new Bundle();
+        bundle.putInt("year", eventMeals.getStartingYear());
+        bundle.putInt("month", eventMeals.getStartingMonth());
+        bundle.putInt("day", eventMeals.getStartingDay());
+        bundle.putInt("starting_hour", eventMeals.getStartingHour());
+        bundle.putInt("starting_minute", eventMeals.getStartingMinute());
+        bundle.putInt("ending_hour", eventMeals.getEndingHour());
+        bundle.putInt("ending_minute", eventMeals.getEndingMinute());
+        bundle.putString("title", eventMeals.getTitle());
+        bundle.putString("location",eventMeals.getLocation());
+        bundle.putString("apartment_number", eventMeals.getApartmentNumber());
+        bundle.putBoolean("is_new", false);
+        bundle.putString("eventID", eventMeals.getEventId());
+        //these fields are only for EVENT MEALS
+        bundle.putInt("price",eventMeals.getPrice());
+        bundle.putInt("meals_amount",eventMeals.getMealsLeft());
+        bundle.putString("menu",eventMeals.getMenu());
+//        ArrayList<String> dishesIDArrayList = new ArrayList<>();
+//        for(Dish dish : eventMeals.getEventsDishes())
+//        dishesIDArrayList.add(dish.getDishID());
+//        bundle.putStringArrayList("dishes",dishesIDArrayList);
+        EditEventDishesFragment fragment = new EditEventDishesFragment();
+        fragment.setArguments(bundle);
+        getParentFragment().getChildFragmentManager().beginTransaction()
+                .add(R.id.chef_event_dishes_fragment_container, fragment, "add_event")
+                .addToBackStack("1")
+                .commit();
+    }
 }

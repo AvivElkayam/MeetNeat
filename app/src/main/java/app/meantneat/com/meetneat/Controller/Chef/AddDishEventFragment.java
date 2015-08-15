@@ -25,6 +25,7 @@ import com.parse.ParseUser;
 import java.util.Calendar;
 import java.util.Date;
 
+import app.meantneat.com.meetneat.AppConstants;
 import app.meantneat.com.meetneat.Camera.LocationAutoComplete;
 import app.meantneat.com.meetneat.MeetnEatDates;
 import app.meantneat.com.meetneat.R;
@@ -38,8 +39,8 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
     EditText location,apartmentNumber,titleEditText;
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
-    int startingHour,startingMinute,endingHour,endingMinute;
-    int eventYear,eventMonth,eventDay;
+    int startingHour,startingMinute,startingYear,startingMonth,startingDay;
+    int endingHour,endingMinute,endingYear,endingMonth,endingDay;
     LocationAutoComplete lAC;
     Calendar calendar;
     View v;
@@ -60,7 +61,7 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
     //String s = ParseUser.getCurrentUser().getObjectId();
-        whereToGo = getArguments().getString("whereToGo");
+        whereToGo = getArguments().getString(AppConstants.WHERE_TO_GO);
         v = inflater.inflate(R.layout.chef_add_event_dishes_fragment_layout,container,false);
         calendar=Calendar.getInstance();
         dateTextView = (TextView)v.findViewById(R.id.add_dish_event_fragment_date_text_view_id);
@@ -82,20 +83,25 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
                     String locationString = lAC.getChoosenLocationString();
 
                     Bundle bundle = new Bundle();
-                    bundle.putInt("year", eventYear);
-                    bundle.putInt("month", eventMonth);
-                    bundle.putInt("day", eventDay);
-                    bundle.putInt("starting_hour", startingHour);
-                    bundle.putInt("starting_minute", startingMinute);
-                    bundle.putInt("ending_hour", endingHour);
-                    bundle.putInt("ending_minute", endingMinute);
-                    bundle.putString("title", titleEditText.getText().toString());
-                    bundle.putString("location", locationString);
-                    bundle.putDouble("latitude",locationCoord.latitude);
-                    bundle.putDouble("longitude",locationCoord.longitude);
-                    bundle.putString("apartment_number", apartmentNumber.getText().toString());
+                    bundle.putInt(AppConstants.EVENT_STARTING_YEAR,startingYear);
+                    bundle.putInt(AppConstants.EVENT_STARTING_MONTH, startingMonth);
+                    bundle.putInt(AppConstants.EVENT_STARTING_DAY, startingDay);
+                    bundle.putInt(AppConstants.EVENT_STARTING_HOUR, startingHour);
+                    bundle.putInt(AppConstants.EVENT_STARTING_MINUTE, startingMinute);
 
-                    bundle.putBoolean("is_new", true);
+                    bundle.putInt(AppConstants.EVENT_ENDING_YEAR,endingYear);
+                    bundle.putInt(AppConstants.EVENT_ENDING_MONTH, endingMonth);
+                    bundle.putInt(AppConstants.EVENT_ENDING_DAY, endingDay);
+                    bundle.putInt(AppConstants.EVENT_ENDING_HOUR, endingHour);
+                    bundle.putInt(AppConstants.EVENT_ENDING_MINUTE, endingMinute);
+
+                    bundle.putString(AppConstants.EVENT_TITLE, titleEditText.getText().toString());
+                    bundle.putString(AppConstants.EVENT_LOCATION, locationString);
+                    bundle.putDouble(AppConstants.EVENT_LATITUDE,locationCoord.latitude);
+                    bundle.putDouble(AppConstants.EVENT_LONGITUDE,locationCoord.longitude);
+                    bundle.putString(AppConstants.EVENT_APARTMENT_NUMBER, apartmentNumber.getText().toString());
+
+                    bundle.putBoolean(AppConstants.IS_NEW, true);
                     //set Fragmentclass Arguments
                     if(whereToGo.equals(goToDishes))
                     {
@@ -167,9 +173,9 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         TextView textView = (TextView)v;
-                        eventYear=year;
-                        eventMonth=monthOfYear;
-                        eventDay=dayOfMonth;
+                        startingYear=year;
+                        startingMonth=monthOfYear;
+                        startingDay=dayOfMonth;
                         ((TextView) v).setText(MeetnEatDates.getDateString(year, monthOfYear, dayOfMonth));
                     }
                 },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
@@ -218,7 +224,7 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
         FragmentManager fragmentManager = f.getChildFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.chef_event_dishes_fragment_container, fragment, "added_event").addToBackStack("added_new")
-                .commit();
+                .commit();//different container ID
     }
     public void wrapInputsAndGoToNewMealsEvent(Bundle bundle)
     {
@@ -227,7 +233,7 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
         Fragment f = getParentFragment();
         FragmentManager fragmentManager = f.getChildFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.chef_event_dishes_fragment_container, fragment, "added_event").addToBackStack("added_new")
-                .commit();
+                .replace(R.id.chef_event_meals_fragment_container, fragment, "added_event").addToBackStack("added_new")
+                .commit();//different container ID
     }
 }

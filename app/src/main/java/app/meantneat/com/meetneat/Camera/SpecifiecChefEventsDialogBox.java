@@ -95,7 +95,7 @@ public class SpecifiecChefEventsDialogBox {
         TextView timeText = (TextView)v.findViewById(R.id.hungry_specifiec_chef_events_dialog_box_event_dishes_cell_Time);
         TextView descriptionText = (TextView)v.findViewById(R.id.hungry_specifiec_chef_events_dialog_box_event_dishes_cell_Description);
 
-        dateText.setText(event.getEventDay()+"."+event.getEventMonth()+"."+event.getEventYear());
+        dateText.setText(event.getStartingDay()+"."+event.getStartingMonth()+"."+event.getStartingYear());
         final String time = (Integer.toString(event.getStartingHour())) + ":" +
                     (Integer.toString(event.getStartingMinute())) + "-" +
                      (Integer.toString(event.getEndingHour())) + ":" +

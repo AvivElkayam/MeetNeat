@@ -8,22 +8,24 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/eat_black">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="160dp" >
+            android:layout_height="180dp"
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="120dp" >
+                android:layout_height="140dp" >
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="140dp"
                     android:layout_gravity="center_horizontal|top" >
 
                     <LinearLayout
@@ -33,10 +35,12 @@
 
                         <EditText
                             android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
+                            android:layout_height="50dp"
                             android:id="@+id/edit_chef_event_meals_fragment_title_edit_text_id"
-                            android:layout_weight="1"
-                            android:hint="Event title:" />
+                            android:textColor="@color/eat_orange"
+                            android:text="Event name:"
+                            android:background="@drawable/gray_text_field"
+                            android:paddingLeft="5dp" />
 
                         <LinearLayout
                             android:orientation="horizontal"
@@ -44,51 +48,113 @@
                             android:layout_height="fill_parent"
                             android:layout_weight="1" >
 
-                            <TextView
+                            <LinearLayout
+                                android:orientation="vertical"
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
-                                android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:text="Staring date"
-                                android:id="@+id/edit_chef_event_meals_fragment_starting_date_label"
-                                android:layout_weight="1"
-                                android:textSize="15dp"
-                                android:gravity="center" />
+                                android:layout_weight="1" >
 
-                            <EditText
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_weight="1" >
+
+                                    <TextView
+                                        style="@android:style/Widget.Holo.Spinner"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="fill_parent"
+                                        android:textAppearance="?android:attr/textAppearanceLarge"
+                                        android:text="Staring date"
+                                        android:id="@+id/edit_chef_event_meals_fragment_starting_date_label"
+                                        android:layout_weight="1"
+                                        android:textSize="15dp"
+                                        android:textColor="@color/eat_white"
+                                        android:gravity="left|center_vertical"
+                                        android:layout_marginLeft="5dp"
+                                        android:paddingLeft="5dp" />
+
+                                    <TextView
+                                        style="@android:style/Widget.Holo.Spinner"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="fill_parent"
+                                        android:textAppearance="?android:attr/textAppearanceLarge"
+                                        android:text="Starting time"
+                                        android:id="@+id/edit_chef_event_meals_fragment_starting_time_label"
+                                        android:layout_weight="1"
+                                        android:textSize="15dp"
+                                        android:textColor="@color/eat_white"
+                                        android:gravity="left|center_vertical"
+                                        android:layout_marginLeft="5dp"
+                                        android:paddingLeft="5dp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="1" >
+
+                                    <TextView
+                                        style="@android:style/Widget.Holo.Spinner"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="fill_parent"
+                                        android:textAppearance="?android:attr/textAppearanceLarge"
+                                        android:text="Ending date"
+                                        android:id="@+id/edit_chef_event_meals_fragment_ending_date_label"
+                                        android:layout_weight="1"
+                                        android:textSize="15dp"
+                                        android:textColor="@color/eat_white"
+                                        android:gravity="left|center_vertical"
+                                        android:layout_marginLeft="5dp"
+                                        android:paddingLeft="5dp" />
+
+                                    <TextView
+                                        style="@android:style/Widget.Holo.Spinner"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="fill_parent"
+                                        android:textAppearance="?android:attr/textAppearanceLarge"
+                                        android:text="Ending time"
+                                        android:id="@+id/edit_chef_event_meals_fragment_ending_time_label"
+                                        android:layout_weight="1"
+                                        android:textSize="15dp"
+                                        android:textColor="@color/eat_white"
+                                        android:gravity="left|center_vertical"
+                                        android:layout_marginLeft="5dp"
+                                        android:paddingLeft="5dp" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
-                                android:id="@+id/edit_chef_event_meals_fragment_price_edit_text_id"
-                                android:layout_weight="1"
-                                android:hint="Price"
-                                android:inputType="number" />
+                                android:layout_weight="1.3" >
 
-                        </LinearLayout>
+                                <ImageView
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:id="@+id/imageView16"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/location" />
 
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="1" >
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:text="Ending time"
-                                android:id="@+id/edit_chef_event_meals_fragment_ending_time_label"
-                                android:layout_weight="1"
-                                android:textSize="15dp"
-                                android:gravity="center" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:text="Starting time"
-                                android:id="@+id/edit_chef_event_meals_fragment_starting_time_label"
-                                android:layout_weight="1"
-                                android:textSize="15dp"
-                                android:gravity="center" />
+                                <AutoCompleteTextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:id="@+id/edit_chef_event_meals_fragment_location_edit_text_id"
+                                    android:focusable="true"
+                                    android:dropDownWidth="fill_parent"
+                                    android:completionThreshold="1"
+                                    android:dropDownHeight="100dp"
+                                    android:layout_weight="1.3"
+                                    android:textColor="@color/eat_white"
+                                    android:textColorHint="@color/eat_white"
+                                    android:hint="Google location"
+                                    android:background="@drawable/gray_text_field"
+                                    android:paddingLeft="5dp"
+                                    android:layout_marginRight="5dp" />
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -102,50 +168,76 @@
                 <EditText
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edit_chef_event_meals_fragment_location_edit_text_id"
-                    android:layout_weight="1"
+                    android:id="@+id/editText5"
                     android:text="Location"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:background="@drawable/gray_text_field"
+                    android:visibility="gone" />
 
                 <EditText
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/edit_chef_event_meals_fragment_meals_amount_edit_text_id"
-                    android:layout_weight="1"
-                    android:text="Meals amount"
-                    android:textSize="15dp" />
-
-                <EditText
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:id="@+id/edit_chef_event_meals_apartment_numebr_edit_text_id"
-                    android:layout_weight="1"
                     android:text="Appartment Number"
                     android:textSize="12dp"
-                    android:textIsSelectable="false" />
+                    android:textIsSelectable="false"
+                    android:textColor="@color/eat_white"
+                    android:background="@drawable/gray_text_field"
+                    android:paddingLeft="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" />
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.6">
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/edit_chef_event_meals_fragment_meals_amount_edit_text_id"
+                android:layout_weight="1"
+                android:text="Meals amount"
+                android:textSize="15dp"
+                android:textColor="@color/eat_white"
+                android:background="@drawable/gray_text_field"
+                android:textColorHint="@color/eat_white"
+                android:layout_marginLeft="5dp" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/edit_chef_event_meals_fragment_price_edit_text_id"
+                android:layout_weight="1"
+                android:hint="Price"
+                android:inputType="number"
+                android:textColorHint="@color/eat_white"
+                android:textColor="@color/eat_white"
+                android:background="@drawable/gray_text_field"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:weightSum="1">
+            android:layout_weight="1.4">
 
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/editText"
-                android:layout_weight="0.88"
-                android:hint="Buffet - Bendict Style\nEach one will get 4 eggs - you can choose your egg style,Salads and Diary as much as you can" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Create event"
-                android:id="@+id/edit_chef_event_meals_fragment_add_event_button_id"
-                android:layout_gravity="center_horizontal" />
+                android:layout_weight="1.4"
+                android:hint="Buffet - Bendict Style\nEach one will get 4 eggs - you can choose your egg style,Salads and Diary as much as you can"
+                android:textColor="@color/eat_white"
+                android:background="@drawable/gray_text_field"
+                android:textColorHint="@color/eat_white"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" />
 
 
         </LinearLayout>
@@ -154,7 +246,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1.3">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -162,7 +254,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Pictures"
                 android:id="@+id/textView4"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/eat_white" />
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -175,7 +268,21 @@
                 android:orientation="horizontal"
                 />
             </HorizontalScrollView>
+
         </LinearLayout>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Create event"
+            android:id="@+id/edit_chef_event_meals_fragment_add_event_button_id"
+            android:layout_weight="1.5"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/eat_white"
+            android:background="@drawable/green_button"
+            android:layout_marginTop="10dp" />
 
     </LinearLayout>
 

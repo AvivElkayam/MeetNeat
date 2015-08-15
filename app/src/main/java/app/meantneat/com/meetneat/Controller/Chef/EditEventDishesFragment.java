@@ -58,6 +58,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import app.meantneat.com.meetneat.AppConstants;
 import app.meantneat.com.meetneat.Camera.CameraBasics;
 import app.meantneat.com.meetneat.Camera.LocationAutoComplete;
 import app.meantneat.com.meetneat.Entities.Dish;
@@ -291,21 +292,21 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     }
     private void getEventDetailsFromBundle()
     {
-        startingYear = getArguments().getInt("year");
-        startingMonth = getArguments().getInt("month");
-        startingDay = getArguments().getInt("day");
-        startingHour = getArguments().getInt("starting_hour");
-        startingMinute = getArguments().getInt("starting_minute");
-        endingHour = getArguments().getInt("ending_hour");
-        endingMinute = getArguments().getInt("ending_minute");
-        startingDateTextView.setText(startingDay+"."+"."+startingMonth+"."+startingYear);
-        startingTimeTextView.setText(startingHour+":"+startingMinute);
-        endingTimeTextView.setText(endingHour+":"+endingMinute);
-        eventTitleEditText.setText(getArguments().getString("title"));
-        apartmentNumber = getArguments().getString("apartment_number");
+        startingYear = getArguments().getInt(AppConstants.EVENT_STARTING_YEAR);
+        startingMonth = getArguments().getInt(AppConstants.EVENT_STARTING_MONTH);
+        startingDay = getArguments().getInt(AppConstants.EVENT_STARTING_DAY);
+        startingHour = getArguments().getInt(AppConstants.EVENT_STARTING_HOUR);
+        startingMinute = getArguments().getInt(AppConstants.EVENT_STARTING_MINUTE);
+        endingHour = getArguments().getInt(AppConstants.EVENT_ENDING_HOUR);
+        endingMinute = getArguments().getInt(AppConstants.EVENT_ENDING_MINUTE);
+        startingDateTextView.setText(MeetnEatDates.getDateString(startingYear,startingMonth,startingDay));
+        startingTimeTextView.setText(MeetnEatDates.getTimeString(startingHour,startingDay));
+        endingTimeTextView.setText(MeetnEatDates.getTimeString(endingHour,endingMinute));
+        eventTitleEditText.setText(getArguments().getString(AppConstants.EVENT_TITLE));
+        apartmentNumber = getArguments().getString(AppConstants.EVENT_APARTMENT_NUMBER);
         eventApartmentNumberEditText.setText(apartmentNumber);
-        location = getArguments().getString("location");
-        isNew = getArguments().getBoolean("is_new");
+        location = getArguments().getString(AppConstants.EVENT_LOCATION);
+        isNew = getArguments().getBoolean(AppConstants.IS_NEW);
 //        if(isNew==false)
 //        {
 //            dishesIDArrayList=getArguments().getStringArrayList("dishes");
@@ -485,7 +486,7 @@ private void initViews()
                             dishArrayList,
                             locationCoord.longitude,
                             locationCoord.latitude);
-                    event.setEventId(getArguments().getString("eventID"));
+                    event.setEventId(getArguments().getString(AppConstants.EVENT_ID));
                     MyModel.getInstance().getModel().editEvent(event,new MyModel.EditEventCallback() {
                         @Override
                         public void eventHasBeenEdited() {

@@ -9,8 +9,9 @@ public class EventDishes {
     private String title;
 //    private String date;
 //    private String time;
-    int startingHour,startingMinute,endingHour,endingMinute;
-    int eventYear,eventMonth,eventDay;
+    int startingHour,startingMinute,startingYear, startingMonth, startingDay;
+
+    int endingYear, endingMonth,endingDay,endingHour,endingMinute;
     private String location,apartmentNumber;
     private String eventId;
     private ArrayList<Dish> eventsDishes;
@@ -23,6 +24,30 @@ public class EventDishes {
 
     public void setChefName(String chefName) {
         this.chefName = chefName;
+    }
+
+    public int getEndingYear() {
+        return endingYear;
+    }
+
+    public void setEndingYear(int endingYear) {
+        this.endingYear = endingYear;
+    }
+
+    public int getEndingMonth() {
+        return endingMonth;
+    }
+
+    public void setEndingMonth(int endingMonth) {
+        this.endingMonth = endingMonth;
+    }
+
+    public int getEndingDay() {
+        return endingDay;
+    }
+
+    public void setEndingDay(int endingDay) {
+        this.endingDay = endingDay;
     }
 
     public String getChefID() {
@@ -52,15 +77,15 @@ public class EventDishes {
     public EventDishes() {
     }
 
-    public EventDishes(String title, int startingHour, int startingMinute, int endingHour, int endingMinute, int eventYear, int eventMonth, int eventDay, String location, String apartmentNumber, String eventId, ArrayList<Dish> eventsDishes,double longitude,double latitude) {
+    public EventDishes(String title, int startingHour, int startingMinute, int endingHour, int endingMinute, int eventYear, int startingMonth, int eventDay, String location, String apartmentNumber, String eventId, ArrayList<Dish> eventsDishes,double longitude,double latitude) {
         this.title = title;
         this.startingHour = startingHour;
         this.startingMinute = startingMinute;
         this.endingHour = endingHour;
         this.endingMinute = endingMinute;
-        this.eventYear = eventYear;
-        this.eventMonth = eventMonth;
-        this.eventDay = eventDay;
+        this.startingYear = eventYear;
+        this.startingMonth = startingMonth;
+        this.startingDay = eventDay;
         this.location = location;
         this.apartmentNumber = apartmentNumber;
         this.eventId = eventId;
@@ -125,28 +150,28 @@ public class EventDishes {
         this.endingMinute = endingMinute;
     }
 
-    public int getEventYear() {
-        return eventYear;
+    public int getStartingYear() {
+        return startingYear;
     }
 
-    public void setEventYear(int eventYear) {
-        this.eventYear = eventYear;
+    public void setStartingYear(int startingYear) {
+        this.startingYear = startingYear;
     }
 
-    public int getEventMonth() {
-        return eventMonth;
+    public int getStartingMonth() {
+        return startingMonth;
     }
 
-    public void setEventMonth(int eventMonth) {
-        this.eventMonth = eventMonth;
+    public void setStartingMonth(int startingMonth) {
+        this.startingMonth = startingMonth;
     }
 
-    public int getEventDay() {
-        return eventDay;
+    public int getStartingDay() {
+        return startingDay;
     }
 
-    public void setEventDay(int eventDay) {
-        this.eventDay = eventDay;
+    public void setStartingDay(int startingDay) {
+        this.startingDay = startingDay;
     }
 
     public String getEventId() {

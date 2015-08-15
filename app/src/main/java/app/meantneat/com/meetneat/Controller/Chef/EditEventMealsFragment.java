@@ -6,8 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,12 +21,11 @@ import android.widget.Toast;
 
 //import com.getbase.floatingactionbutton.FloatingActionButton;
 
-import com.melnykov.fab.FloatingActionButton;
-
 import java.io.File;
 import java.util.Calendar;
 
 import app.meantneat.com.meetneat.Entities.EventMeals;
+import app.meantneat.com.meetneat.MeetnEatDates;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
 
@@ -37,13 +34,13 @@ public class EditEventMealsFragment extends android.support.v4.app.Fragment {
 
     LinearLayout galleryLayout;
     View v;
-    private TextView startingTimeTextView,startingDateTextView,endingTimeTextView,eventMealsAmountEditText;
+    private TextView startingTimeTextView,startingDateTextView,endingDateTextView,endingTimeTextView,eventMealsAmountEditText;
 
-    private DatePickerDialog datePickerDialog;
+    private DatePickerDialog startingDatePickerDialog,endingDatePickerDialog;
     private TimePickerDialog timePickerDialog;
     private int startingYear,startingMonth,startingDay,startingHour,startingMinute,mealsAmount;
     private EditText eventTitleEditText,eventLocationEditText,eventApartmentNumberEditText,priceEditText;
-    private int endingHour,endingMinute;
+    private int endingYear,endingMonth,endingDay,endingHour,endingMinute;
     private Calendar calendar;
     private Button createEventButton;
     private String apartmentNumber,location;
@@ -143,7 +140,7 @@ public class EditEventMealsFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v =  inflater.inflate(R.layout.chef_edit_event_meals_fragment_layout, container, false);
-        loadPhotos();
+        //loadPhotos();
         initViews(v);
         return v;
     }
@@ -183,6 +180,7 @@ public class EditEventMealsFragment extends android.support.v4.app.Fragment {
         calendar= Calendar.getInstance();
         startingTimeTextView = (TextView)v.findViewById(R.id.edit_chef_event_meals_fragment_starting_time_label);
         startingDateTextView = (TextView)v.findViewById(R.id.edit_chef_event_meals_fragment_starting_date_label);
+        endingDateTextView = (TextView)v.findViewById(R.id.edit_chef_event_meals_fragment_ending_time_label);
         endingTimeTextView = (TextView)v.findViewById(R.id.edit_chef_event_meals_fragment_ending_time_label);
         priceEditText = (EditText) v.findViewById(R.id.edit_chef_event_meals_fragment_price_edit_text_id);
         createEventButton = (Button)v.findViewById(R.id.edit_chef_event_meals_fragment_add_event_button_id);
@@ -190,17 +188,17 @@ public class EditEventMealsFragment extends android.support.v4.app.Fragment {
         startingDateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                datePickerDialog = new DatePickerDialog(getActivity(),new DatePickerDialog.OnDateSetListener() {
+                startingDatePickerDialog = new DatePickerDialog(getActivity(),new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         TextView textView = (TextView)v;
                         startingYear=year;
                         startingMonth=monthOfYear;
                         startingDay=dayOfMonth;
-                        ((TextView) v).setText(dayOfMonth+"."+monthOfYear+"."+year);
+                        ((TextView) v).setText(MeetnEatDates.getDateString(year,monthOfYear,dayOfMonth));
                     }
                 },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
-                datePickerDialog.show();
+                startingDatePickerDialog.show();
 
             }
         });
@@ -212,13 +210,29 @@ public class EditEventMealsFragment extends android.support.v4.app.Fragment {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         startingHour = hourOfDay;
                         startingMinute = minute;
-                        ((TextView) v).setText(hourOfDay + ":" + minute);
+                        ((TextView) v).setText(MeetnEatDates.getTimeString(hourOfDay,minute));
                     }
                 }, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), true);
                 timePickerDialog.show();
             }
         });
+        endingDateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                endingDatePickerDialog = new DatePickerDialog(getActivity(),new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        TextView textView = (TextView)v;
+                        endingYear=year;
+                        endingMinute=monthOfYear;
+                        endingDay=dayOfMonth;
+                        ((TextView) v).setText(MeetnEatDates.getDateString(year,monthOfYear,dayOfMonth));
+                    }
+                },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+                endingDatePickerDialog.show();
 
+            }
+        });
         endingTimeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -227,7 +241,7 @@ public class EditEventMealsFragment extends android.support.v4.app.Fragment {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         endingHour = hourOfDay;
                         endingMinute=minute;
-                        ((TextView) v).setText(hourOfDay+":"+minute);
+                        ((TextView) v).setText(MeetnEatDates.getTimeString(hourOfDay,minute));
                     }
                 },calendar.get(Calendar.HOUR),calendar.get(Calendar.MINUTE),true);
                 timePickerDialog.show();
@@ -251,9 +265,24 @@ public class EditEventMealsFragment extends android.support.v4.app.Fragment {
     private void wrapAllDataToEventAndUpdateServer()
     {
         String title = eventTitleEditText.getText().toString();
-        EventMeals event = new EventMeals(title,startingHour,startingMinute,
-                startingYear,startingMonth,startingDay,location,apartmentNumber,mealsAmount,
-                Integer.parseInt(priceEditText.getText().toString()));
+        EventMeals event = new EventMeals();
+        event.setTitle(title);
+        event.setStartingMinute(startingMinute);
+        event.setStartingHour(startingHour);
+        event.setStartingDay(startingDay);
+        event.setStartingMonth(startingMonth);
+        event.setStartingYear(startingYear);
+
+        event.setEndingMinute(endingMinute);
+        event.setEndingHour(endingHour);
+        event.setEndingDay(endingDay);
+        event.setEndingMonth(endingMonth);
+        event.setEndingYear(endingYear);
+
+        event.setApartmentNumber(apartmentNumber);
+        event.setLocation(location);
+        event.setMealsLeft(mealsAmount);
+        event.setPrice(Integer.parseInt(priceEditText.getText().toString()));
         MyModel.getInstance().getModel().addNewEventMealsToServer(event,new SaveToServerCallback() {
             @Override
             public void onResult() {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="fill_parent"
-    android:layout_height="175dp"
+    android:layout_height="140dp"
     android:background="@color/eat_black">
 
     <LinearLayout
@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:textColor="@color/eat_orange"
-            android:textSize="20dp"
+            android:textSize="16dp"
             android:gravity="left|center_vertical" />
 
         <TextView
@@ -32,7 +32,8 @@
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:textColor="@color/eat_white"
-            android:gravity="left|center_vertical" />
+            android:gravity="left|center_vertical"
+            android:textSize="14dp" />
 
         <TextView
             android:layout_width="fill_parent"
@@ -43,41 +44,46 @@
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:textColor="@color/eat_white"
-            android:gravity="left|center_vertical" />
+            android:gravity="left|center_vertical"
+            android:textSize="14dp" />
 
-        <Button
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:text="edit"
-            android:id="@+id/chef_fragment_row_edit_button"
-            android:layout_weight="1"
-            android:textColor="@color/eat_white"
-            android:background="@drawable/green_button"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1">
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:text="ORDERS"
-            android:id="@+id/button"
-            android:layout_weight="1"
-            android:background="@drawable/green_button"
-            android:textColor="@color/eat_white"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/imageView"
+                android:background="@drawable/location"
+                android:layout_weight="5"
+                android:layout_margin="5dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Hagefen St."
+                android:id="@+id/chef_fragment_row_location_text_view"
+                android:textColor="@color/eat_white"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:textSize="16dp"
+                android:paddingRight="5dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1">
+        android:layout_weight="4"
+        android:gravity="center">
 
         <LinearLayout
             android:orientation="vertical"
@@ -85,24 +91,28 @@
             android:layout_height="fill_parent"
             android:gravity="center">
 
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:id="@+id/imageView"
-                android:background="@drawable/location" />
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="edit"
+                android:id="@+id/chef_fragment_row_edit_button"
+                android:layout_weight="1"
+                android:textColor="@color/eat_white"
+                android:background="@drawable/green_button"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="ORDERS"
+                android:id="@+id/button"
+                android:layout_weight="1"
+                android:background="@drawable/green_button"
+                android:textColor="@color/eat_white"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Hagefen St."
-            android:id="@+id/chef_fragment_row_location_text_view"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/eat_white"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="5dp"
-            android:textSize="20dp"
-            android:paddingRight="5dp" />
     </LinearLayout>
 </LinearLayout>

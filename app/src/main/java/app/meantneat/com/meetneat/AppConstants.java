@@ -29,13 +29,17 @@ public class AppConstants {
     //EVENT_MEALS TABLE
     public static String EVENT_MEALS = "EventMeals";
     public static String EVENT_MEALS_ID = "objectId";
+    public static String EVENt_MEALS_EVENt_TITLE = "title";
     public static String EVENT_MEALS_START_DATE = "start_date";
     public static String EVENT_MEALS_END_DATE = "end_date";
     public static String EVENT_MEALS_CHEF_ID = "chef_id";
+    public static String EVENT_MEALS_CHEF_NAME = "chef_name";
     public static String EVENT_MEALS_LOCATION = "location";
     public static String EVENT_MEALS_PRICE = "price";
     public static String EVENT_MEALS_QUANTITY = "quantity";
     public static String EVENT_MEALS_APARTMENT_NUMBER = "apartment_number";
+    public static String EVENT_MEALS_GEO_POINT = "geo_point";
+
     //DISH TABLE
     public static String DISH = "Dish";
     public static String DISH_ID = "objectId";
@@ -68,6 +72,32 @@ public class AppConstants {
     public static String MEALS_ORDER_QUANTITY = "quantity";
     public static String MEALS_ORDER_ARRIVAL_TIME = "arrival_time";
 
+    //Bundle key values
+    public static String EVENT_ID = "eventID";
+    public static String EVENT_TITLE = "title";
+    public static String EVENT_STARTING_DAY = "starting_day";
+    public static String EVENT_STARTING_MONTH = "starting_month";
+    public static String EVENT_STARTING_YEAR = "starting_year";
+    public static String EVENT_STARTING_HOUR = "starting_hour";
+    public static String EVENT_STARTING_MINUTE = "starting_minute";
+
+    public static String EVENT_ENDING_DAY = "ending_day";
+    public static String EVENT_ENDING_MONTH = "ending_month";
+    public static String EVENT_ENDING_YEAR = "ending_year";
+    public static String EVENT_ENDING_HOUR = "ending_hour";
+    public static String EVENT_ENDING_MINUTE = "ending_minute";
+
+    public static String EVENT_CHEF_ID = "chef_id";
+    public static String EVENT_CHEF_NAME = "chef_name";
+    public static String EVENT_LOCATION = "location";
+    public static String EVENT_PRICE = "price";
+    public static String EVENT_QUANTITY = "quantity";
+    public static String EVENT_APARTMENT_NUMBER = "apartment_number";
+    public static String EVENT_LATITUDE = "latitude";
+    public static String EVENT_LONGITUDE = "longitude";
+
+    public static String IS_NEW = "is_new";
+    public static String WHERE_TO_GO = "whereToGo";
 
 
 

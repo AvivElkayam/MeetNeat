@@ -82,11 +82,11 @@ public class SpecificEventDishesDialogBox {
         TextView titleTextView = (TextView)dialogBox.findViewById(R.id.speceific_event_dialog_box_title_text_view);
         titleTextView.setText(eventDishes.getTitle());
         TextView dateTextView = (TextView)dialogBox.findViewById(R.id.speceific_event_dialog_box_date_text_view);
-        dateTextView.setText(eventDishes.getEventYear()
+        dateTextView.setText(eventDishes.getStartingYear()
                         +"."
-                        +eventDishes.getEventMonth()
+                        +eventDishes.getStartingMonth()
                         + "."
-                        +eventDishes.getEventDay()
+                        +eventDishes.getStartingDay()
                         +" | "
                         +eventDishes.getStartingHour()
                         +":"

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import app.meantneat.com.meetneat.Camera.SpecificEventDishesDialogBox;
 import app.meantneat.com.meetneat.Camera.SpecifiecChefEventsDialogBox;
 import app.meantneat.com.meetneat.Controller.Chef.ChefEventDishesFragment;
+import app.meantneat.com.meetneat.Controller.Chef.ChefEventMealsFragment;
 import app.meantneat.com.meetneat.Controller.Chef.EditEventDishesFragment;
 import app.meantneat.com.meetneat.Controller.Chef.EditEventMealsFragment;
 import app.meantneat.com.meetneat.Controller.Login.LoginActivity;
@@ -47,7 +48,8 @@ public class MyModel {
 
         public void addNewEventMealsToServer(EventMeals event, EditEventMealsFragment.SaveToServerCallback callback);
 
-        public void getChefsEventFromServer(ChefEventDishesFragment.GetEventDishesCallback callback);
+        public void getChefsEventDishesFromServer(ChefEventDishesFragment.GetEventDishesCallback callback);
+        public void getChefsEventMealsFromServer(ChefEventMealsFragment.GetEventMealsCallback callback);
 
         public void getDishEventDetailsByID(String eventID, SpecificEventDishesDialogBox.DishEventCallback callback);
 
