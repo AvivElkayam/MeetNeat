@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,21 +34,20 @@ import app.meantneat.com.meetneat.R;
  */
 public class AddDishEventFragment extends Fragment implements  GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
 {
-    TextView endingDateTextView,startingDateTextView,startingTime,endingTime;
-    EditText location,apartmentNumber,titleEditText;
+    private TextView endingDateTextView,startingDateTextView,startingTime,endingTime;
+    private EditText location,apartmentNumber,titleEditText;
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
-    int startingHour,startingMinute,startingYear,startingMonth,startingDay;
-    int endingHour,endingMinute,endingYear,endingMonth,endingDay;
-    LocationAutoComplete lAC;
-    Calendar calendar;
-    View v;
-    Button continueButton;
-
-    String whereToGo;
+    private int startingHour,startingMinute,startingYear,startingMonth,startingDay;
+    private int endingHour,endingMinute,endingYear,endingMonth,endingDay;
+    private LocationAutoComplete lAC;
+    private Calendar calendar;
+    private View v;
+    private Button continueButton;
+    private CheckBox taCheckBox,seatCheckBox;
+    public String whereToGo;
     public static String goToMeals = "meals";
     public static String goToDishes = "dishes";
-
     private GoogleApiClient mGoogleApiClient;
 
     @Override

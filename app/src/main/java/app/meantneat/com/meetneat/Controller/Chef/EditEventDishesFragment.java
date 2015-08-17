@@ -171,7 +171,8 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                     @Override
                     public void pictureHasBeenFetched(Bitmap bitmap) {
                         dish.setThumbnailImage(bitmap);
-                        imageView.setBackground(new BitmapDrawable(bitmap));
+                       // imageView.setBackground(new BitmapDrawable(bitmap));
+                        CameraBasics.setImageViewWithFadeAnimation(getActivity(),imageView,bitmap);
                         //imageView.setImageDrawable(new BitmapDrawable(bitmap));
                     }
                 });
@@ -701,8 +702,8 @@ private void getEventsDishes()
 
             bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
 
-            newDish.setFullsizeImg(CameraBasics.bitmapToByteArr(bitmapArray[0]));
-            newDish.setThumbnailImg(CameraBasics.bitmapToByteArr(bitmapArray[1]));
+//            newDish.setFullsizeImg(CameraBasics.bitmapToByteArr(bitmapArray[0]));
+//            newDish.setThumbnailImg(CameraBasics.bitmapToByteArr(bitmapArray[1]));
             Log.d("IMAGE_SIZE", String.format("%d ON %d", bitmapArray[0].getWidth(), bitmapArray[0].getHeight()));
             addDishImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             addDishImageView.setImageBitmap(bitmapArray[1]);

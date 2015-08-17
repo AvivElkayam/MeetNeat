@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="fill_parent"
     android:layout_height="128dp"
-    android:background="@drawable/burger1">
+    android:background="@color/eat_gray">
 
     <!--<ImageView-->
         <!--android:layout_width="84dp"-->
