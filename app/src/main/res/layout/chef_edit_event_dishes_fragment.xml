@@ -15,17 +15,18 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="180dp">
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="140dp">
+            android:layout_height="fill_parent">
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="140dp"
+                android:layout_height="fill_parent"
                 android:layout_gravity="center_horizontal|top">
 
                 <LinearLayout
@@ -35,12 +36,73 @@
 
                     <EditText
                         android:layout_width="fill_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="fill_parent"
                         android:id="@+id/add_event_fragment_title_edit_text_id"
                         android:textColor="@color/eat_orange"
                         android:text="Event name:"
                         android:background="@drawable/gray_text_field"
-                        android:paddingLeft="5dp" />
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="FROM"
+                        android:id="@+id/textView12"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="12dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/eat_orange" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="Staring date"
+                            android:id="@+id/add_event_fragment_starting_date_label"
+                            android:layout_weight="1"
+                            android:textSize="15dp"
+                            android:textColor="@color/eat_white"
+                            android:gravity="left|center_vertical"
+                            android:layout_marginLeft="5dp"
+                            style="@android:style/Widget.Holo.Spinner" />
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="Starting time"
+                            android:id="@+id/add_event_fragment_starting_time_label"
+                            android:layout_weight="1"
+                            android:textSize="15dp"
+                            android:textColor="@color/eat_white"
+                            android:gravity="left|center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:paddingLeft="5dp"
+                            style="@android:style/Widget.Holo.Spinner" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="TO"
+                        android:id="@+id/textView13"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="12dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/eat_orange" />
 
                     <LinearLayout
                         android:orientation="horizontal"
@@ -48,154 +110,94 @@
                         android:layout_height="fill_parent"
                         android:layout_weight="1">
 
-                        <LinearLayout
-                            android:orientation="vertical"
+                        <TextView
+                            style="@android:style/Widget.Holo.Spinner"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
-                            android:layout_weight="1">
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="Ending date"
+                            android:id="@+id/add_event_fragment_ending_date_label"
+                            android:layout_weight="1"
+                            android:textSize="15dp"
+                            android:textColor="@color/eat_white"
+                            android:gravity="left|center_vertical"
+                            android:layout_marginLeft="5dp" />
 
-                            <LinearLayout
-                                android:orientation="horizontal"
-                                android:layout_width="match_parent"
-                                android:layout_height="fill_parent"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_weight="1">
-
-                                <TextView
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent"
-                                    android:textAppearance="?android:attr/textAppearanceLarge"
-                                    android:text="Staring date"
-                                    android:id="@+id/add_event_fragment_starting_date_label"
-                                    android:layout_weight="1"
-                                    android:textSize="15dp"
-                                    android:textColor="@color/eat_white"
-                                    android:gravity="left|center_vertical"
-                                    android:layout_marginLeft="5dp"
-                                    android:paddingLeft="5dp"
-                                    style="@android:style/Widget.Holo.Spinner" />
-
-                                <TextView
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent"
-                                    android:textAppearance="?android:attr/textAppearanceLarge"
-                                    android:text="Starting time"
-                                    android:id="@+id/add_event_fragment_starting_time_label"
-                                    android:layout_weight="1"
-                                    android:textSize="15dp"
-                                    android:textColor="@color/eat_white"
-                                    android:gravity="left|center_vertical"
-                                    android:layout_marginLeft="5dp"
-                                    android:paddingLeft="5dp"
-                                    style="@android:style/Widget.Holo.Spinner" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:orientation="horizontal"
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:layout_weight="1">
-
-                                <TextView
-                                    style="@android:style/Widget.Holo.Spinner"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textAppearance="?android:attr/textAppearanceLarge"
-                                    android:text="Ending date"
-                                    android:id="@+id/add_event_fragment_ending_date_label"
-                                    android:layout_weight="1"
-                                    android:textSize="15dp"
-                                    android:textColor="@color/eat_white"
-                                    android:gravity="left|center_vertical"
-                                    android:layout_marginLeft="5dp"
-                                    android:paddingLeft="5dp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="fill_parent"
-                                    android:textAppearance="?android:attr/textAppearanceLarge"
-                                    android:text="Ending time"
-                                    android:id="@+id/add_event_fragment_ending_time_label"
-                                    android:layout_weight="1"
-                                    android:textSize="15dp"
-                                    android:textColor="@color/eat_white"
-                                    android:gravity="left|center_vertical"
-                                    android:layout_marginLeft="5dp"
-                                    android:paddingLeft="5dp"
-                                    style="@android:style/Widget.Holo.Spinner" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:orientation="horizontal"
+                        <TextView
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
-                            android:layout_weight="1.3">
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="Ending time"
+                            android:id="@+id/add_event_fragment_ending_time_label"
+                            android:layout_weight="1"
+                            android:textSize="15dp"
+                            android:textColor="@color/eat_white"
+                            android:gravity="left|center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:paddingLeft="5dp"
+                            style="@android:style/Widget.Holo.Spinner" />
+                    </LinearLayout>
 
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:id="@+id/imageView6"
-                                android:layout_gravity="center"
-                                android:background="@drawable/location" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1">
 
-                            <AutoCompleteTextView
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:id="@+id/add_event_fragment_auto_location_label"
-                                android:focusable="true"
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:id="@+id/imageView6"
+                            android:layout_gravity="center"
+                            android:background="@drawable/location"
+                            android:visibility="gone" />
 
-                                android:dropDownWidth="fill_parent"
-                                android:completionThreshold="1"
-                                android:dropDownHeight="100dp"
-                                android:layout_weight="1.3"
-                                android:textColor="@color/eat_white"
-                                android:textColorHint="@color/eat_white"
-                                android:hint="Google location"
-                                android:background="@drawable/gray_text_field"
-                                android:paddingLeft="5dp"
-                                android:layout_marginRight="5dp" />
+                        <AutoCompleteTextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/add_event_fragment_auto_location_label"
+                            android:focusable="true"
 
-                        </LinearLayout>
+                            android:dropDownWidth="fill_parent"
+                            android:completionThreshold="1"
+                            android:dropDownHeight="100dp"
+                            android:layout_weight="1"
+                            android:textColor="@color/eat_white"
+                            android:textColorHint="@color/eat_white"
+                            android:hint="Google location"
+                            android:background="@drawable/gray_text_field"
+                            android:paddingLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:textSize="15dp"
+                            android:gravity="left|center_vertical"
+                            android:layout_marginLeft="5dp" />
 
                     </LinearLayout>
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/add_event_fragment_apartment_numebr_edit_text_id"
+                        android:text="Appartment Number"
+                        android:textSize="12dp"
+                        android:textIsSelectable="false"
+                        android:textColor="@color/eat_white"
+                        android:background="@drawable/gray_text_field"
+                        android:paddingLeft="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1" />
 
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/add_event_fragment_location_edit_text_id"
-                android:text="Location"
-                android:textSize="15dp"
-                android:background="@drawable/gray_text_field"
-                android:visibility="gone" />
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/add_event_fragment_apartment_numebr_edit_text_id"
-                android:text="Appartment Number"
-                android:textSize="12dp"
-                android:textIsSelectable="false"
-                android:textColor="@color/eat_white"
-                android:background="@drawable/gray_text_field"
-                android:paddingLeft="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp" />
-        </LinearLayout>
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:layout_weight="1.5">
 
         <LinearLayout
             android:orientation="vertical"

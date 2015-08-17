@@ -1,6 +1,7 @@
 package app.meantneat.com.meetneat.Controller.MainAndSettings;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
@@ -46,7 +47,9 @@ private FragmentTabHost mTabHost;
         hungryFragment = new HungryFragment();
         settingsFragment = new SettingsFragment();
         initTabsMenu();
-       // getSupportFragmentManager().addOnBackStackChangedListener(getListener());
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.eat_green)));
+        getSupportActionBar().setElevation(0);
+        // getSupportFragmentManager().addOnBackStackChangedListener(getListener());
 //        Button chefButton = (Button) findViewById(R.id.activity_main_tab_chef_button);
 //        Button hungryButton = (Button) findViewById(R.id.activity_main_tab_hungry_button);
 //

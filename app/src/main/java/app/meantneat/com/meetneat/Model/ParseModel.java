@@ -114,6 +114,7 @@ public class ParseModel implements MyModel.ModelInterface {
         Date startingDate = new Date(event.getStartingYear()-1900, event.getStartingMonth(), event.getStartingDay(), event.getStartingHour(), event.getStartingMinute());
         Date endingDate = new Date(event.getStartingYear()-1900, event.getStartingMonth(), event.getStartingDay(), event.getEndingHour(), event.getEndingMinute());
         eventObject.put(AppConstants.EVENT_DISHES_CHEF_ID, ParseUser.getCurrentUser().getObjectId());
+        eventObject.put(AppConstants.EVENT_DISHES_CHEF_NAME,ParseUser.getCurrentUser().getUsername());
         eventObject.put(AppConstants.EVENT_DISHES_START_DATE, startingDate);
         eventObject.put(AppConstants.EVENT_DISHES_END_DATE, endingDate);
         eventObject.put(AppConstants.EVENT_DISHES_LOCATION, event.getLocation());
@@ -192,6 +193,7 @@ public class ParseModel implements MyModel.ModelInterface {
                 Date endingDate = new Date(event.getEndingYear()-1900, event.getEndingMonth(), event.getEndingDay(), event.getEndingHour(), event.getEndingMinute());
                 ParseGeoPoint geoPoint = new ParseGeoPoint(event.getLatitude(), event.getLongitude());
                 eventObject.put(AppConstants.EVENT_MEALS_GEO_POINT, geoPoint);
+                eventObject.put(AppConstants.EVENt_MEALS_EVENT_TITLE,event.getTitle());
                 eventObject.put(AppConstants.EVENT_MEALS_CHEF_ID, ParseUser.getCurrentUser().getObjectId());
                 eventObject.put(AppConstants.EVENT_DISHES_CHEF_NAME,ParseUser.getCurrentUser().getUsername());
                 eventObject.put(AppConstants.EVENT_MEALS_START_DATE, startingDate);
@@ -199,7 +201,8 @@ public class ParseModel implements MyModel.ModelInterface {
                 eventObject.put(AppConstants.EVENT_MEALS_LOCATION, event.getLocation());
                 eventObject.put(AppConstants.EVENT_MEALS_APARTMENT_NUMBER, event.getApartmentNumber());
                 eventObject.put(AppConstants.EVENT_MEALS_PRICE, event.getPrice());
-                eventObject.put(AppConstants.EVENT_MEALS_QUANTITY, event.getTotalDishes());
+                eventObject.put(AppConstants.EVENT_MEALS_MENU,event.getMenu());
+                eventObject.put(AppConstants.EVENT_MEALS_QUANTITY, event.getMealsLeft());
 
                 try {
                     eventObject.save();
@@ -448,13 +451,12 @@ public class ParseModel implements MyModel.ModelInterface {
     private EventMeals ParseObjectToEventMeals(ParseObject object) {
         EventMeals eventMeals = new EventMeals();
         eventMeals.setEventId(object.getObjectId());
-        eventMeals.setTitle(object.getString(AppConstants.EVENt_MEALS_EVENt_TITLE));
+        eventMeals.setTitle(object.getString(AppConstants.EVENt_MEALS_EVENT_TITLE));
         eventMeals.setChefID(object.getString(AppConstants.EVENT_MEALS_CHEF_ID));
         eventMeals.setChefName(object.getString(AppConstants.EVENT_MEALS_CHEF_NAME));
 
         Date startingDate = object.getDate(AppConstants.EVENT_MEALS_START_DATE);
         eventMeals.setStartingDay(startingDate.getDay());
-
         eventMeals.setStartingMonth(startingDate.getMonth());
         eventMeals.setStartingYear(startingDate.getYear());
         eventMeals.setStartingHour(startingDate.getHours());
@@ -472,6 +474,10 @@ public class ParseModel implements MyModel.ModelInterface {
         eventMeals.setLongitude(point.getLongitude());
         eventMeals.setLocation(object.getString(AppConstants.EVENT_MEALS_LOCATION));
         eventMeals.setApartmentNumber(object.getString(AppConstants.EVENT_MEALS_APARTMENT_NUMBER));
+
+        eventMeals.setPrice(object.getInt(AppConstants.EVENT_MEALS_PRICE));
+        eventMeals.setMenu(object.getString(AppConstants.EVENT_MEALS_MENU));
+        eventMeals.setMealsLeft(object.getInt(AppConstants.EVENT_MEALS_QUANTITY));
         //finished the event, now all the event's dishes =\
 
 
@@ -524,7 +530,7 @@ public class ParseModel implements MyModel.ModelInterface {
     }
 
     @Override
-    public void editEvent(final EventDishes event, final MyModel.EditEventCallback callback) {
+    public void editEventDishes(final EventDishes event, final MyModel.EditEventCallback callback) {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
@@ -564,6 +570,52 @@ public class ParseModel implements MyModel.ModelInterface {
             }
         }.execute();
     }
+
+    @Override
+    public void editEventMeals(final EventMeals event, final MyModel.EditEventCallback callback) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(AppConstants.EVENT_DISHES);
+                ParseObject eventObject = null;
+                try {
+                    eventObject = query.get(event.getEventId());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Date startingDate = new Date(event.getStartingYear(), event.getStartingMonth(), event.getStartingDay(), event.getStartingHour(), event.getStartingMinute());
+                Date endingDate = new Date(event.getStartingYear(), event.getStartingMonth(), event.getStartingDay(), event.getEndingHour(), event.getEndingMinute());
+                String s = ParseUser.getCurrentUser().getObjectId();
+                eventObject.put(AppConstants.EVENT_DISHES_CHEF_ID, ParseUser.getCurrentUser().getObjectId());
+                eventObject.put(AppConstants.EVENT_DISHES_START_DATE, startingDate);
+                eventObject.put(AppConstants.EVENT_DISHES_END_DATE, endingDate);
+                eventObject.put(AppConstants.EVENT_DISHES_LOCATION, event.getLocation());
+                eventObject.put(AppConstants.EVENT_DISHES_APARTMENT_NUMBER, event.getApartmentNumber());
+                ParseGeoPoint geoPoint = new ParseGeoPoint(event.getLatitude(), event.getLongitude());
+                eventObject.put(AppConstants.EVENT_DISHES_GEO_POINT, geoPoint);
+                eventObject.put(AppConstants.EVENT_DISHES_TITLE, event.getTitle());
+                //event meals attributes:
+                eventObject.put(AppConstants.EVENT_MEALS_MENU,event.getMenu());
+                eventObject.put(AppConstants.EVENT_MEALS_QUANTITY,event.getMealsLeft());
+                eventObject.put(AppConstants.EVENT_MEALS_PRICE,event.getPrice());
+                try {
+                    eventObject.save();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                callback.eventHasBeenEdited();
+                super.onPostExecute(aVoid);
+            }
+        }.execute();
+    }
+
     private void editDishesForEvent(ArrayList<Dish> dishes)
     {
         for(Dish dish : dishes)

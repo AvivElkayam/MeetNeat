@@ -12,7 +12,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -24,7 +23,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -38,7 +36,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.android.camera.CropImageIntentBuilder;
 //import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -48,7 +45,6 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
-import com.joooonho.SelectableRoundedImageView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.melnykov.fab.FloatingActionButton;
 
@@ -92,8 +88,8 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
     private int startingYear,startingMonth,startingDay,startingHour,startingMinute;
-    private EditText eventTitleEditText,eventLocationEditText,eventApartmentNumberEditText;
     private int endingYear,endingMonth,endingDay,endingHour,endingMinute;
+    private EditText eventTitleEditText,eventLocationEditText,eventApartmentNumberEditText;
     private Calendar calendar;
     private ListView dishesListView;
     private DishRowListAdapter dishRowListAdapter;
@@ -175,8 +171,8 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                     @Override
                     public void pictureHasBeenFetched(Bitmap bitmap) {
                         dish.setThumbnailImage(bitmap);
-                        //imageView.setBackground(new BitmapDrawable(bitmap));
-                        imageView.setImageDrawable(new BitmapDrawable(bitmap));
+                        imageView.setBackground(new BitmapDrawable(bitmap));
+                        //imageView.setImageDrawable(new BitmapDrawable(bitmap));
                     }
                 });
             }
@@ -297,6 +293,9 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
         startingDay = getArguments().getInt(AppConstants.EVENT_STARTING_DAY);
         startingHour = getArguments().getInt(AppConstants.EVENT_STARTING_HOUR);
         startingMinute = getArguments().getInt(AppConstants.EVENT_STARTING_MINUTE);
+        endingYear = getArguments().getInt(AppConstants.EVENT_ENDING_YEAR);
+        endingMonth = getArguments().getInt(AppConstants.EVENT_ENDING_MONTH);
+        endingDay = getArguments().getInt(AppConstants.EVENT_ENDING_DAY);
         endingHour = getArguments().getInt(AppConstants.EVENT_ENDING_HOUR);
         endingMinute = getArguments().getInt(AppConstants.EVENT_ENDING_MINUTE);
         startingDateTextView.setText(MeetnEatDates.getDateString(startingYear,startingMonth,startingDay));
@@ -321,7 +320,7 @@ private void initViews()
    // createEventButton = (Button)getActivity().findViewById(R.id.chef_edit_event_continue_button_id);
     createEventButton = (Button)getActivity().findViewById(R.id.chef_edit_event_continue_button_id);
     eventTitleEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_title_edit_text_id);
-    eventLocationEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_location_edit_text_id);
+    //eventLocationEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_location_edit_text_id);
     eventApartmentNumberEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_apartment_numebr_edit_text_id);
     //addNewDishFloatingButton = (FloatingActionButton) getActivity().findViewById(R.id.add_event_fragment_add_new_dish_button);
     addDishButton = (FloatingActionButton)getActivity().findViewById(R.id.chef_edit_events_dishes_floating_add_dish_button);
@@ -401,22 +400,22 @@ private void initViews()
             timePickerDialog.show();
         }
     });
-    eventLocationEditText.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-
-
-            try {
-                startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST);
-            } catch (GooglePlayServicesRepairableException e) {
-                e.printStackTrace();
-            } catch (GooglePlayServicesNotAvailableException e) {
-                e.printStackTrace();
-            }
-        }
-    });
+//    eventLocationEditText.setOnClickListener(new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//
+//            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+//
+//
+//            try {
+//                startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST);
+//            } catch (GooglePlayServicesRepairableException e) {
+//                e.printStackTrace();
+//            } catch (GooglePlayServicesNotAvailableException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    });
 
     endingTimeTextView.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -487,10 +486,10 @@ private void initViews()
                             locationCoord.longitude,
                             locationCoord.latitude);
                     event.setEventId(getArguments().getString(AppConstants.EVENT_ID));
-                    MyModel.getInstance().getModel().editEvent(event,new MyModel.EditEventCallback() {
+                    MyModel.getInstance().getModel().editEventDishes(event, new MyModel.EditEventCallback() {
                         @Override
                         public void eventHasBeenEdited() {
-                            Toast.makeText(getActivity(),"Even has been edited",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Even has been edited", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

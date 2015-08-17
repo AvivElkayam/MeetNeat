@@ -120,6 +120,7 @@ public class MeetnEatDates {
 
         }
         s = dayString+", "+monthString+" "+Integer.toString(day)+" "+Integer.toString(year);
+        s = Integer.toString(day)+"."+Integer.toString(month)+"."+Integer.toString(year);
         return s;
     }
     public static String getTimeString(int hour, int minute)

@@ -24,6 +24,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.Calendar;
 
+import app.meantneat.com.meetneat.AppConstants;
 import app.meantneat.com.meetneat.Entities.EventMeals;
 import app.meantneat.com.meetneat.MeetnEatDates;
 import app.meantneat.com.meetneat.Model.MyModel;
@@ -38,9 +39,12 @@ public class EditEventMealsFragment extends android.support.v4.app.Fragment {
 
     private DatePickerDialog startingDatePickerDialog,endingDatePickerDialog;
     private TimePickerDialog timePickerDialog;
-    private int startingYear,startingMonth,startingDay,startingHour,startingMinute,mealsAmount;
-    private EditText eventTitleEditText,eventLocationEditText,eventApartmentNumberEditText,priceEditText;
+    private int startingYear,startingMonth,startingDay,startingHour,startingMinute;
     private int endingYear,endingMonth,endingDay,endingHour,endingMinute;
+    private int mealsAmount;
+    private int price;
+    private String menu,eventID,title;
+    private EditText eventTitleEditText,eventLocationEditText,eventApartmentNumberEditText,priceEditText,menuEditText;
     private Calendar calendar;
     private Button createEventButton;
     private String apartmentNumber,location;
@@ -147,29 +151,48 @@ public class EditEventMealsFragment extends android.support.v4.app.Fragment {
     private void getEventDetailsFromBundle()
     {
 
+        startingYear = getArguments().getInt(AppConstants.EVENT_STARTING_YEAR);
+        startingMonth = getArguments().getInt(AppConstants.EVENT_STARTING_MONTH);
+        startingDay = getArguments().getInt(AppConstants.EVENT_STARTING_DAY);
+        startingHour = getArguments().getInt(AppConstants.EVENT_STARTING_HOUR);
+        startingMinute = getArguments().getInt(AppConstants.EVENT_STARTING_MINUTE);
 
+        endingYear = getArguments().getInt(AppConstants.EVENT_ENDING_YEAR);
+        endingMonth = getArguments().getInt(AppConstants.EVENT_ENDING_MONTH);
+        endingDay = getArguments().getInt(AppConstants.EVENT_ENDING_DAY);
+        endingHour = getArguments().getInt(AppConstants.EVENT_ENDING_HOUR);
+        endingMinute = getArguments().getInt(AppConstants.EVENT_ENDING_MINUTE);
 
-        startingYear = getArguments().getInt("year");
-        startingMonth = getArguments().getInt("month");
-        startingDay = getArguments().getInt("day");
-        startingHour = getArguments().getInt("starting_hour");
-        startingMinute = getArguments().getInt("starting_minute");
-        endingHour = getArguments().getInt("ending_hour");
-        endingMinute = getArguments().getInt("ending_minute");
-        startingDateTextView.setText(startingDay+"."+"."+startingMonth+"."+startingYear);
+        title = getArguments().getString(AppConstants.EVENT_TITLE);
+        apartmentNumber = getArguments().getString(AppConstants.EVENT_APARTMENT_NUMBER);
+        location = getArguments().getString(AppConstants.EVENT_LOCATION);
+        isNew = getArguments().getBoolean(AppConstants.IS_NEW);
+        if(isNew==false)
+        {//if it's not new-its in editing mode and it has additional attributes:
+            mealsAmount = getArguments().getInt(AppConstants.EVENT_MEALS_LEFT);
+            price = getArguments().getInt(AppConstants.EVENT_PRICE);
+            menu = getArguments().getString(AppConstants.EVENT_MENU);
+            eventID = getArguments().getString(AppConstants.EVENT_MEALS_ID);
+
+        }
+
+        setViewsWithData();
+    }
+    private void setViewsWithData()
+    {
+        eventLocationEditText.setText(location);
+        eventApartmentNumberEditText.setText(apartmentNumber);
+        startingDateTextView.setText(MeetnEatDates.getDateString(startingYear,startingMonth,startingDay));
         startingTimeTextView.setText(startingHour+":"+startingMinute);
         endingTimeTextView.setText(endingHour+":"+endingMinute);
-        eventTitleEditText.setText(getArguments().getString("title"));
-        apartmentNumber = getArguments().getString("apartment_number");
-        eventApartmentNumberEditText.setText(apartmentNumber);
-        location = getArguments().getString("location");
-        eventLocationEditText.setText(location);
-        mealsAmount = getArguments().getInt("meals_amount");
-        eventMealsAmountEditText.setText("Meals amount:" + mealsAmount);
-        //priceEditText =
-        isNew = getArguments().getBoolean("is_new");
+        eventTitleEditText.setText(title);
+        if(isNew==false)
+        {//if it's not new-its in editing mode and it has additional attributes:
+            eventMealsAmountEditText.setText(Integer.toString(mealsAmount));
+            priceEditText.setText(Double.toString(price));
+            menuEditText.setText(menu);
 
-
+        }
     }
     private void initViews(View v)
     {
@@ -183,6 +206,7 @@ public class EditEventMealsFragment extends android.support.v4.app.Fragment {
         endingDateTextView = (TextView)v.findViewById(R.id.edit_chef_event_meals_fragment_ending_time_label);
         endingTimeTextView = (TextView)v.findViewById(R.id.edit_chef_event_meals_fragment_ending_time_label);
         priceEditText = (EditText) v.findViewById(R.id.edit_chef_event_meals_fragment_price_edit_text_id);
+        menuEditText = (EditText)v.findViewById(R.id.edit_chef_event_meals_fragment_menu_edit_text_id);
         createEventButton = (Button)v.findViewById(R.id.edit_chef_event_meals_fragment_add_event_button_id);
 
         startingDateTextView.setOnClickListener(new View.OnClickListener() {
@@ -224,7 +248,7 @@ public class EditEventMealsFragment extends android.support.v4.app.Fragment {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         TextView textView = (TextView)v;
                         endingYear=year;
-                        endingMinute=monthOfYear;
+                        endingMonth=monthOfYear;
                         endingDay=dayOfMonth;
                         ((TextView) v).setText(MeetnEatDates.getDateString(year,monthOfYear,dayOfMonth));
                     }
@@ -250,7 +274,14 @@ public class EditEventMealsFragment extends android.support.v4.app.Fragment {
         createEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wrapAllDataToEventAndUpdateServer();
+                if(isNew==true)
+                {
+                    wrapAllDataToEventAndAddNewEventToServer();
+                }
+                else
+                {
+                    wrapAllDataToEventAndUpdateServer();
+                }
             }
         });
         getEventDetailsFromBundle();
@@ -262,11 +293,10 @@ public class EditEventMealsFragment extends android.support.v4.app.Fragment {
         public void onResult();
     }
 
-    private void wrapAllDataToEventAndUpdateServer()
+    private void wrapAllDataToEventAndAddNewEventToServer()
     {
-        String title = eventTitleEditText.getText().toString();
         EventMeals event = new EventMeals();
-        event.setTitle(title);
+        event.setTitle(eventTitleEditText.getText().toString());
         event.setStartingMinute(startingMinute);
         event.setStartingHour(startingHour);
         event.setStartingDay(startingDay);
@@ -279,16 +309,71 @@ public class EditEventMealsFragment extends android.support.v4.app.Fragment {
         event.setEndingMonth(endingMonth);
         event.setEndingYear(endingYear);
 
-        event.setApartmentNumber(apartmentNumber);
+        event.setApartmentNumber(eventApartmentNumberEditText.getText().toString());
         event.setLocation(location);
-        event.setMealsLeft(mealsAmount);
+        event.setMealsLeft(Integer.parseInt(eventMealsAmountEditText.getText().toString()));
         event.setPrice(Integer.parseInt(priceEditText.getText().toString()));
+        event.setMenu(menuEditText.getText().toString());
         MyModel.getInstance().getModel().addNewEventMealsToServer(event,new SaveToServerCallback() {
             @Override
             public void onResult() {
                 Toast.makeText(getActivity(),"Event Saved",Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void wrapAllDataToEventAndUpdateServer()
+    {
+        EventMeals event = new EventMeals();
+        event.setTitle(eventTitleEditText.getText().toString());
+        event.setStartingMinute(startingMinute);
+        event.setStartingHour(startingHour);
+        event.setStartingDay(startingDay);
+        event.setStartingMonth(startingMonth);
+        event.setStartingYear(startingYear);
+
+        event.setEndingMinute(endingMinute);
+        event.setEndingHour(endingHour);
+        event.setEndingDay(endingDay);
+        event.setEndingMonth(endingMonth);
+        event.setEndingYear(endingYear);
+
+        event.setApartmentNumber(eventApartmentNumberEditText.getText().toString());
+        event.setLocation(location);
+        event.setMealsLeft(Integer.parseInt(eventMealsAmountEditText.getText().toString()));
+        event.setPrice(Integer.parseInt(priceEditText.getText().toString()));
+        event.setMenu(menuEditText.getText().toString());
+        event.setEventID(eventID);
+        MyModel.getInstance().getModel().editEventMeals(event,new MyModel.EditEventCallback() {
+            @Override
+            public void eventHasBeenEdited() {
+                Toast.makeText(getActivity(),"Event Saved",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+//        event.setTitle(eventTitleEditText.getText().toString());
+//        event.setStartingMinute(startingMinute);
+//        event.setStartingHour(startingHour);
+//        event.setStartingDay(startingDay);
+//        event.setStartingMonth(startingMonth);
+//        event.setStartingYear(startingYear);
+//
+//        event.setEndingMinute(endingMinute);
+//        event.setEndingHour(endingHour);
+//        event.setEndingDay(endingDay);
+//        event.setEndingMonth(endingMonth);
+//        event.setEndingYear(endingYear);
+//
+//        event.setApartmentNumber(eventApartmentNumberEditText.getText().toString());
+//        event.setLocation(location);
+//        event.setMealsLeft(Integer.parseInt(eventMealsAmountEditText.getText().toString()));
+//        event.setPrice(Integer.parseInt(priceEditText.getText().toString()));
+//        event.setMenu(menuEditText.getText().toString());
+//        MyModel.getInstance().getModel().addNewEventMealsToServer(event,new SaveToServerCallback() {
+//            @Override
+//            public void onResult() {
+//                Toast.makeText(getActivity(),"Event Saved",Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
 

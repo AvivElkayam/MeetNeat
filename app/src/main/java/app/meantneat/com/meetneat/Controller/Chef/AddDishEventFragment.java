@@ -20,10 +20,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
-import com.parse.ParseUser;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import app.meantneat.com.meetneat.AppConstants;
 import app.meantneat.com.meetneat.Camera.LocationAutoComplete;
@@ -35,7 +33,7 @@ import app.meantneat.com.meetneat.R;
  */
 public class AddDishEventFragment extends Fragment implements  GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
 {
-    TextView dateTextView,startingTime,endingTime;
+    TextView endingDateTextView,startingDateTextView,startingTime,endingTime;
     EditText location,apartmentNumber,titleEditText;
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
@@ -64,7 +62,8 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
         whereToGo = getArguments().getString(AppConstants.WHERE_TO_GO);
         v = inflater.inflate(R.layout.chef_add_event_dishes_fragment_layout,container,false);
         calendar=Calendar.getInstance();
-        dateTextView = (TextView)v.findViewById(R.id.add_dish_event_fragment_date_text_view_id);
+        startingDateTextView = (TextView)v.findViewById(R.id.add_dish_event_fragment_starting_date_text_view_id);
+        endingDateTextView = (TextView)v.findViewById(R.id.add_dish_event_fragment_ending_date_text_view_id);
         startingTime = (TextView)v.findViewById(R.id.add_dish_event_fragment_starting_time_text_view_id);
         endingTime = (TextView)v.findViewById(R.id.add_dish_event_fragment_ending_time_text_view_id);
         //location = (EditText)v.findViewById(R.id.add_dish_event_fragment_location_text_view_id);
@@ -127,7 +126,7 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
     }
     private boolean validateFields()
     {
-        if(dateTextView.equals("Date")
+        if(startingDateTextView.equals("Date")
                 || startingTime.equals("Starting Time")
                 || endingTime.equals("EndingTime")
                 || apartmentNumber.getText().toString().equals(""))
@@ -166,19 +165,36 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
                 timePickerDialog.show();
             }
         });
-        dateTextView.setOnClickListener(new View.OnClickListener() {
+        endingDateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                datePickerDialog = new DatePickerDialog(getActivity(),new DatePickerDialog.OnDateSetListener() {
+                datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        TextView textView = (TextView)v;
-                        startingYear=year;
-                        startingMonth=monthOfYear;
-                        startingDay=dayOfMonth;
+                        TextView textView = (TextView) v;
+                        endingYear = year;
+                        endingMonth = monthOfYear;
+                        endingDay = dayOfMonth;
                         ((TextView) v).setText(MeetnEatDates.getDateString(year, monthOfYear, dayOfMonth));
                     }
-                },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.show();
+
+            }
+        });
+        startingDateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        TextView textView = (TextView) v;
+                        startingYear = year;
+                        startingMonth = monthOfYear;
+                        startingDay = dayOfMonth;
+                        ((TextView) v).setText(MeetnEatDates.getDateString(year, monthOfYear, dayOfMonth));
+                    }
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.show();
 
             }

@@ -205,7 +205,8 @@
                 android:textColor="@color/eat_white"
                 android:background="@drawable/gray_text_field"
                 android:textColorHint="@color/eat_white"
-                android:layout_marginLeft="5dp" />
+                android:layout_marginLeft="5dp"
+                android:inputType="number" />
 
             <EditText
                 android:layout_width="fill_parent"
@@ -230,7 +231,7 @@
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:id="@+id/editText"
+                android:id="@+id/edit_chef_event_meals_fragment_menu_edit_text_id"
                 android:layout_weight="1.4"
                 android:hint="Buffet - Bendict Style\nEach one will get 4 eggs - you can choose your egg style,Salads and Diary as much as you can"
                 android:textColor="@color/eat_white"

@@ -23,49 +23,45 @@ import app.meantneat.com.meetneat.Entities.EventMeals;
  * Created by mac on 5/25/15.
  */
 public class MyModel {
-    private ModelInterface model;
-
-    private static MyModel ourInstance = new MyModel();
-    public static MyModel getInstance() {
+        private ModelInterface model;
+        private static MyModel ourInstance = new MyModel();
+        public static MyModel getInstance() {
         return ourInstance;
     }
-    private MyModel() {
+        private MyModel() {
         model = new ParseModel();
     }
-
-    public ModelInterface getModel() {
+        public ModelInterface getModel() {
         return model;
     }
 
-    public interface ModelInterface {
+
+ public interface ModelInterface
+ {
+//***************************SignIn/SignUp***************************
         public void LoginToMeetNeat(String userName, String password,LoginActivity.LoginCallback callback);
-
         public void signUpToMeetNeat(String userName, String email, String password,Bitmap bitmap, SignInActivity.SignUpCallback callback);
-
-        public boolean currentUserConnected();
-
-        public void addNewEventDishesToServer(EventDishes event, EditEventDishesFragment.SaveToServerCallback callback);
-
-        public void addNewEventMealsToServer(EventMeals event, EditEventMealsFragment.SaveToServerCallback callback);
-
-        public void getChefsEventDishesFromServer(ChefEventDishesFragment.GetEventDishesCallback callback);
-        public void getChefsEventMealsFromServer(ChefEventMealsFragment.GetEventMealsCallback callback);
-
-        public void getDishEventDetailsByID(String eventID, SpecificEventDishesDialogBox.DishEventCallback callback);
-
-        public void getChefPicture(String chefID, PictureCallback callback);
-
-        public void getDishPicture(String dishID, PictureCallback callback);
         public void logOut();
-        void getClosestChefsRadius(ChefEventDishesFragment.GetEventDishesCallback callback, LatLng centerLocation);
-        public void editEvent(EventDishes event,EditEventCallback callback);
+//***************************Event Meals***************************
+        public void addNewEventMealsToServer(EventMeals event, EditEventMealsFragment.SaveToServerCallback callback);
+        public void getChefsEventMealsFromServer(ChefEventMealsFragment.GetEventMealsCallback callback);
+        public void editEventMeals(EventMeals event, EditEventCallback callback);
+//***************************Event Dishes***************************
+        public void addNewEventDishesToServer(EventDishes event, EditEventDishesFragment.SaveToServerCallback callback);
+        public void getChefsEventDishesFromServer(ChefEventDishesFragment.GetEventDishesCallback callback);
+        public void getDishEventDetailsByID(String eventID, SpecificEventDishesDialogBox.DishEventCallback callback);
+        public void getDishPicture(String dishID, PictureCallback callback);
+        public void getClosestChefsRadius(ChefEventDishesFragment.GetEventDishesCallback callback, LatLng centerLocation);
+        public void editEventDishes(EventDishes event, EditEventCallback callback);
         public void getEventsDishes(String id,DishesCallback callback);
+//***************************User***************************
+        public void getChefPicture(String chefID, PictureCallback callback);
+        public boolean currentUserConnected();
         //Hungry - OnClick chef-Map
         public void getSpecifiecChefsEventFromServer(String chefId, LatLng coordinates,
                                                      SpecifiecChefEventsDialogBox.getEventsByType callback);
-
-
-    }
+}
+//***************************Callbacks***************************
     public interface EditEventCallback
     {
         public void eventHasBeenEdited();
