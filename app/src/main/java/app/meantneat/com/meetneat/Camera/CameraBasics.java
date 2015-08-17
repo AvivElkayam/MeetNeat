@@ -16,9 +16,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -38,6 +35,7 @@ public class CameraBasics {
     File image;
     EditEventDishesFragment f;
     Context context;
+    String mCurrentPhotoPath;
 
 
     public void setF(EditEventDishesFragment f) {
@@ -50,6 +48,7 @@ public class CameraBasics {
 
     public void dispatchTakePictureIntent(Context context)
     {
+        this.context = context;
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
         try {
@@ -57,19 +56,15 @@ public class CameraBasics {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
 
-        this.context = context;
+
+
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(image));
 
-//       takePictureIntent.putExtra("crop", "true");
-//       takePictureIntent.putExtra("circleCrop", true);
-//       takePictureIntent.putExtra("outputX",600);
-//       takePictureIntent.putExtra("outputY", 600);
-//        takePictureIntent.putExtra("aspectX", 1);
-//        takePictureIntent.putExtra("aspectY", 1);
-//        takePictureIntent.putExtra("scale", true);
-//       takePictureIntent.putExtra("return-data", true);
+
 
         if (takePictureIntent.resolveActivity(((Activity)context).getPackageManager()) != null) {
             f.getParentFragment().startActivityForResult(takePictureIntent, 1);
@@ -85,14 +80,9 @@ public class CameraBasics {
 
 
 
-            try {
-                imageBitmaps[0] = MediaStore.Images.Media.getBitmap(context.getContentResolver(), Uri.fromFile(image));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
                 //imageBitmaps[0] = MediaStore.Images.Media.getBitmap(context.getContentResolver(), Uri.fromFile(image));
-                //imageBitmaps[0] = decodeSampledBitmapFromBitmap(image,400,400);
+                imageBitmaps[0] = decodeSampledBitmapFromBitmap(image,400,400);
 
 
 
@@ -115,7 +105,7 @@ public class CameraBasics {
         final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
         final RectF rectF = new RectF(rect);
         final float roundPx = pixels;
-//jn
+
         paint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(color);
@@ -126,26 +116,60 @@ public class CameraBasics {
 
         return output;
     }
-    public static void setImageViewWithFadeAnimation(Context c, final ImageView v, final Bitmap new_image) {
-        final Animation anim_out = AnimationUtils.loadAnimation(c, android.R.anim.fade_out);
-        final Animation anim_in  = AnimationUtils.loadAnimation(c, android.R.anim.fade_in);
-        anim_out.setAnimationListener(new Animation.AnimationListener()
-        {
-            @Override public void onAnimationStart(Animation animation) {}
-            @Override public void onAnimationRepeat(Animation animation) {}
-            @Override public void onAnimationEnd(Animation animation)
-            {
-                v.setImageBitmap(new_image);
-                anim_in.setAnimationListener(new Animation.AnimationListener() {
-                    @Override public void onAnimationStart(Animation animation) {}
-                    @Override public void onAnimationRepeat(Animation animation) {}
-                    @Override public void onAnimationEnd(Animation animation) {}
-                });
-                v.startAnimation(anim_in);
-            }
-        });
-        v.startAnimation(anim_out);
+
+    public static byte[] bitmapToByteArr(Bitmap b)
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        b.compress(Bitmap.CompressFormat.JPEG,100,baos);
+        return baos.toByteArray();
+
+
+
+
     }
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
+    public static Bitmap decodeSampledBitmapFromBitmap(File imageFile,
+                                                         int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(imageFile.getPath(), options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(imageFile.getPath(), options);
+        //
+    }
+
+
 }
 
 
