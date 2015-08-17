@@ -35,6 +35,7 @@ public class CameraBasics {
     File image;
     EditEventDishesFragment f;
     Context context;
+    String mCurrentPhotoPath;
 
 
     public void setF(EditEventDishesFragment f) {
@@ -47,6 +48,7 @@ public class CameraBasics {
 
     public void dispatchTakePictureIntent(Context context)
     {
+        this.context = context;
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
         try {
@@ -54,19 +56,15 @@ public class CameraBasics {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
 
-        this.context = context;
+
+
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(image));
 
-//       takePictureIntent.putExtra("crop", "true");
-//       takePictureIntent.putExtra("circleCrop", true);
-//       takePictureIntent.putExtra("outputX",600);
-//       takePictureIntent.putExtra("outputY", 600);
-//        takePictureIntent.putExtra("aspectX", 1);
-//        takePictureIntent.putExtra("aspectY", 1);
-//        takePictureIntent.putExtra("scale", true);
-//       takePictureIntent.putExtra("return-data", true);
+
 
         if (takePictureIntent.resolveActivity(((Activity)context).getPackageManager()) != null) {
             f.getParentFragment().startActivityForResult(takePictureIntent, 1);
@@ -168,7 +166,10 @@ public class CameraBasics {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeFile(imageFile.getPath(), options);
+        //
     }
+
+
 }
 
 
