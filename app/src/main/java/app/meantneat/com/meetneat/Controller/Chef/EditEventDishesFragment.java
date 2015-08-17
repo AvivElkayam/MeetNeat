@@ -267,7 +267,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
 
         lAC  = new LocationAutoComplete(getActivity(),mGoogleApiClient,2);
         lAC.setChoosenLocationString(getArguments().getString("location"));
-        lAC.setChoosenPlaceLatLng(new LatLng(getArguments().getDouble("latitude"),getArguments().getDouble("longitude")));
+        lAC.setChoosenPlaceLatLng(new LatLng(getArguments().getDouble("latitude"), getArguments().getDouble("longitude")));
         lAC.setAutoCompleteTextView(location);
 
 //        lac.se
@@ -501,20 +501,20 @@ private void initViews()
     }
 private void getEventsDishes()
     {
-        MyModel.getInstance().getModel().getEventsDishes(getArguments().getString("eventID"),new MyModel.DishesCallback() {
+        MyModel.getInstance().getModel().getEventsDishes(getArguments().getString("eventID"), new MyModel.DishesCallback() {
             @Override
             public void dishesAhBeenFetched(ArrayList<Dish> dishes) {
                 dishArrayList.clear();
                 dishArrayList.addAll(dishes);
                 dishRowListAdapter.notifyDataSetChanged();
-                if(dishArrayList.size()>0) {
+                if (dishArrayList.size() > 0) {
                     Dish dish = dishArrayList.get(0);
                     dishTitleEditText.setText(dish.getTitle());
                     dishPriceEditText.setText("Price: " + dish.getPrice());
                     dishQuantityEditText.setText("DishesLeft: " + dish.getQuantityLeft());
 
                     dishDescriptionEditText.setText(dish.getDescriprion());
-                    MyModel.getInstance().getModel().getDishPicture(dish.getDishID(),new MyModel.PictureCallback() {
+                    MyModel.getInstance().getModel().getDishPicture(dish.getDishID(), new MyModel.PictureCallback() {
                         @Override
                         public void pictureHasBeenFetched(Bitmap bitmap) {
                             dishImageView.setBackground(new BitmapDrawable(bitmap));
@@ -522,9 +522,7 @@ private void getEventsDishes()
                     });
                     noMoreEventsOverlay.setVisibility(View.GONE);
 
-                }
-                else
-                {
+                } else {
                     noMoreEventsOverlay.setVisibility(View.VISIBLE);
                 }
             }
@@ -700,60 +698,28 @@ private void getEventsDishes()
         }
 
         if ((requestCode == REQUEST_PICTURE) && (resultCode == Activity.RESULT_OK)) {
-            // When the user is done picking a picture, let's start the CropImage Activity,
-            // setting the output image file and size to 200x200 pixels square.
-            Uri croppedImage = Uri.fromFile(croppedImageFile);
-
-//            CropImageIntentBuilder cropImage = new CropImageIntentBuilder(200, 200, croppedImage);
-//            cropImage.setOutlineColor(0xFF03A9F4);
-//            cropImage.setSourceImage(data.getData());
-//            Intent a = cropImage.getIntent(getActivity());
-
 
 
             bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
-//            new AsyncTask<Void, Void, Void>() {
-//                @Override
-//                protected Void doInBackground(Void... params) {
-//                    dishArrayList.get(currentPosition).setFullsizeImg(bitmapToByteArr(bitmapArray[0])); //Full size to Bytearray
-//
-//                    dishArrayList.get(currentPosition).setThumbnailImg(bitmapToByteArr(bitmapArray[1])); //Thumbnail to Bytearray
-//                    newDish.setFullsizeImg(bitmapToByteArr(bitmapArray[0]));
-//                    newDish.setThumbnailImg(bitmapToByteArr(bitmapArray[1]));
-//                    return null;
-//
-//                }
-//            }.execute();
-            newDish.setFullsizeImg(bitmapToByteArr(bitmapArray[0]));
-            newDish.setThumbnailImg(bitmapToByteArr(bitmapArray[1]));
+
+            newDish.setFullsizeImg(CameraBasics.bitmapToByteArr(bitmapArray[0]));
+            newDish.setThumbnailImg(CameraBasics.bitmapToByteArr(bitmapArray[1]));
+            Log.d("IMAGE_SIZE", String.format("%d ON %d", bitmapArray[0].getWidth(), bitmapArray[0].getHeight()));
+            addDishImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             addDishImageView.setImageBitmap(bitmapArray[1]);
 
-           // startActivityForResult(cropImage.getIntent(getActivity()), REQUEST_CROP_PICTURE);
 
 
-        } else if ((requestCode == REQUEST_CROP_PICTURE) && (resultCode == Activity.RESULT_OK)) {
+
+        }
+        else if ((requestCode == REQUEST_CROP_PICTURE) && (resultCode == Activity.RESULT_OK)) {
             // When we are done cropping, display it in the ImageView.
             dishImageView.setImageBitmap(BitmapFactory.decodeFile(croppedImageFile.getAbsolutePath()));
         }
 
 
 
-//        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode==Activity.RESULT_OK) {
-           //bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
-//            new AsyncTask<Void, Void, Void>() {
-//                @Override
-//                protected Void doInBackground(Void... params) {
-////                    dishArrayList.get(currentPosition).setFullsizeImg(bitmapToByteArr(bitmapArray[0])); //Full size to Bytearray
-////
-////                    dishArrayList.get(currentPosition).setThumbnailImg(bitmapToByteArr(bitmapArray[1])); //Thumbnail to Bytearray
-//                    newDish.setFullsizeImg(bitmapToByteArr(bitmapArray[0]));
-//                    newDish.setThumbnailImg(bitmapToByteArr(bitmapArray[1]));
-//                    return null;
-//
-//                }
-//            }.execute();
-//            addDishImageView.setImageBitmap(bitmapArray[1]);
-//        }
+
         //Location from google picker
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
@@ -768,13 +734,7 @@ private void getEventsDishes()
     }
 
 
-    private byte[] bitmapToByteArr(Bitmap b)
-    {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        b.compress(Bitmap.CompressFormat.JPEG,80,baos);
-        return baos.toByteArray();
 
-    }
     private void wrapAllDataToEventAndUpdateServer()
     {
         String title = eventTitleEditText.getText().toString();
