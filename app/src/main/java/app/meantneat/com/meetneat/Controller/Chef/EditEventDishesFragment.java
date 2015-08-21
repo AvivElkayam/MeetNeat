@@ -704,6 +704,8 @@ private void getEventsDishes()
 
             newDish.setFullsizeImg(CameraBasics.bitmapToByteArr(bitmapArray[0]));
             newDish.setThumbnailImg(CameraBasics.bitmapToByteArr(bitmapArray[1]));
+
+
             Log.d("IMAGE_SIZE", String.format("%d ON %d", bitmapArray[0].getWidth(), bitmapArray[0].getHeight()));
             addDishImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             addDishImageView.setImageBitmap(bitmapArray[1]);
@@ -711,10 +713,6 @@ private void getEventsDishes()
 
 
 
-        }
-        else if ((requestCode == REQUEST_CROP_PICTURE) && (resultCode == Activity.RESULT_OK)) {
-            // When we are done cropping, display it in the ImageView.
-            dishImageView.setImageBitmap(BitmapFactory.decodeFile(croppedImageFile.getAbsolutePath()));
         }
 
 

@@ -137,11 +137,9 @@ import app.meantneat.com.meetneat.R;
 
         this.googleMapHungry = googleMap;
         googleMapHungry.setMyLocationEnabled(true);
-        //LatLng NEWARK = new LatLng(40.714086, -74.228697);
 
-//        GroundOverlayOptions newarkMap = new GroundOverlayOptions()
-//                .image(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922))
-//                .position(NEWARK, 8600f, 6500f);
+
+
         googleMapHungry.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
 
 
@@ -155,22 +153,6 @@ import app.meantneat.com.meetneat.R;
                     firstTime = false;
 
                 }
-
-
-                    // CENTER MARKER //
-                //Drawable dr = getResources().getDrawable(R.drawable.logo1);
-                //final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
-                //BitmapDescriptor fixed = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 150, 150, true));
-
-//                if(lastMarker != null)
-//                    lastMarker.remove();
-//                lastMarker = googleMapHungry.addMarker(new MarkerOptions()
-//                                .position(googleMapHungry.getCameraPosition().target)
-//                                .title("Center")
-//
-//                                .icon(fixed)
-//                );
-
 
 
                 float[] results = new float[10];
@@ -217,7 +199,7 @@ import app.meantneat.com.meetneat.R;
                 return false;
             }
         });
-        //googleMapHungry.animateCamera(Cmera);
+
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(32.073776, 34.781890), 16));
         //ArrayList<LatLng> coordinatesArr = getClosestCoordinatesFromServer();
         //getClosestCoordinatesFromServer();
