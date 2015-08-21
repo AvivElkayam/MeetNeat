@@ -43,7 +43,7 @@
                 android:layout_gravity="center_vertical"
                 android:id="@+id/hungry_specifiec_chef_events_dialog_box_chef_name_text"
                 android:layout_weight="1"
-                android:textColor="@color/eat_white"
+                android:textColor="@color/eat_black"
                 android:gravity="bottom"
                 android:layout_marginBottom="10dp" />
 
@@ -88,7 +88,7 @@
     android:layout_width="match_parent"
     android:layout_height="300dp"
     app:cardCornerRadius="30dp"
-    android:background="@color/eat_white"
+    android:background="@color/eat_black"
     android:layout_gravity="center_horizontal"
     android:layout_weight="0.74">
 

@@ -3,7 +3,7 @@
     android:layout_width="250dp" android:layout_height="300dp"
     android:orientation="vertical"
     android:gravity="center_vertical"
-    android:background="@color/eat_black">
+    android:background="@color/eat_white">
 
     <TextView
         android:layout_width="fill_parent"
@@ -29,8 +29,8 @@
         android:layout_marginRight="5dp"
         android:paddingLeft="5dp"
         android:gravity="center_vertical"
-        android:textColor="@color/eat_white"
-        android:textColorHint="@color/eat_white"
+        android:textColor="@color/eat_black"
+        android:textColorHint="@color/eat_black"
         android:layout_weight="1" />
     <TextView
         android:layout_width="fill_parent"
@@ -53,8 +53,8 @@
         android:layout_marginRight="5dp"
         android:paddingLeft="5dp"
         android:gravity="center_vertical"
-        android:textColor="@color/eat_white"
-        android:textColorHint="@color/eat_white"
+        android:textColor="@color/eat_black"
+        android:textColorHint="@color/eat_black"
         android:layout_weight="1" />
 
     <LinearLayout
@@ -62,7 +62,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
-        android:id="@+id/">
+        android:id="@+id/d">
 
         <CheckBox
             android:layout_width="fill_parent"

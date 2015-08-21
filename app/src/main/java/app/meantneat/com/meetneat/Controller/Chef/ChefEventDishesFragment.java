@@ -147,7 +147,7 @@ public class ChefEventDishesFragment extends Fragment
 
         floatingAddButton = (FloatingActionButton) getActivity().findViewById(R.id.chef_events_dishes_floating_add_button);
         floatingAddButton.attachToListView(eventsListView);
-        floatingAddButton.setColorNormal(getResources().getColor(R.color.eat_orange));
+        floatingAddButton.setColorNormal(getResources().getColor(R.color.eat_green));
         floatingAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,11 +199,13 @@ public class ChefEventDishesFragment extends Fragment
         bundle.putInt(AppConstants.EVENT_STARTING_DAY, eventDishes.getStartingDay());
         bundle.putInt(AppConstants.EVENT_STARTING_HOUR, eventDishes.getStartingHour());
         bundle.putInt(AppConstants.EVENT_STARTING_MINUTE, eventDishes.getStartingMinute());
+
         bundle.putInt(AppConstants.EVENT_ENDING_YEAR, eventDishes.getEndingYear());
         bundle.putInt(AppConstants.EVENT_ENDING_MONTH, eventDishes.getEndingMonth());
         bundle.putInt(AppConstants.EVENT_ENDING_DAY, eventDishes.getEndingDay());
         bundle.putInt(AppConstants.EVENT_ENDING_HOUR, eventDishes.getEndingHour());
         bundle.putInt(AppConstants.EVENT_ENDING_MINUTE, eventDishes.getEndingMinute());
+
         bundle.putString(AppConstants.EVENT_TITLE, eventDishes.getTitle());
         bundle.putString(AppConstants.EVENT_LOCATION,eventDishes.getLocation());
         bundle.putString(AppConstants.EVENT_APARTMENT_NUMBER, eventDishes.getApartmentNumber());
@@ -234,9 +236,9 @@ public class ChefEventDishesFragment extends Fragment
             }
         });
         // Configure the refreshing colors
-        swipeRefreshLayout.setColorSchemeResources(R.color.eat_black,
+        swipeRefreshLayout.setColorSchemeResources(R.color.eat_white,
                 R.color.eat_orange,
-                R.color.eat_white
+                R.color.eat_black
                 );
 
 

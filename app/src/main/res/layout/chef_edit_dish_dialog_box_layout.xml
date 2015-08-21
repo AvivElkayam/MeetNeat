@@ -1,73 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="300dp"
     android:layout_height="500dp"
     android:gravity="center_horizontal"
-    android:background="@color/eat_black">
+    android:background="@color/eat_white"
+
+    >
 
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:id="@+id/chef_edit_dish_dialog_box_image_view"
-        android:layout_marginTop="10dp" />
-
-    <EditText
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="180dp"
+        android:id="@+id/chef_edit_dish_dialog_box_image_view" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/chef_edit_dish_dialog_box_title_edit_text"
-        android:background="@drawable/gray_text_field"
-        android:layout_marginTop="30dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_weight="1"
-        android:textColor="@color/eat_white" />
-    <EditText
+        android:hint="Title"
+        android:textColor="@color/eat_black"
+        app:met_baseColor="@color/eat_black"
+        app:met_primaryColor="@color/eat_green"
+        app:met_errorColor="@color/eat_black"
+        app:met_hideUnderline="false"
+        app:met_floatingLabel="highlight"
+        app:met_singleLineEllipsis="true"
+        android:text="Title" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:id="@+id/chef_edit_dish_dialog_box_description_edit_text"
         android:background="@drawable/gray_text_field"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_weight="1"
-        android:textColor="@color/eat_white" />
+        android:hint="Description"
+        android:textColor="@color/eat_black"
+        app:met_baseColor="@color/eat_black"
+        app:met_primaryColor="@color/eat_green"
+        app:met_errorColor="@color/eat_black"
+        app:met_hideUnderline="false"
+        app:met_floatingLabel="highlight"
+        app:met_singleLineEllipsis="true"
+        android:text="Description"
+        android:layout_marginTop="-10dp" />
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/chef_edit_dish_dialog_box_price_edit_text"
         android:background="@drawable/gray_text_field"
         android:autoText="true"
-        android:layout_marginTop="10dp"
+        android:hint="Price"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_weight="1"
-        android:textColor="@color/eat_white" />
+        android:textColor="@color/eat_black"
+        app:met_baseColor="@color/eat_black"
+        app:met_primaryColor="@color/eat_green"
+        app:met_errorColor="@color/eat_black"
+        app:met_hideUnderline="false"
+        app:met_floatingLabel="highlight"
+        app:met_singleLineEllipsis="true"
+        android:text="Price"
+        android:layout_marginTop="-10dp" />
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
         android:id="@+id/chef_edit_dish_dialog_box_quantity_edit_text"
         android:background="@drawable/gray_text_field"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_weight="1"
-        android:layout_marginBottom="20dp"
-        android:textColor="@color/eat_white" />
+        android:textColor="@color/eat_black"
+        android:hint="Dishes Left"
+        app:met_baseColor="@color/eat_black"
+        app:met_primaryColor="@color/eat_green"
+        app:met_errorColor="@color/eat_black"
+        app:met_hideUnderline="false"
+        app:met_floatingLabel="highlight"
+        app:met_singleLineEllipsis="true"
+        android:text="Dishes Left"
+        android:layout_marginTop="-10dp" />
 
     <Button
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:text="Edit Dish"
         android:id="@+id/chef_edit_dish_dialog_box_edit_dish_button"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:textColor="@color/eat_white"
+        android:layout_gravity="bottom|center_horizontal"
+        android:textColor="@color/eat_black"
         android:background="@drawable/green_button"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp" />

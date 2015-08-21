@@ -58,7 +58,7 @@ public class ChefEventMealsFragment extends Fragment
             //String time = eventMeal.getTime();
             //String date = eventMeal.getDate();
             //String mealsLeft = "Meals left: "+ eventMeal.getDishesLeft();
-            String totalMeals = "Total meals: "+eventMeal.getTotalDishes();
+            String totalMeals = "Total meals: "+eventMeal.getMealsLeft();
 
 
 

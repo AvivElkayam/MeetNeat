@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="fill_parent"
     android:layout_height="140dp"
-    android:background="@color/eat_black">
+    android:background="@color/eat_white">
 
     <LinearLayout
         android:orientation="vertical"
@@ -13,39 +13,40 @@
 
         <TextView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Yaman friday"
             android:id="@+id/chef_fragment_row_title_text_view"
-            android:layout_weight="1"
             android:layout_marginLeft="10dp"
-            android:textColor="@color/eat_orange"
+            android:textColor="@color/eat_black"
             android:textSize="16dp"
-            android:gravity="left|center_vertical" />
+            android:gravity="left|center_vertical"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp" />
 
         <TextView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="date"
             android:id="@+id/chef_fragment_row_date_text_view"
-            android:layout_weight="1"
             android:layout_marginLeft="10dp"
-            android:textColor="@color/eat_white"
-            android:gravity="left|center_vertical"
-            android:textSize="14dp" />
+            android:textColor="@color/eat_black"
+            android:gravity="top|left"
+            android:textSize="15sp"
+            android:layout_marginTop="7dp" />
 
         <TextView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="time"
             android:id="@+id/chef_fragment_row_time_text_view"
-            android:layout_weight="1"
             android:layout_marginLeft="10dp"
-            android:textColor="@color/eat_white"
-            android:gravity="left|center_vertical"
-            android:textSize="14dp" />
+            android:textColor="@color/eat_black"
+            android:gravity="left"
+            android:textSize="15sp"
+            android:layout_marginTop="5dp" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -54,26 +55,21 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="1">
 
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/imageView"
-                android:background="@drawable/location"
-                android:layout_weight="5"
-                android:layout_margin="5dp" />
-
             <TextView
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Hagefen St."
                 android:id="@+id/chef_fragment_row_location_text_view"
-                android:textColor="@color/eat_white"
+                android:textColor="@color/eat_black"
+                android:drawableLeft="@drawable/location48"
+
                 android:gravity="center_vertical"
                 android:layout_marginLeft="5dp"
-                android:textSize="16dp"
+                android:textSize="15sp"
                 android:paddingRight="5dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:layout_marginTop="5dp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -97,7 +93,7 @@
                 android:text="edit"
                 android:id="@+id/chef_fragment_row_edit_button"
                 android:layout_weight="1"
-                android:textColor="@color/eat_white"
+                android:textColor="@color/eat_black"
                 android:background="@drawable/green_button"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp" />
@@ -109,7 +105,7 @@
                 android:id="@+id/button"
                 android:layout_weight="1"
                 android:background="@drawable/green_button"
-                android:textColor="@color/eat_white"
+                android:textColor="@color/eat_black"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp" />
         </LinearLayout>

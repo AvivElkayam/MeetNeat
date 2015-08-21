@@ -1,11 +1,15 @@
 package app.meantneat.com.meetneat.Controller.Hungry;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,8 +21,11 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -35,6 +42,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -96,7 +104,7 @@ import app.meantneat.com.meetneat.R;
         super.onStart();
 
         android.support.v4.app.FragmentManager fragmentManager = getChildFragmentManager();
-       SupportMapFragment mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
+       SupportMapFragment mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map2);
        mapFragment.getMapAsync(this);
         mGoogleApiClient.connect();
         mLocationRequest = new LocationRequest();
@@ -272,8 +280,9 @@ import app.meantneat.com.meetneat.R;
                             .title("Marker")
                             .rotation((float)90.0)
                             .icon(fixed)
-        );
 
+        );
+        //Marker m = setUpMap(coordinatesArray.get(i), BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.chef_hat_yellow));
         allMarkersMap.put(m, eventsArray.get(i));
         }
     }
@@ -373,6 +382,65 @@ return b;
         canvas.drawBitmap(bmp1, new Matrix(), null);
         canvas.drawBitmap(bmp2, new Matrix(), null);
         return bmOverlay;
+    }
+//    private void setUpMapIfNeeded() {
+//        // Do a null check to confirm that we have not already instantiated the
+//        // map.
+//        if (mMap == null) {
+//            // Try to obtain the map from the SupportMapFragment.
+//            mMap = ((SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+//            // Check if we were successful in obtaining the map.
+//            if (mMap != null) {
+//                setUpMap();
+//            }
+//        }
+//    }
+
+    private Marker setUpMap(final LatLng markerLatLng,Bitmap bitmap) {
+
+        View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.chef_template, null);
+        ImageView imageView = (ImageView) marker.findViewById(R.id.chef_template_image_view);
+        imageView.setImageBitmap(bitmap);
+        Marker m = googleMapHungry.addMarker(new MarkerOptions()
+                .position(markerLatLng)
+                .title("Title")
+                .snippet("Description")
+                .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getActivity(), marker))));
+        Fragment fragment = this;
+        final View mapView = fragment.getView();
+        if (mapView.getViewTreeObserver().isAlive()) {
+            mapView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//                @SuppressLint("NewApi")
+                // We check which build version we are using.
+                @Override
+                public void onGlobalLayout() {
+                    LatLngBounds bounds = new LatLngBounds.Builder().include(markerLatLng).build();
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                        mapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    } else {
+                        mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+                    googleMapHungry.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
+                }
+            });
+        }
+        return m;
+    }
+
+    // Convert a view to bitmap
+    public static Bitmap createDrawableFromView(Context context, View view) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        view.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
+        view.layout(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
+        view.buildDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(view.getMeasuredWidth(), view.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+
+        return bitmap;
     }
 
 

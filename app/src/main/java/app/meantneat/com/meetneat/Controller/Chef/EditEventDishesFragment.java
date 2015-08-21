@@ -27,6 +27,7 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -80,11 +81,8 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     Bitmap[] bitmapArray;
     CameraBasics cameraBasics = new CameraBasics();
     private TextView startingTimeTextView,startingDateTextView,endingTimeTextView,endingDateTextView;
-    //dishes viewas
+    //dishes views
     private TextView noMoreEventsOverlay;
-    private TextView dishTitleEditText,dishPriceEditText,dishQuantityEditText,dishDescriptionEditText,dishTotalOrdersTextView;
-    private Button dishTakeAwayButton,dishToSeatButton;
-    private boolean isTakeAway=false,isToSeat=false;
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
     private int startingYear,startingMonth,startingDay,startingHour,startingMinute;
@@ -94,11 +92,9 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     private ListView dishesListView;
     private DishRowListAdapter dishRowListAdapter;
     private ArrayList<Dish> dishArrayList;
-    private ListView eventsListView;
-    private DishRowListAdapter eventsArrayAdapter;
     private Button createEventButton;
     private Dialog addDishDialog;
-    private String apartmentNumber,location;
+    private String apartmentNumber,location,eventID;
     ArrayList<String> dishesIDArrayList;
     View v1,v2,v3;
     //add dish dialog views
@@ -106,7 +102,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     private Button nextButton,backButton,continueButton;
     private EditText addDishTitleEditText,addDishPriceEditText,addDishDishesLeftEditText,addDishDescriptionEditText;
     private ImageView addDishImageView, dishImageView;
-    private String dishTitle,dishPrice,dishDescription,dishQuantity;
+    private CheckBox addDishtaCheckBox,addDishseatCheckBox;
     private boolean isNew;
     int dialogBoxIndex=1;
     private Dish newDish;
@@ -159,7 +155,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
             priceTextView.setText("$"+Double.toString(dish.getPrice()));
 
             final TextView quantityTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_quantity_text_view);
-            quantityTextView.setText(Double.toString(dish.getQuantity()));
+            quantityTextView.setText(Double.toString(dish.getQuantityLeft()));
 
             //final ImageView imageView = (ImageView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_image_view);
             //final SelectableRoundedImageView imageView = (SelectableRoundedImageView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_image_view);
@@ -183,20 +179,12 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
             }
 
 
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    currentPosition = position;
-                    dishTitleEditText.setText(title);
-                    dishPriceEditText.setText("Price: "+dish.getPrice());
-                    dishQuantityEditText.setText("DishesLeft: "+dish.getQuantityLeft());
-                    dishDescriptionEditText.setText(description);
-                    dishImageView.setBackground(new BitmapDrawable(dish.getThumbnailImage()));
-                }
-            });
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                    //edit specific dish
+
                     dish.setDishIndex(position);
                     final EditDishDialogBox editDishDialogBox = new EditDishDialogBox(getActivity(),dish);
                     editDishDialogBox.show();
@@ -294,19 +282,25 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
         startingDay = getArguments().getInt(AppConstants.EVENT_STARTING_DAY);
         startingHour = getArguments().getInt(AppConstants.EVENT_STARTING_HOUR);
         startingMinute = getArguments().getInt(AppConstants.EVENT_STARTING_MINUTE);
+
         endingYear = getArguments().getInt(AppConstants.EVENT_ENDING_YEAR);
         endingMonth = getArguments().getInt(AppConstants.EVENT_ENDING_MONTH);
         endingDay = getArguments().getInt(AppConstants.EVENT_ENDING_DAY);
         endingHour = getArguments().getInt(AppConstants.EVENT_ENDING_HOUR);
         endingMinute = getArguments().getInt(AppConstants.EVENT_ENDING_MINUTE);
-        startingDateTextView.setText(MeetnEatDates.getDateString(startingYear,startingMonth,startingDay));
-        startingTimeTextView.setText(MeetnEatDates.getTimeString(startingHour,startingDay));
-        endingTimeTextView.setText(MeetnEatDates.getTimeString(endingHour,endingMinute));
+
+        startingDateTextView.setText(MeetnEatDates.getDateString(startingYear, startingMonth, startingDay));
+        startingTimeTextView.setText(MeetnEatDates.getTimeString(startingHour, startingMinute));
+        endingDateTextView.setText(MeetnEatDates.getDateString(endingYear, endingMonth, endingDay));
+        endingTimeTextView.setText(MeetnEatDates.getTimeString(endingHour, endingMinute));
         eventTitleEditText.setText(getArguments().getString(AppConstants.EVENT_TITLE));
         apartmentNumber = getArguments().getString(AppConstants.EVENT_APARTMENT_NUMBER);
         eventApartmentNumberEditText.setText(apartmentNumber);
         location = getArguments().getString(AppConstants.EVENT_LOCATION);
         isNew = getArguments().getBoolean(AppConstants.IS_NEW);
+        if(isNew==false)
+            eventID = getArguments().getString(AppConstants.EVENT_ID);
+
 //        if(isNew==false)
 //        {
 //            dishesIDArrayList=getArguments().getStringArrayList("dishes");
@@ -314,132 +308,22 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
 //        eventLocationEditText.setText(location);
 
     }
-private void initViews()
+    private void initViews()
 {
 
 
-   // createEventButton = (Button)getActivity().findViewById(R.id.chef_edit_event_continue_button_id);
     createEventButton = (Button)getActivity().findViewById(R.id.chef_edit_event_continue_button_id);
     eventTitleEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_title_edit_text_id);
-    //eventLocationEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_location_edit_text_id);
     eventApartmentNumberEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_apartment_numebr_edit_text_id);
-    //addNewDishFloatingButton = (FloatingActionButton) getActivity().findViewById(R.id.add_event_fragment_add_new_dish_button);
     addDishButton = (FloatingActionButton)getActivity().findViewById(R.id.chef_edit_events_dishes_floating_add_dish_button);
     calendar=Calendar.getInstance();
-    startingTimeTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_starting_time_label);
-    startingDateTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_starting_date_label);
-    endingTimeTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_ending_time_label);
+
     noMoreEventsOverlay = (TextView)getActivity().findViewById(R.id.add_event_fragment_no_more_events_overlay);
-    dishTitleEditText = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_title_text_view);
-    dishTotalOrdersTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_total_orders_text_view);
-    dishPriceEditText = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_price_text_view);
-    dishQuantityEditText = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_dishes_left_text_view);
-    dishDescriptionEditText = (TextView)getActivity().findViewById(R.id.add_event_fragment_dish_description_text_view);
-    dishTakeAwayButton = (Button)getActivity().findViewById(R.id.add_event_fragment_dish_take_away_button);
-    dishTakeAwayButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-        Button button = (Button)v;
-            if(isTakeAway==false)
-            {
-                button.setBackgroundColor(Color.GREEN);
-                isTakeAway=true;
-            }
-            else
-            {
-                button.setBackgroundColor(Color.RED);
-                isTakeAway=false;
-            }
-        }
-    });
-    dishToSeatButton = (Button)getActivity().findViewById(R.id.add_event_fragment_dish_to_seat_button);
-    dishToSeatButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Button button = (Button)v;
-            if(isToSeat==false)
-            {
-                button.setBackgroundColor(Color.GREEN);
-                isToSeat=true;
-            }
-            else
-            {
-                button.setBackgroundColor(Color.RED);
-                isToSeat=false;
-            }
-        }
-    });
 
-    startingDateTextView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(final View v) {
-            datePickerDialog = new DatePickerDialog(getActivity(),new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    TextView textView = (TextView)v;
-                    startingYear=year;
-                    startingMonth=monthOfYear;
-                    startingDay=dayOfMonth;
-                    ((TextView) v).setText(MeetnEatDates.getDateString(year,monthOfYear,dayOfMonth));
-                }
-            },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
-            datePickerDialog.show();
+    initDatePickers();
+    initTimePickers();
 
-        }
-    });
-    startingTimeTextView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(final View v) {
-            timePickerDialog = new TimePickerDialog(getActivity(),new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                startingHour = hourOfDay;
-                    startingMinute=minute;
-                    ((TextView) v).setText(MeetnEatDates.getTimeString(hourOfDay,minute));
-                }
-            },calendar.get(Calendar.HOUR),calendar.get(Calendar.MINUTE),true);
-            timePickerDialog.show();
-        }
-    });
-//    eventLocationEditText.setOnClickListener(new View.OnClickListener() {
-//        @Override
-//        public void onClick(View v) {
-//
-//            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-//
-//
-//            try {
-//                startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST);
-//            } catch (GooglePlayServicesRepairableException e) {
-//                e.printStackTrace();
-//            } catch (GooglePlayServicesNotAvailableException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    });
 
-    endingTimeTextView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(final View v) {
-            timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    endingHour = hourOfDay;
-                    endingMinute = minute;
-                    ((TextView) v).setText(MeetnEatDates.getTimeString(hourOfDay,minute));
-                }
-            }, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), true);
-            timePickerDialog.show();
-        }
-    });
-
-    dishImageView = (ImageView)getActivity().findViewById(R.id.add_event_fragment_dish_image_view);
-    dishImageView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            dispatchTakePictureIntent();
-        }
-    });
     getEventDetailsFromBundle();
     initCreateEventButton();
     initListView();
@@ -451,6 +335,80 @@ private void initViews()
 
 
 }
+
+
+
+    private void initTimePickers() {
+        startingTimeTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_starting_time_label);
+        endingTimeTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_ending_time_label);
+        startingTimeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                timePickerDialog = new TimePickerDialog(getActivity(),new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        startingHour = hourOfDay;
+                        startingMinute=minute;
+                        ((TextView) v).setText(MeetnEatDates.getTimeString(hourOfDay,minute));
+                    }
+                },calendar.get(Calendar.HOUR),calendar.get(Calendar.MINUTE),true);
+                timePickerDialog.show();
+            }
+        });
+
+        endingTimeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        endingHour = hourOfDay;
+                        endingMinute = minute;
+                        ((TextView) v).setText(MeetnEatDates.getTimeString(hourOfDay,minute));
+                    }
+                }, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), true);
+                timePickerDialog.show();
+            }
+        });
+    }
+
+    private void initDatePickers() {
+        startingDateTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_starting_date_label);
+        endingDateTextView = (TextView)getActivity().findViewById(R.id.add_event_fragment_ending_date_label);
+        startingDateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                datePickerDialog = new DatePickerDialog(getActivity(),new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        TextView textView = (TextView)v;
+                        startingYear=year;
+                        startingMonth=monthOfYear+1;
+                        startingDay=dayOfMonth;
+                        ((TextView) v).setText(MeetnEatDates.getDateString(year,monthOfYear,dayOfMonth));
+                    }
+                },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.show();
+
+            }
+        });
+        endingDateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        TextView textView = (TextView) v;
+                        endingYear = year;
+                        endingMonth = monthOfYear+1;
+                        endingDay = dayOfMonth;
+                        ((TextView) v).setText(MeetnEatDates.getDateString(year, monthOfYear, dayOfMonth));
+                    }
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.show();
+            }});
+    }
+
     private void initCreateEventButton()
     {
         if(isNew==true) {
@@ -480,9 +438,12 @@ private void initViews()
                             startingYear,
                             startingMonth,
                             startingDay,
+                            endingYear,
+                            endingMonth,
+                            endingDay,
                             locationString,
                             apartmentNumber,
-                            "",
+                            eventID,
                             dishArrayList,
                             locationCoord.longitude,
                             locationCoord.latitude);
@@ -508,18 +469,6 @@ private void getEventsDishes()
                 dishArrayList.addAll(dishes);
                 dishRowListAdapter.notifyDataSetChanged();
                 if (dishArrayList.size() > 0) {
-                    Dish dish = dishArrayList.get(0);
-                    dishTitleEditText.setText(dish.getTitle());
-                    dishPriceEditText.setText("Price: " + dish.getPrice());
-                    dishQuantityEditText.setText("DishesLeft: " + dish.getQuantityLeft());
-
-                    dishDescriptionEditText.setText(dish.getDescriprion());
-                    MyModel.getInstance().getModel().getDishPicture(dish.getDishID(), new MyModel.PictureCallback() {
-                        @Override
-                        public void pictureHasBeenFetched(Bitmap bitmap) {
-                            dishImageView.setBackground(new BitmapDrawable(bitmap));
-                        }
-                    });
                     noMoreEventsOverlay.setVisibility(View.GONE);
 
                 } else {
@@ -571,7 +520,8 @@ private void getEventsDishes()
         v2 = getActivity().getLayoutInflater().inflate(R.layout.chef_add_dish_phase_two,dialogBoxLayoutContainer,false);
         addDishPriceEditText = (EditText)v2.findViewById(R.id.add_dish_phase_two_price_edit_text_id);
         addDishDishesLeftEditText = (EditText)v2.findViewById(R.id.add_dish_phase_two_quantity_edit_text_id);
-
+        addDishtaCheckBox = (CheckBox)v2.findViewById(R.id.add_dish_phase_two_ta_checkbox_id);
+        addDishseatCheckBox = (CheckBox)v2.findViewById(R.id.add_dish_phase_two_seat_checkbox_id);
         v3 = getActivity().getLayoutInflater().inflate(R.layout.chef_add_dish_phase_three,dialogBoxLayoutContainer,false);
         addDishImageView = (ImageView)v3.findViewById(R.id.add_dish_phase_three_dish_image_view_id);
         addDishImageView.setOnClickListener(new View.OnClickListener() {
@@ -623,6 +573,8 @@ private void getEventsDishes()
 //                        dishQuantity = addDishDishesLeftEditText.getText().toString();
                         newDish.setPrice(Double.parseDouble(addDishPriceEditText.getText().toString()));
                         newDish.setQuantityLeft(Double.parseDouble(addDishDishesLeftEditText.getText().toString()));
+                        newDish.setTakeAway(addDishtaCheckBox.isChecked());
+                        newDish.setToSit(addDishseatCheckBox.isChecked());
                         if(addDishPriceEditText.getText().toString().equals("")|| addDishDishesLeftEditText.getText().toString().equals(""))
                         {
                             Toast.makeText(getActivity(),"Please fill in details",Toast.LENGTH_SHORT).show();
@@ -702,8 +654,8 @@ private void getEventsDishes()
 
             bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
 
-//            newDish.setFullsizeImg(CameraBasics.bitmapToByteArr(bitmapArray[0]));
-//            newDish.setThumbnailImg(CameraBasics.bitmapToByteArr(bitmapArray[1]));
+            newDish.setFullsizeImg(CameraBasics.bitmapToByteArr(bitmapArray[0]));
+            newDish.setThumbnailImg(CameraBasics.bitmapToByteArr(bitmapArray[1]));
             Log.d("IMAGE_SIZE", String.format("%d ON %d", bitmapArray[0].getWidth(), bitmapArray[0].getHeight()));
             addDishImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             addDishImageView.setImageBitmap(bitmapArray[1]);
@@ -742,27 +694,36 @@ private void getEventsDishes()
         String locationString = lAC.getChoosenLocationString();
         //To do: Get string ftom the autoComlete Label;
         //String locationStr =
-        EventDishes event = new EventDishes(title
-                ,startingHour
-                ,startingMinute
-                ,endingHour
-                ,endingMinute,
-                startingYear,
-                startingMonth,
-                startingDay,
-                locationString,
-                apartmentNumber,
-                "",
-                dishArrayList,
-                locationCoord.longitude,
-                locationCoord.latitude);
-
+        EventDishes event = new EventDishes();
+        event.setTitle(title);
+        event.setStartingYear(startingYear);
+        event.setStartingMonth(startingMonth);
+        event.setStartingDay(startingDay);
+        event.setStartingHour(startingHour);
+        event.setStartingMinute(startingMinute);
+        event.setEndingYear(endingYear);
+        event.setEndingMonth(endingMonth);
+        event.setEndingDay(endingDay);
+        event.setEndingHour(endingHour);
+        event.setEndingMinute(endingMinute);
+        event.setApartmentNumber(apartmentNumber);
+        event.setEventsDishes(dishArrayList);
+        event.setLatitude(locationCoord.latitude);
+        event.setLongitude(locationCoord.longitude);
+        event.setLocation(locationString);
+        event.setEventId(eventID);
         MyModel.getInstance().getModel().addNewEventDishesToServer(event, new SaveToServerCallback() {
             @Override
             public void onResult() {
                 Toast.makeText(getActivity(), "Event Saved", Toast.LENGTH_SHORT).show();
             }
         });
+//        MyModel.getInstance().getModel().editEventDishes(event, new MyModel.EditEventCallback() {
+//            @Override
+//            public void eventHasBeenEdited() {
+//
+//            }
+//        });
     }
     public interface SaveToServerCallback
     {

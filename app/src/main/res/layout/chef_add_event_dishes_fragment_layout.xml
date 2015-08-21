@@ -1,242 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/eat_black"
-    android:fitsSystemWindows="true">
+    android:background="@color/eat_white"
+    android:fitsSystemWindows="true"
+    android:weightSum="8">
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:id="@+id/add_dish_event_fragment_title_edit_text_id"
+        android:hint="Event title"
+        android:layout_marginLeft="30dp"
+        android:paddingLeft="5dp"
+        android:layout_marginRight="30dp"
+        android:textSize="15dp"
+        android:textColor="@color/eat_black"
+        android:textColorHint="@color/eat_black"
+        app:met_baseColor="@color/eat_black"
+        app:met_primaryColor="@color/eat_black"
+        app:met_errorColor="@color/eat_black"
+        app:met_hideUnderline="false"
+
+
+        app:met_floatingLabel="highlight"
+        app:met_singleLineEllipsis="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="-15dp" />
+
+    <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/add_dish_event_fragment_location_auto"
+        android:focusable="true"
+        android:dropDownWidth="fill_parent"
+        android:completionThreshold="1"
+        android:textColor="@color/eat_black"
+        android:hint="Location"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/gray_text_field"
+        android:layout_marginLeft="30dp"
+        android:textSize="15dp"
+        android:paddingLeft="5dp"
+        android:textColorHint="@color/eat_black"
+        android:gravity="left|center_vertical"
+
+        app:met_baseColor="@color/eat_black"
+        app:met_primaryColor="@color/eat_black"
+        app:met_errorColor="@color/eat_black"
+        app:met_hideUnderline="false"
+        android:paddingTop="10dp"
+        android:inputType="textCapSentences" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:id="@+id/add_dish_event_fragment_appartment_number_text_view_id"
+        android:background="@drawable/gray_text_field"
+        android:layout_marginLeft="30dp"
+        android:textSize="15dp"
+        android:layout_alignParentBottom="true"
+        android:hint="Specific adress instructions"
+        android:paddingLeft="5dp"
+        android:layout_marginRight="30dp"
+        android:textColorHint="@color/eat_black"
+        android:textColor="@color/eat_black"
+        android:gravity="left|center_vertical"
+
+
+        app:met_baseColor="@color/eat_black"
+        app:met_primaryColor="@color/eat_black"
+        app:met_errorColor="@color/eat_black"
+        app:met_hideUnderline="false"
+
+
+        app:met_floatingLabel="highlight"
+        app:met_singleLineEllipsis="true"
+        android:inputType="textCapSentences" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="STARTS AT"
+        android:id="@+id/textView10"
+        android:textSize="12dp"
+        android:textColor="@color/eat_gray"
+        android:paddingLeft="30dp"
+        android:gravity="bottom" />
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/layout">
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
 
-        <EditText
+        <TextView
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:id="@+id/add_dish_event_fragment_title_edit_text_id"
-            android:hint="Event title"
-            android:background="@drawable/gray_text_field"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="40dp"
+            android:layout_height="fill_parent"
+            android:text="Date"
+            android:id="@+id/add_dish_event_fragment_starting_date_text_view_id"
+            android:layout_marginRight="5dp"
+            android:textSize="15dp"
+            android:textIsSelectable="false"
             android:gravity="left|center_vertical"
             android:paddingLeft="5dp"
-            android:layout_marginRight="30dp"
-            android:textSize="15dp"
-            android:textColor="@color/eat_white"
-            android:textColorHint="@color/eat_white"
-            android:layout_weight="1" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="15dp"
+            android:textColor="@color/eat_black"
+            android:textColorHint="@color/eat_black"
             android:layout_weight="1"
-            android:paddingBottom="4dp">
+            style="@android:style/Widget.Holo.Light.Spinner" />
 
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:id="@+id/imageView5"
-                android:background="@drawable/location"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="2dp" />
-
-            <AutoCompleteTextView
-                android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:id="@+id/add_dish_event_fragment_location_auto"
-                android:focusable="true"
-                android:dropDownWidth="fill_parent"
-                android:completionThreshold="1"
-                android:dropDownHeight="100dp"
-                android:layout_weight="1"
-                android:layout_alignParentBottom="true"
-                android:textColor="@color/eat_white"
-                android:hint="Location"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/gray_text_field"
-                android:layout_marginLeft="5dp"
-                android:textSize="15dp"
-                android:paddingLeft="5dp"
-                android:textColorHint="@color/eat_white"
-                android:gravity="left|center_vertical" />
-
-        </LinearLayout>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:id="@+id/add_dish_event_fragment_appartment_number_text_view_id"
-            android:background="@drawable/gray_text_field"
-            android:layout_marginLeft="40dp"
-            android:textSize="15dp"
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Starting Time"
+            android:id="@+id/add_dish_event_fragment_starting_time_text_view_id"
+            android:layout_weight="1"
             android:layout_alignParentBottom="true"
-            android:hint="Specific adress instructions"
-            android:paddingLeft="5dp"
-            android:layout_weight="1"
-            android:layout_marginRight="30dp"
-            android:textColorHint="@color/eat_white"
-            android:textColor="@color/eat_white"
-            android:layout_marginTop="15dp"
-            android:gravity="left|center_vertical" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="FROM"
-            android:id="@+id/textView10"
-            android:layout_weight="1"
-            android:textSize="20dp"
-            android:layout_marginTop="15dp"
-            android:textColor="@color/eat_white"
-            android:paddingLeft="40dp"
-            android:gravity="bottom" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
-            android:layout_weight="1">
-
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:id="@+id/imageView2"
-                android:background="@drawable/calander"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="2dp"
-                android:layout_gravity="center" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:text="Date"
-                android:id="@+id/add_dish_event_fragment_starting_date_text_view_id"
-                android:layout_marginRight="5dp"
-                android:textSize="15dp"
-                android:textIsSelectable="false"
-                android:gravity="left|center_vertical"
-                android:paddingLeft="5dp"
-                android:layout_marginLeft="5dp"
-                android:textColor="@color/eat_white"
-                android:textColorHint="@color/eat_white"
-                android:layout_weight="1"
-                style="@android:style/Widget.Holo.Spinner" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:text="Starting Time"
-                android:id="@+id/add_dish_event_fragment_starting_time_text_view_id"
-                android:layout_weight="1"
-                android:layout_alignParentBottom="true"
-                android:layout_marginRight="30dp"
-                android:textSize="15dp"
-                android:gravity="left|center_vertical"
-                android:paddingLeft="5dp"
-                android:layout_marginLeft="5dp"
-                android:textColor="@color/eat_white"
-                android:textColorHint="@color/eat_white"
-                style="@android:style/Widget.Holo.Spinner" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="TO"
-            android:id="@+id/textView11"
-            android:layout_weight="1"
-            android:textSize="20dp"
-            android:layout_marginTop="15dp"
-            android:textColor="@color/eat_white"
-            android:paddingLeft="40dp"
-            android:gravity="bottom" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_weight="1">
-
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:id="@+id/imageView3"
-                android:background="@drawable/time1"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="2dp" />
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:text="Date"
-                android:id="@+id/add_dish_event_fragment_ending_date_text_view_id"
-                android:layout_marginRight="5dp"
-                android:textSize="15dp"
-                android:textIsSelectable="false"
-                android:gravity="left|center_vertical"
-                android:paddingLeft="5dp"
-                android:layout_marginLeft="5dp"
-                android:textColor="@color/eat_white"
-                android:textColorHint="@color/eat_white"
-                android:layout_weight="1"
-                style="@android:style/Widget.Holo.Spinner" />
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:text="Ending Time"
-                android:id="@+id/add_dish_event_fragment_ending_time_text_view_id"
-                android:layout_weight="1"
-                android:layout_marginRight="30dp"
-                android:textSize="15dp"
-                android:gravity="left|center_vertical"
-                android:paddingLeft="5dp"
-                android:layout_marginLeft="5dp"
-                android:textColor="@color/eat_white"
-                android:textColorHint="@color/eat_white"
-                style="@android:style/Widget.Holo.Spinner" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="15dp"
-            android:layout_weight="1">
-
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:id="@+id/imageView4"
-                android:background="@drawable/time2"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginBottom="2dp" />
-
-        </LinearLayout>
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:text="Continue"
-            android:id="@+id/buttadd_dish_event_fragment_continue_button_idon3"
-            android:background="@drawable/green_button"
-            android:textColor="@color/eat_white"
             android:textSize="15dp"
-            android:layout_marginLeft="46dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="35dp"
-            android:layout_weight="1"
-            android:layout_marginBottom="100dp" />
+            android:gravity="left|center_vertical"
+            android:paddingLeft="5dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/eat_black"
+            android:textColorHint="@color/eat_black"
+            style="@android:style/Widget.Holo.Light.Spinner" />
     </LinearLayout>
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="ENDS AT"
+        android:id="@+id/textView11"
+        android:textSize="12dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/eat_gray"
+        android:paddingLeft="30dp"
+        android:gravity="bottom" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Date"
+            android:id="@+id/add_dish_event_fragment_ending_date_text_view_id"
+            android:layout_marginRight="5dp"
+            android:textSize="15dp"
+            android:textIsSelectable="false"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="5dp"
+            android:textColor="@color/eat_black"
+            android:textColorHint="@color/eat_black"
+            android:layout_weight="1"
+            style="@android:style/Widget.Holo.Light.Spinner"
+            android:inputType="textCapSentences" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Ending Time"
+            android:id="@+id/add_dish_event_fragment_ending_time_text_view_id"
+            android:layout_weight="1"
+            android:textSize="15dp"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="5dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/eat_black"
+            android:textColorHint="@color/eat_black"
+            style="@android:style/Widget.Holo.Light.Spinner" />
+
+    </LinearLayout>
+
+    <info.hoang8f.widget.FButton
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:text="Continue"
+        android:id="@+id/buttadd_dish_event_fragment_continue_button_idon3"
+        android:textColor="@color/eat_white"
+        android:textSize="15sp"
+        fbutton:buttonColor="@color/eat_green"
+        fbutton:shadowColor="@color/eat_green_shadow"
+        fbutton:shadowEnabled="true"
+        fbutton:shadowHeight="2dp"
+        fbutton:cornerRadius="4dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="100dp"
+    />
+
+</LinearLayout>

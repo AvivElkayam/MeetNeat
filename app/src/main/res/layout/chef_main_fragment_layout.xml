@@ -20,13 +20,16 @@
         android:layout_height="48dp"
         android:textSize="14dp"
         android:background="@color/eat_green"
-        android:textColor="@color/eat_black"
-        app:pstsDividerColor="@color/eat_black"
+        android:textColor="@color/eat_white"
+        app:pstsDividerColor="@color/eat_white"
         app:pstsIndicatorColor="@color/eat_orange"
-        app:pstsUnderlineColor="@color/eat_orange"
-        app:pstsUnderlineHeight="4dp"
+        app:pstsUnderlineColor="@color/eat_white"
+        app:pstsUnderlineHeight="2dp"
         app:pstsIndicatorHeight="4dp"
-        app:pstsTabPaddingLeftRight="14dp">
+        app:pstsTabPaddingLeftRight="14dp"
+
+        android:elevation="5dp"
+        >
     </com.astuetz.PagerSlidingTabStrip>
 
     <android.support.v4.view.ViewPager

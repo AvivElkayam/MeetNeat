@@ -12,10 +12,10 @@
         android:background="@drawable/eyal_shani"
         android:layout_gravity="center"
         android:visibility="visible"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginBottom="25dp"
-        android:layout_marginLeft="20dp" />
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginBottom="35dp"
+        android:layout_marginLeft="32dp" />
 
     <ImageView
         android:layout_width="96dp"
