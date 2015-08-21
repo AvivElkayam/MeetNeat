@@ -1,6 +1,7 @@
 package app.meantneat.com.meetneat.Controller.Chef;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,10 +23,10 @@ import app.meantneat.com.meetneat.R;
  * Created by mac on 5/17/15.
  */
 public class ChefFragment extends Fragment {
-
-    public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
+//PagerSlidingTabStrip.IconTabProvider  -   for icons
+    public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter   {
         final int PAGE_COUNT = 2;
-        private String tabTitles[] = new String[] { "EventDishes", "EventMeals" };
+        private String tabTitles[] = new String[] { "DISHES", "MEALS" };
 
         public SampleFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -63,23 +64,23 @@ public class ChefFragment extends Fragment {
         }
 
 
-        @Override
-        public int getPageIconResId(int i) {
-            switch (i)
-            {
-                case 0:
-                {
-                    return R.drawable.event_dishes_orange;
-                }
-                case 1:
-                {
-                    return R.drawable.event_meals_orange;
-                }
-
-
-            }
-            return 0;
-        }
+//        @Override
+//        public int getPageIconResId(int i) {
+//            switch (i)
+//            {
+//                case 0:
+//                {
+//                    return R.drawable.event_dishes_orange;
+//                }
+//                case 1:
+//                {
+//                    return R.drawable.event_meals_orange;
+//                }
+//
+//
+//            }
+//            return 0;
+//        }
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -97,6 +98,7 @@ public class ChefFragment extends Fragment {
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) v.findViewById(R.id.chef_view_pager_tabs);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
+
 
 
     }

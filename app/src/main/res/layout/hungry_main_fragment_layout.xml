@@ -11,7 +11,7 @@
         app:pstsTextAllCaps="true"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@color/eat_black"
+        android:background="@color/eat_white"
         android:textColor="@color/eat_orange"
         app:pstsDividerColor="@color/eat_orange"
         app:pstsIndicatorColor="@color/eat_orange"

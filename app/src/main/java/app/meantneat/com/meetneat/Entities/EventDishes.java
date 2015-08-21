@@ -77,7 +77,7 @@ public class EventDishes {
     public EventDishes() {
     }
 
-    public EventDishes(String title, int startingHour, int startingMinute, int endingHour, int endingMinute, int eventYear, int startingMonth, int eventDay, String location, String apartmentNumber, String eventId, ArrayList<Dish> eventsDishes,double longitude,double latitude) {
+    public EventDishes(String title, int startingHour, int startingMinute,int endingYear,int endingMonth,int endingDay, int endingHour, int endingMinute, int eventYear, int startingMonth, int eventDay, String location, String apartmentNumber, String eventId, ArrayList<Dish> eventsDishes,double longitude,double latitude) {
         this.title = title;
         this.startingHour = startingHour;
         this.startingMinute = startingMinute;
@@ -86,6 +86,9 @@ public class EventDishes {
         this.startingYear = eventYear;
         this.startingMonth = startingMonth;
         this.startingDay = eventDay;
+        this.endingYear=endingYear;
+        this.endingMonth=endingMonth;
+        this.endingDay=endingDay;
         this.location = location;
         this.apartmentNumber = apartmentNumber;
         this.eventId = eventId;

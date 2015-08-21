@@ -11,8 +11,13 @@
   <color name="blue_semi_transparent_pressed">#80738ffe</color>
 
     <color name="eat_orange">#FBAE17</color>
-    <color name="eat_black">#333333</color>
-    <color name="eat_green">#00A595</color>
-    <color name="eat_gray">#b3b3b3</color>
     <color name="eat_white">#ffffff</color>
+    <color name="eat_black_semi_transparent">#80333333</color>
+
+    <color name="eat_green">#009688</color>
+    <color name="eat_green_shadow">#00796B</color>
+    <!--<color name="eat_green">#00A595</color>-->
+
+    <color name="eat_gray">#b3b3b3</color>
+    <color name="eat_black">#333333</color>
 </resources>

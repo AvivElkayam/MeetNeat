@@ -3,22 +3,23 @@
     android:layout_width="250dp" android:layout_height="300dp"
     android:orientation="vertical"
     android:gravity="center_vertical"
-    android:background="@color/eat_black">
+    android:background="@color/eat_white">
 
     <TextView
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="fill_parent"
         android:text="Price"
         android:id="@+id/textView2"
         android:layout_gravity="center_vertical"
         android:textColor="@color/eat_orange"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical"
+        android:layout_weight="1" />
 
     <EditText
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="fill_parent"
         android:inputType="numberSigned"
         android:ems="10"
         android:id="@+id/add_dish_phase_two_price_edit_text_id"
@@ -28,21 +29,23 @@
         android:layout_marginRight="5dp"
         android:paddingLeft="5dp"
         android:gravity="center_vertical"
-        android:textColor="@color/eat_white"
-        android:textColorHint="@color/eat_white" />
+        android:textColor="@color/eat_black"
+        android:textColorHint="@color/eat_black"
+        android:layout_weight="1" />
     <TextView
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="fill_parent"
         android:text="Quantity"
         android:id="@+id/textView3"
         android:textColor="@color/eat_orange"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical"
+        android:layout_weight="1" />
 
     <EditText
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="fill_parent"
         android:id="@+id/add_dish_phase_two_quantity_edit_text_id"
         android:inputType="number"
         android:background="@drawable/gray_text_field"
@@ -50,7 +53,33 @@
         android:layout_marginRight="5dp"
         android:paddingLeft="5dp"
         android:gravity="center_vertical"
-        android:textColor="@color/eat_white"
-        android:textColorHint="@color/eat_white" />
+        android:textColor="@color/eat_black"
+        android:textColorHint="@color/eat_black"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:id="@+id/d">
+
+        <CheckBox
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="T.A"
+            android:id="@+id/add_dish_phase_two_ta_checkbox_id"
+            android:layout_weight="1"
+            android:checked="false" />
+
+        <CheckBox
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Seat"
+            android:id="@+id/add_dish_phase_two_seat_checkbox_id"
+            android:layout_weight="1"
+            android:checked="false" />
+
+    </LinearLayout>
 
 </LinearLayout>

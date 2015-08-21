@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,10 +21,9 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
-import com.parse.ParseUser;
 
 import java.util.Calendar;
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 import app.meantneat.com.meetneat.AppConstants;
 import app.meantneat.com.meetneat.Camera.LocationAutoComplete;
@@ -35,21 +35,20 @@ import app.meantneat.com.meetneat.R;
  */
 public class AddDishEventFragment extends Fragment implements  GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
 {
-    TextView dateTextView,startingTime,endingTime;
-    EditText location,apartmentNumber,titleEditText;
+    private TextView endingDateTextView,startingDateTextView,startingTime,endingTime;
+    private EditText location,apartmentNumber,titleEditText;
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
-    int startingHour,startingMinute,startingYear,startingMonth,startingDay;
-    int endingHour,endingMinute,endingYear,endingMonth,endingDay;
-    LocationAutoComplete lAC;
-    Calendar calendar;
-    View v;
-    Button continueButton;
-
-    String whereToGo;
+    private int startingHour,startingMinute,startingYear,startingMonth,startingDay;
+    private int endingHour,endingMinute,endingYear,endingMonth,endingDay;
+    private LocationAutoComplete lAC;
+    private Calendar calendar;
+    private View v;
+    private Button continueButton;
+    private CheckBox taCheckBox,seatCheckBox;
+    public String whereToGo;
     public static String goToMeals = "meals";
     public static String goToDishes = "dishes";
-
     private GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -62,9 +61,10 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
 
     //String s = ParseUser.getCurrentUser().getObjectId();
         whereToGo = getArguments().getString(AppConstants.WHERE_TO_GO);
-        v = inflater.inflate(R.layout.chef_add_event_dishes_fragment_layout,container,false);
-        calendar=Calendar.getInstance();
-        dateTextView = (TextView)v.findViewById(R.id.add_dish_event_fragment_date_text_view_id);
+        v = inflater.inflate(R.layout.chef_add_event_dishes_fragment_layout, container, false);
+        calendar= Calendar.getInstance();
+        startingDateTextView = (TextView)v.findViewById(R.id.add_dish_event_fragment_starting_date_text_view_id);
+        endingDateTextView = (TextView)v.findViewById(R.id.add_dish_event_fragment_ending_date_text_view_id);
         startingTime = (TextView)v.findViewById(R.id.add_dish_event_fragment_starting_time_text_view_id);
         endingTime = (TextView)v.findViewById(R.id.add_dish_event_fragment_ending_time_text_view_id);
         //location = (EditText)v.findViewById(R.id.add_dish_event_fragment_location_text_view_id);
@@ -73,6 +73,7 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
         titleEditText = (EditText)v.findViewById(R.id.add_dish_event_fragment_title_edit_text_id);
         titleEditText.setPadding(5,0,0,0);
         continueButton = (Button)v.findViewById(R.id.buttadd_dish_event_fragment_continue_button_idon3);
+
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +128,7 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
     }
     private boolean validateFields()
     {
-        if(dateTextView.equals("Date")
+        if(startingDateTextView.equals("Date")
                 || startingTime.equals("Starting Time")
                 || endingTime.equals("EndingTime")
                 || apartmentNumber.getText().toString().equals(""))
@@ -148,7 +149,7 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
                         startingMinute=minute;
                         ((TextView) v).setText(hourOfDay+":"+minute);
                     }
-                },calendar.get(Calendar.HOUR),calendar.get(Calendar.MINUTE),true);
+                },calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),true);
                 timePickerDialog.show();
             }
         });
@@ -162,23 +163,40 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
                         endingMinute=minute;
                         ((TextView) v).setText(hourOfDay+":"+minute);
                     }
-                },calendar.get(Calendar.HOUR),calendar.get(Calendar.MINUTE),true);
+                },calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),true);
                 timePickerDialog.show();
             }
         });
-        dateTextView.setOnClickListener(new View.OnClickListener() {
+        endingDateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                datePickerDialog = new DatePickerDialog(getActivity(),new DatePickerDialog.OnDateSetListener() {
+                datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        TextView textView = (TextView)v;
-                        startingYear=year;
-                        startingMonth=monthOfYear;
-                        startingDay=dayOfMonth;
-                        ((TextView) v).setText(MeetnEatDates.getDateString(year, monthOfYear, dayOfMonth));
+                        TextView textView = (TextView) v;
+                        endingYear = year;
+                        endingMonth = monthOfYear+1;//months starts from 0
+                        endingDay = dayOfMonth;
+                        ((TextView) v).setText(MeetnEatDates.getDateString(endingYear, endingMonth, endingDay));
                     }
-                },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.show();
+
+            }
+        });
+        startingDateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        TextView textView = (TextView) v;
+                        startingYear = year;
+                        startingMonth = monthOfYear+1;//months starts from 0
+                        startingDay = dayOfMonth;
+                        ((TextView) v).setText(MeetnEatDates.getDateString(startingYear, startingMonth, startingDay));
+                    }
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.show();
 
             }
@@ -236,4 +254,5 @@ public class AddDishEventFragment extends Fragment implements  GoogleApiClient.C
                 .replace(R.id.chef_event_meals_fragment_container, fragment, "added_event").addToBackStack("added_new")
                 .commit();//different container ID
     }
+
 }

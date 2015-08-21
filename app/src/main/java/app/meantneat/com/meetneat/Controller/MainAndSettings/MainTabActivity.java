@@ -1,9 +1,11 @@
 package app.meantneat.com.meetneat.Controller.MainAndSettings;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -46,7 +48,17 @@ private FragmentTabHost mTabHost;
         hungryFragment = new HungryFragment();
         settingsFragment = new SettingsFragment();
         initTabsMenu();
-       // getSupportFragmentManager().addOnBackStackChangedListener(getListener());
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.eat_green)));
+        getSupportActionBar().setElevation(0);
+
+
+        //code for set view as header for action bar
+
+//        final ActionBar actionBar = getSupportActionBar();
+//        actionBar.setCustomView(R.layout.chef_edit_event_dishes_fragment_dish_row);
+//        actionBar.setDisplayShowTitleEnabled(false);
+//        actionBar.setDisplayShowCustomEnabled(true);
+        // getSupportFragmentManager().addOnBackStackChangedListener(getListener());
 //        Button chefButton = (Button) findViewById(R.id.activity_main_tab_chef_button);
 //        Button hungryButton = (Button) findViewById(R.id.activity_main_tab_hungry_button);
 //

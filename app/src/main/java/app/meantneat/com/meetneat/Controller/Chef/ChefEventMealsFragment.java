@@ -20,6 +20,7 @@ import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 
+import app.meantneat.com.meetneat.AppConstants;
 import app.meantneat.com.meetneat.Entities.EventDishes;
 import app.meantneat.com.meetneat.Entities.EventMeals;
 import app.meantneat.com.meetneat.MeetnEatDates;
@@ -46,7 +47,7 @@ public class ChefEventMealsFragment extends Fragment
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             View itemView = convertView;
 
             if(itemView==null)
@@ -57,7 +58,7 @@ public class ChefEventMealsFragment extends Fragment
             //String time = eventMeal.getTime();
             //String date = eventMeal.getDate();
             //String mealsLeft = "Meals left: "+ eventMeal.getDishesLeft();
-            String totalMeals = "Total meals: "+eventMeal.getTotalDishes();
+            String totalMeals = "Total meals: "+eventMeal.getMealsLeft();
 
 
 
@@ -77,11 +78,7 @@ public class ChefEventMealsFragment extends Fragment
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.chef_event_meals_fragment_container, new EditEventMealsFragment(), "edit_meal_event")
-                            // Add this transaction to the back stack
-                    .addToBackStack("edit_meal_event")
-                    .commit();
+                packDataToBundleAndPassToEditScreen(position);
                 }
             });
             return itemView;
@@ -151,11 +148,7 @@ public class ChefEventMealsFragment extends Fragment
     {
 
         eventMealsArrayList = new ArrayList<>();
-        EventMeals eventMeals1 = new EventMeals("חרטות",22,22,2017,7,3,"Shaul","12",8,25);
-        //EventMeals eventDishes1 = new EventMeals("חגיגה אסיאתית",,4,2);
-        //EventMeals eventDishes2 = new EventMeals("חינגה לובית",,15,8);
 
-        eventMealsArrayList.add(eventMeals1);
         eventsListView =(ListView)getActivity().findViewById(R.id.chef_events_meals_list_view);
         eventsArrayAdapter = new EventRowListAdapter();
         eventsListView.setAdapter(eventsArrayAdapter);
@@ -187,31 +180,41 @@ public class ChefEventMealsFragment extends Fragment
     {
         EventMeals eventMeals = eventMealsArrayList.get(index);
         Bundle bundle = new Bundle();
-        bundle.putInt("year", eventMeals.getStartingYear());
-        bundle.putInt("month", eventMeals.getStartingMonth());
-        bundle.putInt("day", eventMeals.getStartingDay());
-        bundle.putInt("starting_hour", eventMeals.getStartingHour());
-        bundle.putInt("starting_minute", eventMeals.getStartingMinute());
-        bundle.putInt("ending_hour", eventMeals.getEndingHour());
-        bundle.putInt("ending_minute", eventMeals.getEndingMinute());
-        bundle.putString("title", eventMeals.getTitle());
-        bundle.putString("location",eventMeals.getLocation());
-        bundle.putString("apartment_number", eventMeals.getApartmentNumber());
-        bundle.putBoolean("is_new", false);
-        bundle.putString("eventID", eventMeals.getEventId());
+        bundle.putInt(AppConstants.EVENT_STARTING_YEAR, eventMeals.getStartingYear());
+        bundle.putInt(AppConstants.EVENT_STARTING_MONTH, eventMeals.getStartingMonth());
+        bundle.putInt(AppConstants.EVENT_STARTING_DAY, eventMeals.getStartingDay());
+        bundle.putInt(AppConstants.EVENT_STARTING_HOUR, eventMeals.getStartingHour());
+        bundle.putInt(AppConstants.EVENT_STARTING_MINUTE, eventMeals.getStartingMinute());
+        bundle.putInt(AppConstants.EVENT_ENDING_YEAR, eventMeals.getEndingYear());
+        bundle.putInt(AppConstants.EVENT_ENDING_MONTH, eventMeals.getEndingMonth());
+        bundle.putInt(AppConstants.EVENT_ENDING_DAY, eventMeals.getEndingDay());
+        bundle.putInt(AppConstants.EVENT_ENDING_HOUR, eventMeals.getEndingHour());
+        bundle.putInt(AppConstants.EVENT_ENDING_MINUTE, eventMeals.getEndingMinute());
+        bundle.putString(AppConstants.EVENT_TITLE, eventMeals.getTitle());
+        bundle.putString(AppConstants.EVENT_LOCATION,eventMeals.getLocation());
+        bundle.putString(AppConstants.EVENT_APARTMENT_NUMBER, eventMeals.getApartmentNumber());
+        bundle.putBoolean(AppConstants.IS_NEW, false);
+        bundle.putString(AppConstants.EVENT_ID,eventMeals.getEventId());
         //these fields are only for EVENT MEALS
-        bundle.putInt("price",eventMeals.getPrice());
-        bundle.putInt("meals_amount",eventMeals.getMealsLeft());
-        bundle.putString("menu",eventMeals.getMenu());
+        bundle.putInt(AppConstants.EVENT_PRICE,eventMeals.getPrice());
+        bundle.putInt(AppConstants.EVENT_MEALS_LEFT,eventMeals.getMealsLeft());
+        bundle.putString(AppConstants.EVENT_MENU,eventMeals.getMenu());
 //        ArrayList<String> dishesIDArrayList = new ArrayList<>();
 //        for(Dish dish : eventMeals.getEventsDishes())
 //        dishesIDArrayList.add(dish.getDishID());
 //        bundle.putStringArrayList("dishes",dishesIDArrayList);
-        EditEventDishesFragment fragment = new EditEventDishesFragment();
+//        EditEventDishesFragment fragment = new EditEventDishesFragment();
+//        fragment.setArguments(bundle);
+//        getParentFragment().getChildFragmentManager().beginTransaction()
+//                .add(R.id.chef_event_dishes_fragment_container, fragment, "add_event")
+//                .addToBackStack("1")
+//                .commit();
+        EditEventMealsFragment fragment = new EditEventMealsFragment();
         fragment.setArguments(bundle);
-        getParentFragment().getChildFragmentManager().beginTransaction()
-                .add(R.id.chef_event_dishes_fragment_container, fragment, "add_event")
-                .addToBackStack("1")
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.chef_event_meals_fragment_container, fragment, "edit_meal_event")
+                        // Add this transaction to the back stack
+                .addToBackStack("edit_meal_event")
                 .commit();
     }
 }

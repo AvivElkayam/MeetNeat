@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/chef_event_dishes_fragment_container"
-    android:background="@color/eat_black">
+    android:background="@color/eat_white">
     <android.support.v4.widget.SwipeRefreshLayout
 
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -33,7 +33,9 @@
         android:text="+"
         android:textColor="@drawable/plus_icon"
         android:layout_marginLeft="20dp"
-        android:background="@drawable/yellow_circle" />
+        android:background="@drawable/yellow_circle"
+        android:src="@drawable/fab_plus"
+        />
     <ProgressBar
         android:layout_width="64dp"
         android:layout_height="64dp"

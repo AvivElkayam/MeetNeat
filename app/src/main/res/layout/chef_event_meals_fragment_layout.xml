@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/chef_event_meals_fragment_container"
-    android:background="@color/eat_black">
+    android:background="@color/eat_white">
 
     <ListView
         android:layout_width="match_parent"

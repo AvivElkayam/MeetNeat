@@ -29,7 +29,7 @@ public class AppConstants {
     //EVENT_MEALS TABLE
     public static String EVENT_MEALS = "EventMeals";
     public static String EVENT_MEALS_ID = "objectId";
-    public static String EVENt_MEALS_EVENt_TITLE = "title";
+    public static String EVENt_MEALS_EVENT_TITLE = "title";
     public static String EVENT_MEALS_START_DATE = "start_date";
     public static String EVENT_MEALS_END_DATE = "end_date";
     public static String EVENT_MEALS_CHEF_ID = "chef_id";
@@ -39,6 +39,8 @@ public class AppConstants {
     public static String EVENT_MEALS_QUANTITY = "quantity";
     public static String EVENT_MEALS_APARTMENT_NUMBER = "apartment_number";
     public static String EVENT_MEALS_GEO_POINT = "geo_point";
+    public static String EVENT_MEALS_MENU = "menu";
+
 
     //DISH TABLE
     public static String DISH = "Dish";
@@ -92,6 +94,9 @@ public class AppConstants {
     public static String EVENT_LOCATION = "location";
     public static String EVENT_PRICE = "price";
     public static String EVENT_QUANTITY = "quantity";
+    public static String EVENT_MEALS_LEFT= "meals_left";
+    public static String EVENT_MENU= "menu";
+
     public static String EVENT_APARTMENT_NUMBER = "apartment_number";
     public static String EVENT_LATITUDE = "latitude";
     public static String EVENT_LONGITUDE = "longitude";

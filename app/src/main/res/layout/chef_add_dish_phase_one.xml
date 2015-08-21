@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="250dp" android:layout_height="300dp"
     android:orientation="vertical"
-    android:background="@color/eat_black">
+    android:background="@color/eat_white">
 
     <TextView
         android:layout_width="fill_parent"
@@ -25,8 +25,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:paddingLeft="5dp"
-        android:textColor="@color/eat_white"
-        android:textColorHint="@color/eat_white" />
+        android:textColor="@color/eat_black"
+        android:textColorHint="@color/eat_black" />
 
     <TextView
         android:layout_width="fill_parent"
@@ -49,7 +49,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:paddingLeft="5dp"
-        android:textColor="@color/eat_white"
-        android:textColorHint="@color/eat_white" />
+        android:textColor="@color/eat_black"
+        android:textColorHint="@color/eat_black" />
 
 </LinearLayout>
