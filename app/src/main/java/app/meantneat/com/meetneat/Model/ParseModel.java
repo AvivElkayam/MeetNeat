@@ -490,6 +490,7 @@ private void saveEventsDishesToServer(EventDishes event,ParseObject eventObject)
     @Override
     public void getClosestChefsRadius(final ChefEventDishesFragment.GetEventDishesCallback callback, final LatLng centerLocation) {
 
+        //TO DO:: load 5 at a time
 
         new AsyncTask<Void, Void, Void>() {
             ArrayList<EventDishes> eventDishesArrayList = new ArrayList<>();
@@ -502,7 +503,7 @@ private void saveEventsDishesToServer(EventDishes event,ParseObject eventObject)
                 LatLng l = centerLocation;
                 eventQuery.whereWithinKilometers(AppConstants.EVENT_DISHES_GEO_POINT,
                         new ParseGeoPoint(centerLocation.latitude,centerLocation.longitude)
-                        ,5);
+                        ,3);
 
 
                 //eventQuery.whereEqualTo(AppConstants.EVENT_DISHES_CHEF_ID,ParseUser.getCurrentUser().getObjectId());

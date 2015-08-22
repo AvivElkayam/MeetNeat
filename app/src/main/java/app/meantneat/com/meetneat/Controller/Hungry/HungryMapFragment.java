@@ -3,7 +3,6 @@ package app.meantneat.com.meetneat.Controller.Hungry;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
@@ -25,7 +24,6 @@ import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -78,7 +76,7 @@ import app.meantneat.com.meetneat.R;
     public static LatLng lastCenterStatic;
     boolean firstTime = true;
     Marker lastMarker;
-    BitmapDescriptor fixed;
+    BitmapDescriptor chefMarker;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -104,14 +102,17 @@ import app.meantneat.com.meetneat.R;
         super.onStart();
 
         android.support.v4.app.FragmentManager fragmentManager = getChildFragmentManager();
-       SupportMapFragment mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map2);
-       mapFragment.getMapAsync(this);
-        mGoogleApiClient.connect();
-        mLocationRequest = new LocationRequest();
+        SupportMapFragment mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map2);
+        mapFragment.getMapAsync(this);
 
-        mLocationRequest.setInterval(10000);
-        mLocationRequest.setFastestInterval(5000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mGoogleApiClient.connect();
+
+        //set properties of location request - to run look in OnConnected
+//        mLocationRequest = new LocationRequest();
+//
+//        mLocationRequest.setInterval(10000);
+//        mLocationRequest.setFastestInterval(5000);
+//        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
     @Override
@@ -126,10 +127,6 @@ import app.meantneat.com.meetneat.R;
                 .addOnConnectionFailedListener(this)
                 .build();
 
-        //Google_Map = supportMapFragment.getMap();
-//               SupportMapFragment mapFragment = (SupportMapFragment) (getActivity().getSupportFragmentManager()
-//                .findFragmentById(R.id.map));
-
     }
 
 
@@ -138,19 +135,23 @@ import app.meantneat.com.meetneat.R;
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        Drawable dr = getResources().getDrawable(R.drawable.chef_48_green);
-        final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
-        fixed = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 96, 96, true));
-
 
         this.googleMapHungry = googleMap;
         googleMapHungry.setMyLocationEnabled(true);
 
+        //restaurant marker init
+        Drawable dr = getResources().getDrawable(R.drawable.chef_48_green);
+        final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+        chefMarker = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 96, 96, true));
 
 
         googleMapHungry.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
 
-
+            //TO DO:: check best practice to identify camera stopped changing
+            //TO DO:: check how to stop parse query/function - we will want to stop last restaurants load from server
+            // if camera changed too far(^^)
+            //TO DO:: center changed -> clear only the events that not in a 3km radius+check their availability
+            // -> get closest 3km from server except those we already have(if not null) ->draw them
             @Override
             public void onCameraChange(CameraPosition cameraPosition) {
 
@@ -163,7 +164,7 @@ import app.meantneat.com.meetneat.R;
                 }
 
 
-                float[] results = new float[10];
+                float[] results = new float[10]; //10 - random
                 Location.distanceBetween(
                         lastCenter.latitude,
                         lastCenter.longitude,
@@ -176,8 +177,7 @@ import app.meantneat.com.meetneat.R;
 
                     getClosestCoordinatesFromServer();
 
-
-
+               //temp Mechanism to stop model from downloading if while downloading the center is changed
                 lastCenter = googleMapHungry.getCameraPosition().target;
                 lastCenterStatic = lastCenter;
             }
@@ -188,20 +188,11 @@ import app.meantneat.com.meetneat.R;
             @Override
             public boolean onMarkerClick(Marker marker) {
 
-//                final SpecifiecChefEventsDialogBox dialogBox = new SpecifiecChefEventsDialogBox(
-//                        getActivity(),"pFubDWWXGT",marker.getPosition());
+
                 EventDishes eventByMarker =  allMarkersMap.get(marker);
                 final SpecifiecChefEventsDialogBox dialogBox = new SpecifiecChefEventsDialogBox(
                         getActivity(),eventByMarker.getChefID(),eventByMarker.getChefName(),marker.getPosition());
 
-
-//                final SpecificEventDishesDialogBox dialogBox = new SpecificEventDishesDialogBox(getActivity(),"7k60BVnPPQ","Jonathan Roshfeld","01.08.2004 - 03.09.2014","Italian Party");
-//                dialogBox.getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
-//                    @Override
-//                    public void onCancel(DialogInterface dialog) {
-//                        //dialogBox.getDialog().show();
-//                    }
-//                });
 
                 dialogBox.show();
                 return false;
@@ -209,8 +200,7 @@ import app.meantneat.com.meetneat.R;
         });
 
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(32.073776, 34.781890), 16));
-        //ArrayList<LatLng> coordinatesArr = getClosestCoordinatesFromServer();
-        //getClosestCoordinatesFromServer();
+
 
     }
 
@@ -230,6 +220,8 @@ import app.meantneat.com.meetneat.R;
 
 
                         }
+
+                        //TO DO:: check
                         coordinatesArray = coordinatesArrayTmp;
                         showClosestEvents();
                     }
@@ -245,11 +237,6 @@ import app.meantneat.com.meetneat.R;
         // if there same chef in the same location diffrent events - add only one event...
 
 
-
-
-//        Drawable dr = getResources().getDrawable(R.drawable.logo1);
-//        final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
-//        BitmapDescriptor fixed = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 150, 150, true));
         int i=0;
         googleMapHungry.clear();
 
@@ -261,7 +248,7 @@ import app.meantneat.com.meetneat.R;
                             .position(coordinatesArray.get(i))
                             .title("Marker")
                             .rotation((float)90.0)
-                            .icon(fixed)
+                            .icon(chefMarker)
 
         );
         //Marker m = setUpMap(coordinatesArray.get(i), BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.chef_hat_yellow));

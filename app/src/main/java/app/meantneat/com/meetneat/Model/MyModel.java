@@ -74,5 +74,10 @@ public class MyModel {
     {
         public void dishesAhBeenFetched(ArrayList<Dish> dishes);
     }
+    //TO DO: insert this callback in getClosestChefsRadius
+    public interface MapCallback
+    {
+        public void eventsHBeenFetched(ArrayList<EventDishes> eventDisheses);
+    }
 
 }
