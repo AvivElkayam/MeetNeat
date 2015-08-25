@@ -133,11 +133,7 @@ public class ChefEventDishesFragment extends Fragment
     {
 
         eventDishesArrayList = new ArrayList<>();
-//        EventDishes event1 = new EventDishes("שישי בשכונה",12,00,16,00,2015,3,12,"תל אביב, אבן גבירול","22","",null,0,0);
-//        EventDishes event2 = new EventDishes("שאריות משבת",8,00,13,00,2015,3,12,"תל אביב,שאול המלך","11","",null,0,0);
-//
-//        eventDishesArrayList.add(event1);
-//        eventDishesArrayList.add(event2);
+
         eventsListView =(ListView)getActivity().findViewById(R.id.chef_events_dishes_list_view);
         eventsArrayAdapter = new EventRowListAdapter();
         eventsListView.setAdapter(eventsArrayAdapter);
@@ -157,7 +153,7 @@ public class ChefEventDishesFragment extends Fragment
                 Bundle bundle = new Bundle();
                 bundle.putString(AppConstants.WHERE_TO_GO,AddDishEventFragment.goToDishes);
                 fragment.setArguments(bundle);
-                fragmentTransaction.replace(R.id.chef_event_dishes_fragment_container, fragment).addToBackStack("addNewEventDish");
+                fragmentTransaction.replace(R.id.chef_event_dishes_fragment_container, fragment);
                 fragmentTransaction.commit();
                 floatingAddButton.hide();
             }

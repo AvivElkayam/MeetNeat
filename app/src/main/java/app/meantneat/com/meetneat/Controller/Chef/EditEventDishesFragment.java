@@ -452,9 +452,14 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                     MyModel.getInstance().getModel().editEventDishes(event, new MyModel.EditEventCallback() {
                         @Override
                         public void eventHasBeenEdited() {
-                            Toast.makeText(getActivity(), "Even has been edited", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), "Even has been edited", Toast.LENGTH_SHORT).show();
                         }
                     });
+
+                    //Go back to chef Events
+                    Fragment f = getParentFragment();
+                    FragmentManager fm = f.getChildFragmentManager();
+                    fm.popBackStackImmediate();
                 }
             });
 
@@ -750,17 +755,13 @@ private void getEventsDishes()
                 //Toast.makeText(getActivity(), "Event Saved", Toast.LENGTH_SHORT).show();
             }
         });
-//        FragmentManager fm = getActivity()
-//                .getSupportFragmentManager();
-//        Fragment f = getParentFragment();
-//        FragmentManager fm = f.getChildFragmentManager();
-//        fm.popBackStack("addNewEventDish", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//        MyModel.getInstance().getModel().editEventDishes(event, new MyModel.EditEventCallback() {
-//            @Override
-//            public void eventHasBeenEdited() {
-//
-//            }
-//        });
+
+        //Go back to chef Events
+        Fragment f = getParentFragment();
+        FragmentManager fm = f.getChildFragmentManager();
+        fm.popBackStackImmediate();
+
+
     }
     public interface SaveToServerCallback
     {
