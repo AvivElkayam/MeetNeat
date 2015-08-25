@@ -504,9 +504,10 @@ private void saveEventsDishesToServer(EventDishes event,ParseObject eventObject)
                 eventQuery.whereWithinKilometers(AppConstants.EVENT_DISHES_GEO_POINT,
                         new ParseGeoPoint(centerLocation.latitude,centerLocation.longitude)
                         ,3);
+                eventQuery.()
 
 
-                //eventQuery.whereEqualTo(AppConstants.EVENT_DISHES_CHEF_ID,ParseUser.getCurrentUser().getObjectId());
+
                 List<ParseObject> tempEventArray;
                 try {
                     if( ! (HungryMapFragment.lastCenterStatic.equals(centerLocation ))  )

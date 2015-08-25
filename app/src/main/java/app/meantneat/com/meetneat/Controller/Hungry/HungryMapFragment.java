@@ -1,5 +1,6 @@
 package app.meantneat.com.meetneat.Controller.Hungry;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -66,7 +67,8 @@ import app.meantneat.com.meetneat.R;
 
     private static View view;
     private Map<Marker, EventDishes> allMarkersMap = new HashMap<Marker, EventDishes>();
-    private ArrayList<EventDishes> eventsArray = new ArrayList<>();
+    private ArrayList<EventDishes> cuurentEventsArray = new ArrayList<>();
+    private ArrayList<EventDishes> newEventsArray = new ArrayList<>();
     private ArrayList<LatLng> coordinatesArray = new ArrayList<>();
     private GoogleMap googleMapHungry;
     private GoogleApiClient mGoogleApiClient;
@@ -189,9 +191,9 @@ import app.meantneat.com.meetneat.R;
             public boolean onMarkerClick(Marker marker) {
 
 
-                EventDishes eventByMarker =  allMarkersMap.get(marker);
+                EventDishes eventByMarker = allMarkersMap.get(marker);
                 final SpecifiecChefEventsDialogBox dialogBox = new SpecifiecChefEventsDialogBox(
-                        getActivity(),eventByMarker.getChefID(),eventByMarker.getChefName(),marker.getPosition());
+                        getActivity(), eventByMarker.getChefID(), eventByMarker.getChefName(), marker.getPosition());
 
 
                 dialogBox.show();
@@ -211,18 +213,19 @@ import app.meantneat.com.meetneat.R;
                     @Override
                     public void done(ArrayList<EventDishes> eventDisheses) {
 
-                        eventsArray = eventDisheses;
-                        ArrayList<LatLng> coordinatesArrayTmp = new ArrayList<>();
-                        for (EventDishes e : eventsArray) {
-
-                            LatLng tmp = new LatLng(e.getLatitude(), e.getLongitude());
-                            coordinatesArrayTmp.add(tmp);
-
-
-                        }
-
-                        //TO DO:: check
-                        coordinatesArray = coordinatesArrayTmp;
+                        //currentEventsArray = eventDisheses;
+                        newEventsArray = eventDisheses;
+//                        ArrayList<LatLng> coordinatesArrayTmp = new ArrayList<>();
+//                        for (EventDishes e : eventsArray) {
+//
+//                            LatLng tmp = new LatLng(e.getLatitude(), e.getLongitude());
+//                            coordinatesArrayTmp.add(tmp);
+//
+//
+//                        }
+//
+//
+//                        coordinatesArray = coordinatesArrayTmp;
                         showClosestEvents();
                     }
                 }
@@ -230,33 +233,104 @@ import app.meantneat.com.meetneat.R;
 
     }
 
+    private void mergeEventsArray()
+    {
+        for (int i = 0;i< newEventsArray.size(); i++) {
+
+
+
+            for(int j=0;j<cuurentEventsArray.size();j++)
+            {
+                if(newEventsArray.get(i).getEventId() == cuurentEventsArray.get(j).getEventId()) {
+
+                    newEventsArray.remove(i);
+                    break; // continue to next new event
+
+                }
+            }
+
+
+        }
+
+    }
+
     private void showClosestEvents()
     {
         //make hashmap of markers and coordinates - if there is
-        // 2 diffrent chefs in the same coordinate rotate the marker
+        // 2 diffrent chefs in the same coordinate rotate the marker <-- TO DO
         // if there same chef in the same location diffrent events - add only one event...
 
+        //TO DO:: remove events in the same location+chef --> server should do it
+        removeFarEvents(); // Remove Events far than 3 km
+        mergeEventsArray(); //Remove existing events that downloaded from the server - TEMP...
+        //addClosestUniqueEvents();
 
-        int i=0;
-        googleMapHungry.clear();
+        //Add new markers to GoogleMap
+        for (int i = 0;i< newEventsArray.size(); i++) {
 
 
-        allMarkersMap.clear();
-        for (i = 0;i< coordinatesArray.size(); i++) {
 
-        Marker m = googleMapHungry.addMarker(new MarkerOptions()
+
+        final Marker m = googleMapHungry.addMarker(new MarkerOptions()
                             .position(coordinatesArray.get(i))
                             .title("Marker")
-                            .rotation((float)90.0)
+                             .alpha(0)
+                            .rotation((float) 90.0)
                             .icon(chefMarker)
+
+
 
         );
         //Marker m = setUpMap(coordinatesArray.get(i), BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.chef_hat_yellow));
-        allMarkersMap.put(m, eventsArray.get(i));
+        allMarkersMap.put(m, newEventsArray.get(i));
+        cuurentEventsArray.add(newEventsArray.get(i));
+
+            //marker fade in
+            ValueAnimator ani = ValueAnimator.ofFloat(0, 1); //change for (1,0) if you want a fade out
+            ani.setDuration(5000);
+            ani.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    m.setAlpha((float) animation.getAnimatedValue());
+                }
+            });
+            ani.start();
         }
     }
 
+    private void removeFarEvents()
+    {
+        //Clear(from GoogleMap) only the ones not in the 3 km radius + remove it from allMarkersMap
+        float results[] = new float[10];
+        for (Map.Entry<Marker,EventDishes> entry : allMarkersMap.entrySet()) {
+            Marker marker = entry.getKey();
+            EventDishes event = entry.getValue();
 
+
+
+            Location.distanceBetween(
+                    lastCenter.latitude,
+                    lastCenter.longitude,
+                    marker.getPosition().latitude,
+                    marker.getPosition().latitude,
+                    results);
+
+            //results[0] = distance in Meters
+            //There is an option just to hide -  marker.setVisibility
+            if(results[0] > 3000) {
+                marker.remove();
+
+                allMarkersMap.remove(marker);
+                //remove from current events
+                cuurentEventsArray.remove(event);
+            }
+        }
+    }
+
+    private void addClosestUniqueEvents() {
+               //TO DO:: download from server events that not already on map
+
+    }
     @Override
     public void onConnected(Bundle bundle) {
         Log.e("LNGLTD", "Connected");
