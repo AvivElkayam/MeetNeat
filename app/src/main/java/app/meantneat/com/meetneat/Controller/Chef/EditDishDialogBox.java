@@ -65,6 +65,7 @@ public class EditDishDialogBox {
 
         dishImageView = (ImageView)dialogBox.findViewById(R.id.chef_edit_dish_dialog_box_image_view);
         dishImageView.setImageBitmap(dish.getThumbnailImage());
+        dishImageView.setScaleType(ImageView.ScaleType.CENTER);
 
         editDishButton = (Button)dialogBox.findViewById(R.id.chef_edit_dish_dialog_box_edit_dish_button);
         editDishButton.setOnClickListener(new View.OnClickListener() {

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="250dp" android:layout_height="300dp"
     android:orientation="vertical"
     android:gravity="center_vertical"
-    android:background="@color/eat_white">
+    android:background="@color/eat_white"
+    android:animateLayoutChanges="true"
+    >
 
     <TextView
         android:layout_width="fill_parent"
@@ -15,23 +18,31 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:gravity="center_vertical"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:visibility="gone" />
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:inputType="numberSigned"
         android:ems="10"
-        android:id="@+id/add_dish_phase_two_price_edit_text_id"
-        android:layout_gravity="center_vertical"
-        android:background="@drawable/gray_text_field"
+        android:textColor="@color/eat_black"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:id="@+id/add_dish_phase_two_price_edit_text_id"
+        android:background="@drawable/gray_text_field"
+        app:met_baseColor="@color/eat_black"
+        app:met_primaryColor="@color/eat_black"
+        app:met_errorColor="@color/eat_black"
+        app:met_hideUnderline="false"
+        app:met_floatingLabel="highlight"
+        app:met_singleLineEllipsis="true"
         android:paddingLeft="5dp"
         android:gravity="center_vertical"
-        android:textColor="@color/eat_black"
         android:textColorHint="@color/eat_black"
-        android:layout_weight="1" />
+        android:hint="Price"
+        android:layout_marginTop="20dp" />
+
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -41,11 +52,13 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:gravity="center_vertical"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:visibility="gone" />
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
+
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/add_dish_phase_two_quantity_edit_text_id"
         android:inputType="number"
         android:background="@drawable/gray_text_field"
@@ -55,30 +68,39 @@
         android:gravity="center_vertical"
         android:textColor="@color/eat_black"
         android:textColorHint="@color/eat_black"
-        android:layout_weight="1" />
+        app:met_baseColor="@color/eat_black"
+        app:met_primaryColor="@color/eat_black"
+        app:met_errorColor="@color/eat_black"
+        app:met_hideUnderline="false"
+        app:met_floatingLabel="highlight"
+        app:met_singleLineEllipsis="true"
+        android:hint="Quantity"
+        android:layout_marginTop="20dp" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:id="@+id/d">
+        android:layout_height="wrap_content"
+        android:id="@+id/d"
+        android:layout_marginTop="20dp">
 
         <CheckBox
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="40dp"
             android:text="T.A"
             android:id="@+id/add_dish_phase_two_ta_checkbox_id"
             android:layout_weight="1"
-            android:checked="false" />
+            android:checked="false"
+            android:layout_gravity="bottom" />
 
         <CheckBox
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="40dp"
             android:text="Seat"
             android:id="@+id/add_dish_phase_two_seat_checkbox_id"
             android:layout_weight="1"
-            android:checked="false" />
+            android:checked="false"
+            android:layout_gravity="bottom" />
 
     </LinearLayout>
 
