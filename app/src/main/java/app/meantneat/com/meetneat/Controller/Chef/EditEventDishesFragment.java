@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -597,7 +598,7 @@ private void getEventsDishes()
 
                         if(newDish.getFullsizeImg()==null)
                         {
-                            Toast.makeText(getActivity(),"Please choose a photo to the image",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),"Please choose a photo for the dish",Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
@@ -746,9 +747,14 @@ private void getEventsDishes()
         MyModel.getInstance().getModel().addNewEventDishesToServer(event, new SaveToServerCallback() {
             @Override
             public void onResult() {
-                Toast.makeText(getActivity(), "Event Saved", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Event Saved", Toast.LENGTH_SHORT).show();
             }
         });
+//        FragmentManager fm = getActivity()
+//                .getSupportFragmentManager();
+//        Fragment f = getParentFragment();
+//        FragmentManager fm = f.getChildFragmentManager();
+//        fm.popBackStack("addNewEventDish", FragmentManager.POP_BACK_STACK_INCLUSIVE);
 //        MyModel.getInstance().getModel().editEventDishes(event, new MyModel.EditEventCallback() {
 //            @Override
 //            public void eventHasBeenEdited() {

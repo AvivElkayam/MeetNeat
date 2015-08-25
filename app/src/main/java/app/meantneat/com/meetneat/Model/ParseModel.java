@@ -639,11 +639,33 @@ private void saveEventsDishesToServer(EventDishes event,ParseObject eventObject)
             if(object == null)
                 object = new ParseObject(AppConstants.DISH);
             object.put(AppConstants.DISH_DISHES_LEFT,dish.getQuantityLeft());
+            object.put(AppConstants.DISH_DISHES,dish.getQuantity());
             object.put(AppConstants.DISH_PRICE,dish.getPrice());
             object.put(AppConstants.DISH_TITLE,dish.getTitle());
             object.put(AppConstants.DISH_DESCRIPTION,dish.getDescriprion());
             object.put(AppConstants.DISH_EVENT_ID,eventID);
-            object.saveInBackground();
+            ParseFile file = new ParseFile("aFull.jpeg", dish.getFullsizeImg());
+
+            try {
+                file.save();
+                object.put(AppConstants.DISH_IMG_FULL, file);
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+
+            ParseFile fileB = new ParseFile("aThmb.jpeg", dish.getThumbnailImg());
+            try {
+                fileB.save();
+                object.put(AppConstants.DISH_IMG_THUMBNAIL, fileB);
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+
+            try {
+                object.save();
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
         }
     }
     @Override
