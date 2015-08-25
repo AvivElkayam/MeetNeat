@@ -48,6 +48,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import app.meantneat.com.meetneat.Camera.SpecifiecChefEventsDialogBox;
 import app.meantneat.com.meetneat.Controller.Chef.ChefEventDishesFragment;
@@ -66,7 +67,7 @@ import app.meantneat.com.meetneat.R;
  public class HungryMapFragment extends Fragment implements OnMapReadyCallback , LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
     private static View view;
-    private Map<Marker, EventDishes> allMarkersMap = new HashMap<Marker, EventDishes>();
+    private Map<Marker, EventDishes> allMarkersMap = new ConcurrentHashMap<Marker,EventDishes>();
     private ArrayList<EventDishes> cuurentEventsArray = new ArrayList<>();
     private ArrayList<EventDishes> newEventsArray = new ArrayList<>();
     private ArrayList<LatLng> coordinatesArray = new ArrayList<>();
@@ -268,14 +269,13 @@ import app.meantneat.com.meetneat.R;
         //Add new markers to GoogleMap
         for (int i = 0;i< newEventsArray.size(); i++) {
 
-
-
-
+        EventDishes event = newEventsArray.get(i);
+        LatLng coordinate = new LatLng(event.getLatitude(), event.getLongitude());
         final Marker m = googleMapHungry.addMarker(new MarkerOptions()
-                            .position(coordinatesArray.get(i))
+                            .position(coordinate)
                             .title("Marker")
                              .alpha(0)
-                            .rotation((float) 90.0)
+                            //.rotation((float) 90.0)
                             .icon(chefMarker)
 
 
@@ -287,7 +287,7 @@ import app.meantneat.com.meetneat.R;
 
             //marker fade in
             ValueAnimator ani = ValueAnimator.ofFloat(0, 1); //change for (1,0) if you want a fade out
-            ani.setDuration(5000);
+            ani.setDuration(3000);
             ani.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
@@ -303,7 +303,7 @@ import app.meantneat.com.meetneat.R;
         //Clear(from GoogleMap) only the ones not in the 3 km radius + remove it from allMarkersMap
         float results[] = new float[10];
         for (Map.Entry<Marker,EventDishes> entry : allMarkersMap.entrySet()) {
-            Marker marker = entry.getKey();
+            final Marker marker = entry.getKey();
             EventDishes event = entry.getValue();
 
 
@@ -312,13 +312,24 @@ import app.meantneat.com.meetneat.R;
                     lastCenter.latitude,
                     lastCenter.longitude,
                     marker.getPosition().latitude,
-                    marker.getPosition().latitude,
+                    marker.getPosition().longitude,
                     results);
 
             //results[0] = distance in Meters
             //There is an option just to hide -  marker.setVisibility
             if(results[0] > 3000) {
-                marker.remove();
+                //marker fade in
+                ValueAnimator ani = ValueAnimator.ofFloat(1, 0); //change for (1,0) if you want a fade out and reverse
+                ani.setDuration(3000);
+                ani.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        marker.setAlpha((float) animation.getAnimatedValue());
+                        
+                    }
+                });
+                ani.start();
+
 
                 allMarkersMap.remove(marker);
                 //remove from current events

@@ -507,7 +507,7 @@ private void saveEventsDishesToServer(EventDishes event,ParseObject eventObject)
                 eventQuery.whereWithinKilometers(AppConstants.EVENT_DISHES_GEO_POINT,
                         new ParseGeoPoint(centerLocation.latitude,centerLocation.longitude)
                         ,3);
-                
+
 
 
 
