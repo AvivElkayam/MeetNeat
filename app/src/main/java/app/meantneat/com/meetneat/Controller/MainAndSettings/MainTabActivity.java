@@ -321,6 +321,8 @@ public class MainTabActivity extends ActionBarActivity {
         // then emulate 'onBackPressed' behaviour, because in default, it is not working
         FragmentManager fm = getSupportFragmentManager();
         for (Fragment frag : fm.getFragments()) {
+            if(frag == null)
+                continue;
             if (frag.getTag() == "chef") {
                 FragmentManager childFm = frag.getChildFragmentManager();
 
