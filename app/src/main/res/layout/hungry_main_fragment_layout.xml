@@ -11,11 +11,17 @@
         app:pstsTextAllCaps="true"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@color/eat_white"
-        android:textColor="@color/eat_orange"
-        app:pstsDividerColor="@color/eat_orange"
+        android:textSize="14dp"
+        android:background="@color/eat_green"
+        android:textColor="@color/eat_white"
+        app:pstsDividerColor="@color/eat_white"
         app:pstsIndicatorColor="@color/eat_orange"
-        app:pstsUnderlineColor="@color/eat_orange"
+        app:pstsUnderlineColor="@color/eat_white"
+        app:pstsUnderlineHeight="0dp"
+        app:pstsIndicatorHeight="4dp"
+        app:pstsTabPaddingLeftRight="14dp"
+
+        android:elevation="5dp"
         >
     </com.astuetz.PagerSlidingTabStrip>
 

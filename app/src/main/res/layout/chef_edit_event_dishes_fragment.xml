@@ -48,7 +48,69 @@
                         app:met_hideUnderline="false"
                         app:met_floatingLabel="highlight"
                         app:met_singleLineEllipsis="true"
-                        android:hint="Event name:" />
+                        android:hint="Event name:"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:id="@+id/imageView6"
+                            android:layout_gravity="center"
+                            android:background="@drawable/location"
+                            android:visibility="gone" />
+
+                        <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/add_event_fragment_auto_location_label"
+                            android:focusable="true"
+
+                            android:dropDownWidth="fill_parent"
+                            android:completionThreshold="1"
+                            android:dropDownHeight="100dp"
+                            android:textColor="@color/eat_black"
+                            android:textColorHint="@color/eat_black"
+                            android:hint="Location"
+                            android:background="@drawable/gray_text_field"
+                            android:paddingLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:textSize="15sp"
+                            android:gravity="left|center_vertical"
+                            android:layout_marginLeft="5dp"
+                            app:met_baseColor="@color/eat_black"
+                            app:met_primaryColor="@color/eat_black"
+                            app:met_errorColor="@color/eat_black"
+                            app:met_hideUnderline="false"
+                            app:met_floatingLabel="highlight"
+                            app:met_singleLineEllipsis="true"
+                            android:layout_marginTop="-5dp" />
+
+                    </LinearLayout>
+
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/add_event_fragment_apartment_numebr_edit_text_id"
+                        android:textSize="15sp"
+                        android:textIsSelectable="false"
+                        android:textColor="@color/eat_black"
+                        android:background="@drawable/gray_text_field"
+                        android:paddingLeft="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        app:met_baseColor="@color/eat_black"
+                        app:met_primaryColor="@color/eat_black"
+                        app:met_errorColor="@color/eat_black"
+                        app:met_hideUnderline="false"
+                        app:met_floatingLabel="highlight"
+                        app:met_singleLineEllipsis="true"
+                        android:hint="Appartment Number"
+                        android:layout_marginTop="-5dp" />
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -142,67 +204,6 @@
                             style="@android:style/Widget.Holo.Light.Spinner" />
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:id="@+id/imageView6"
-                            android:layout_gravity="center"
-                            android:background="@drawable/location"
-                            android:visibility="gone" />
-
-                        <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/add_event_fragment_auto_location_label"
-                            android:focusable="true"
-
-                            android:dropDownWidth="fill_parent"
-                            android:completionThreshold="1"
-                            android:dropDownHeight="100dp"
-                            android:textColor="@color/eat_black"
-                            android:textColorHint="@color/eat_black"
-                            android:hint="Location"
-                            android:background="@drawable/gray_text_field"
-                            android:paddingLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:textSize="15dp"
-                            android:gravity="left|center_vertical"
-                            android:layout_marginLeft="5dp"
-                            app:met_baseColor="@color/eat_black"
-                            app:met_primaryColor="@color/eat_black"
-                            app:met_errorColor="@color/eat_black"
-                            app:met_hideUnderline="false"
-                            app:met_floatingLabel="highlight"
-                            app:met_singleLineEllipsis="true"
-                            android:layout_marginTop="5dp" />
-
-                    </LinearLayout>
-
-                    <com.rengwuxian.materialedittext.MaterialEditText
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/add_event_fragment_apartment_numebr_edit_text_id"
-                        android:textSize="12dp"
-                        android:textIsSelectable="false"
-                        android:textColor="@color/eat_black"
-                        android:background="@drawable/gray_text_field"
-                        android:paddingLeft="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        app:met_baseColor="@color/eat_black"
-                        app:met_primaryColor="@color/eat_black"
-                        app:met_errorColor="@color/eat_black"
-                        app:met_hideUnderline="false"
-                        app:met_floatingLabel="highlight"
-                        app:met_singleLineEllipsis="true"
-                        android:hint="Appartment Number"
-                        android:layout_marginTop="-15dp" />
-
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -212,7 +213,8 @@
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1.5">
+        android:layout_weight="1.5"
+        android:layout_marginTop="10dp">
 
         <LinearLayout
             android:orientation="vertical"
@@ -299,12 +301,15 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_gravity="left|bottom"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
     android:elevation="3dp"
-        android:src="@drawable/fab_plus"
         android:textColor="@color/eat_black"
         android:layout_marginLeft="20dp"
-        android:background="@drawable/yellow_circle" />
+        android:background="@drawable/green_circle"
+        android:src="@drawable/fab_plus"
+
+        />
+
 
     <!--<Button-->
         <!--android:layout_width="150dp"-->
@@ -320,8 +325,10 @@
         android:layout_height="40dp"
         android:text="Create event"
         android:id="@+id/chef_edit_event_continue_button_id"
-        android:layout_gravity="bottom|center_horizontal"
+        android:layout_gravity="bottom|center_horizontal|right"
         android:textColor="@color/eat_black"
         android:background="@drawable/green_button"
-        android:layout_marginBottom="25dp" />
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="20dp" />
+
 </FrameLayout>

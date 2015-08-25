@@ -1,58 +1,71 @@
-<RelativeLayout
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_tab_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:background="@color/eat_white"
     >
 
+        <!-- The main content view -->
     <FrameLayout
-        android:id="@+id/mainFrame"
+        android:id="@+id/activity_main_tabs_container"
 
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
+        <!-- The navigation drawer -->
 
-        <LinearLayout
-            android:id="@+id/activity_main_tabs_container"
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
 
-        </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:visibility="gone">
+        <!--<LinearLayout-->
+            <!--android:id="@+id/activity_main_tabs_container"-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent">-->
 
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Hungry"
-                android:id="@+id/activity_main_tab_hungry_button"
-                android:layout_gravity="bottom"
-                android:layout_weight="1" />
+        <!--</LinearLayout>-->
 
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Chef"
-                android:id="@+id/activity_main_tab_chef_button"
-                android:layout_gravity="bottom"
-                android:layout_weight="1" />
+        <!--<LinearLayout-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="bottom|center"-->
+            <!--android:visibility="gone">-->
 
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Settings"
-                android:id="@+id/activity_main_tab_settings_button"
-                android:layout_gravity="bottom"
-                android:layout_weight="1" />
-        </LinearLayout>
+            <!--<Button-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Hungry"-->
+                <!--android:id="@+id/activity_main_tab_hungry_button"-->
+                <!--android:layout_gravity="bottom"-->
+                <!--android:layout_weight="1" />-->
+
+            <!--<Button-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Chef"-->
+                <!--android:id="@+id/activity_main_tab_chef_button"-->
+                <!--android:layout_gravity="bottom"-->
+                <!--android:layout_weight="1" />-->
+
+            <!--<Button-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Settings"-->
+                <!--android:id="@+id/activity_main_tab_settings_button"-->
+                <!--android:layout_gravity="bottom"-->
+                <!--android:layout_weight="1" />-->
+        <!--</LinearLayout>-->
+
     </FrameLayout>
 
-
+    <ListView android:id="@+id/main_tab_drawer_list_view"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="@color/eat_white"/>
     <!--<FrameLayout-->
             <!--android:id="@android:id/tabcontent"-->
             <!--android:layout_width="0dp"-->
@@ -73,4 +86,4 @@
             <!--android:layout_weight="0"/>-->
 
 
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

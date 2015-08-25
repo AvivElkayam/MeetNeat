@@ -24,7 +24,7 @@
         app:pstsDividerColor="@color/eat_white"
         app:pstsIndicatorColor="@color/eat_orange"
         app:pstsUnderlineColor="@color/eat_white"
-        app:pstsUnderlineHeight="2dp"
+        app:pstsUnderlineHeight="0dp"
         app:pstsIndicatorHeight="4dp"
         app:pstsTabPaddingLeftRight="14dp"
 

@@ -143,7 +143,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
             final Dish dish = dishArrayList.get(position);
             final String title = dish.getTitle();
             String price = "Price: "+dish.getPrice();
-            String dishesLeft = Double.toString(dish.getQuantity());
+            String dishesLeft = Double.toString(dish.getQuantityLeft());
             final String description = dish.getDescriprion();
            // dishImageView = dish.getThumbnailImg();
 
@@ -169,6 +169,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                         dish.setThumbnailImage(bitmap);
                        // imageView.setBackground(new BitmapDrawable(bitmap));
                         CameraBasics.setImageViewWithFadeAnimation(getActivity(),imageView,bitmap);
+                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         //imageView.setImageDrawable(new BitmapDrawable(bitmap));
                     }
                 });
@@ -242,6 +243,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                 addDishDialog.show();
             }
         });
+        addDishButton.attachToListView(dishesListView);
         mGoogleApiClient = new GoogleApiClient
                 .Builder(getActivity())
                 .addApi(Places.GEO_DATA_API)
@@ -322,8 +324,6 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
 
     initDatePickers();
     initTimePickers();
-
-
     getEventDetailsFromBundle();
     initCreateEventButton();
     initListView();
@@ -522,6 +522,7 @@ private void getEventsDishes()
         addDishDishesLeftEditText = (EditText)v2.findViewById(R.id.add_dish_phase_two_quantity_edit_text_id);
         addDishtaCheckBox = (CheckBox)v2.findViewById(R.id.add_dish_phase_two_ta_checkbox_id);
         addDishseatCheckBox = (CheckBox)v2.findViewById(R.id.add_dish_phase_two_seat_checkbox_id);
+
         v3 = getActivity().getLayoutInflater().inflate(R.layout.chef_add_dish_phase_three,dialogBoxLayoutContainer,false);
         addDishImageView = (ImageView)v3.findViewById(R.id.add_dish_phase_three_dish_image_view_id);
         addDishImageView.setOnClickListener(new View.OnClickListener() {
@@ -547,11 +548,8 @@ private void getEventsDishes()
                     case 1:
                     {
                         dialogBoxIndex=1;
-                        //dishDescription=addDishDescriptionEditText.getText().toString();
-                        newDish.setDescriprion(addDishDescriptionEditText.getText().toString());
-                        //dishTitle = addDishTitleEditText.getText().toString();
-                        newDish.setTitle(addDishTitleEditText.getText().toString());
-                        if(newDish.getTitle().equals("") || newDish.getDescriprion().equals(""))
+
+                        if(addDishTitleEditText.getText().toString().equals("") || addDishDescriptionEditText.getText().toString().equals(""))
                         {
                             Toast.makeText(getActivity(),"Please fill in details",Toast.LENGTH_SHORT).show();
                         }
@@ -564,6 +562,8 @@ private void getEventsDishes()
                             backButton.setVisibility(View.VISIBLE);
                             hideKeyboard(addDishTitleEditText);
                             hideKeyboard(addDishDescriptionEditText);
+                            newDish.setDescriprion(addDishDescriptionEditText.getText().toString());
+                            newDish.setTitle(addDishTitleEditText.getText().toString());
                         }
                         break;
                     }
@@ -571,10 +571,7 @@ private void getEventsDishes()
                     {
 //                        dishPrice = addDishPriceEditText.getText().toString();
 //                        dishQuantity = addDishDishesLeftEditText.getText().toString();
-                        newDish.setPrice(Double.parseDouble(addDishPriceEditText.getText().toString()));
-                        newDish.setQuantityLeft(Double.parseDouble(addDishDishesLeftEditText.getText().toString()));
-                        newDish.setTakeAway(addDishtaCheckBox.isChecked());
-                        newDish.setToSit(addDishseatCheckBox.isChecked());
+
                         if(addDishPriceEditText.getText().toString().equals("")|| addDishDishesLeftEditText.getText().toString().equals(""))
                         {
                             Toast.makeText(getActivity(),"Please fill in details",Toast.LENGTH_SHORT).show();
@@ -588,7 +585,10 @@ private void getEventsDishes()
                             backButton.setVisibility(View.VISIBLE);
                             hideKeyboard(addDishPriceEditText);
                             hideKeyboard(addDishDishesLeftEditText);
-
+                            newDish.setPrice(Double.parseDouble(addDishPriceEditText.getText().toString()));
+                            newDish.setQuantityLeft(Double.parseDouble(addDishDishesLeftEditText.getText().toString()));
+                            newDish.setTakeAway(addDishtaCheckBox.isChecked());
+                            newDish.setToSit(addDishseatCheckBox.isChecked());
                         }
                         break;
                     }
@@ -615,8 +615,41 @@ private void getEventsDishes()
 
             }
         }
-
         );
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (dialogBoxIndex)
+                {
+                    case 1:
+                    {
+                        break;
+                    }
+                    case 2:
+                    {
+                            dialogBoxIndex = 1;
+                            v1.setVisibility(View.VISIBLE);
+                            v2.setVisibility(View.GONE);
+                            v3.setVisibility(View.GONE);
+                            backButton.setVisibility(View.GONE);
+                            hideKeyboard(addDishPriceEditText);
+                            hideKeyboard(addDishDishesLeftEditText);
+
+
+                        break;
+                    }
+                    case 3:
+                    {
+                        v1.setVisibility(View.GONE);
+                        v2.setVisibility(View.VISIBLE);
+                        v3.setVisibility(View.GONE);
+                            dialogBoxIndex=2;
+
+                        break;
+                    }
+                }
+            }
+        });
     }
 
     @Override

@@ -68,10 +68,10 @@ public class ChefEventDishesFragment extends Fragment
             titleTextView.setText(title);
             titleTextView.setTypeface(null, Typeface.BOLD);
             TextView dateTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_date_text_view);
-            dateTextView.setText(MeetnEatDates.getDateString(event.getStartingYear(),event.getStartingMonth(),event.getStartingDay())+", "+MeetnEatDates.getTimeString(event.getStartingHour(),event.getStartingMinute()));
+            dateTextView.setText("Starts at "+MeetnEatDates.getDateString(event.getStartingYear(),event.getStartingMonth(),event.getStartingDay())+", "+MeetnEatDates.getTimeString(event.getStartingHour(),event.getStartingMinute()));
 
             TextView timeTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_time_text_view);
-            timeTextView.setText(MeetnEatDates.getDateString(event.getEndingYear(), event.getEndingMonth(), event.getEndingDay()) + ", " + MeetnEatDates.getTimeString(event.getEndingHour(), event.getEndingMinute()));
+            timeTextView.setText("Ends at "+MeetnEatDates.getDateString(event.getEndingYear(), event.getEndingMonth(), event.getEndingDay()) + ", " + MeetnEatDates.getTimeString(event.getEndingHour(), event.getEndingMinute()));
 
             TextView locationTextView = (TextView)itemView.findViewById(R.id.chef_fragment_row_location_text_view);
             locationTextView.setText(event.getLocation());

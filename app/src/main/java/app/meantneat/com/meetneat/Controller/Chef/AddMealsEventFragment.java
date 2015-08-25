@@ -45,41 +45,12 @@ public class AddMealsEventFragment extends Fragment {
         location = (EditText)v.findViewById(R.id.add_meals_event_fragment_location_text_view_id);
         apartmentNumber = (EditText)v.findViewById(R.id.add_meals_event_fragment_appartment_number_text_view_id);
         titleEditText = (EditText)v.findViewById(R.id.add_meals_event_fragment_title_edit_text_id);
-
         continueButton = (Button)v.findViewById(R.id.buttadd_meal_event_fragment_continue_button_idon3);
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(validateFields()) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("year", eventYear);
-                    bundle.putInt("month", eventMonth);
-                    bundle.putInt("day", eventDay);
-                    bundle.putInt("starting_hour", startingHour);
-                    bundle.putInt("starting_minute", startingMinute);
-                    bundle.putInt("ending_hour", endingHour);
-                    bundle.putInt("ending_minute", endingMinute);
-                    bundle.putString("title", titleEditText.getText().toString());
-                    bundle.putString("location", location.getText().toString());
-                    bundle.putString("apartment_number", apartmentNumber.getText().toString());
-
-
-                    int meals = Integer.parseInt(mealsAmountText.getText().toString());
-                    bundle.putInt("meals_amount", Integer.parseInt(mealsAmountText.getText().toString()));
-                    bundle.putBoolean("is_new", true);
-                    //set Fragmentclass Arguments
-                    EditEventMealsFragment fragment = new EditEventMealsFragment();
-
-                    fragment.setArguments(bundle);
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.chef_event_meals_fragment_container, fragment, "edit_meal_event")
-                            .commit();
-                }
-                else
-                {
-                    Toast.makeText(getActivity(),"Please fill all event details",Toast.LENGTH_SHORT).show();
-                }
+                    packBundleAndOpenFragment();
             }
         });
         initTimePicker();
@@ -140,5 +111,37 @@ public class AddMealsEventFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+    private void packBundleAndOpenFragment()
+    {
+        if(validateFields()) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("year", eventYear);
+            bundle.putInt("month", eventMonth);
+            bundle.putInt("day", eventDay);
+            bundle.putInt("starting_hour", startingHour);
+            bundle.putInt("starting_minute", startingMinute);
+            bundle.putInt("ending_hour", endingHour);
+            bundle.putInt("ending_minute", endingMinute);
+            bundle.putString("title", titleEditText.getText().toString());
+            bundle.putString("location", location.getText().toString());
+            bundle.putString("apartment_number", apartmentNumber.getText().toString());
+
+
+            int meals = Integer.parseInt(mealsAmountText.getText().toString());
+            bundle.putInt("meals_amount", Integer.parseInt(mealsAmountText.getText().toString()));
+            bundle.putBoolean("is_new", true);
+            //set Fragmentclass Arguments
+            EditEventMealsFragment fragment = new EditEventMealsFragment();
+
+            fragment.setArguments(bundle);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.chef_event_meals_fragment_container, fragment, "edit_meal_event")
+                    .commit();
+        }
+        else
+        {
+            Toast.makeText(getActivity(),"Please fill all event details",Toast.LENGTH_SHORT).show();
+        }
     }
 }
