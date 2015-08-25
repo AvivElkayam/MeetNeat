@@ -153,8 +153,8 @@ private void saveEventsDishesToServer(EventDishes event,ParseObject eventObject)
         dishObject.put(AppConstants.DISH_IS_TO_SIT, dish.isToSit());
         dishObject.put(AppConstants.DISH_DESCRIPTION, dish.getDescriprion());
         dishObject.put(AppConstants.DISH_TITLE, dish.getTitle());
-        dishObject.put(AppConstants.DISH_DISHES_LEFT, dish.getQuantity());
-        dishObject.put(AppConstants.DISH_DISHES, dish.getQuantity());
+        dishObject.put(AppConstants.DISH_DISHES_LEFT, dish.getQuantityLeft());
+        dishObject.put(AppConstants.DISH_DISHES, dish.getQuantityLeft());
         dishObject.put(AppConstants.DISH_PRICE, dish.getPrice());
         ParseFile file = new ParseFile("aFull.jpeg", dish.getFullsizeImg());
 
@@ -357,9 +357,12 @@ private void saveEventsDishesToServer(EventDishes event,ParseObject eventObject)
                 {
                     ParseObject dish = query.get(dishID);
                     ParseFile applicantResume = dish.getParseFile(AppConstants.DISH_IMG_THUMBNAIL);//changed to thumbnail
-                    byte[] bytes = applicantResume.getData();
 
-                    bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    if(applicantResume!=null) {
+                        byte[] bytes = applicantResume.getData();
+
+                        bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    }
                 }
                 catch (ParseException e) {
                     e.printStackTrace();
