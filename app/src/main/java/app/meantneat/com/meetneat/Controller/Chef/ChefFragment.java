@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -24,7 +25,7 @@ import app.meantneat.com.meetneat.R;
  */
 public class ChefFragment extends Fragment {
 //PagerSlidingTabStrip.IconTabProvider  -   for icons
-    public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter   {
+    public class SampleFragmentPagerAdapter extends BaseFragmentStatePagerAdapter   {
         final int PAGE_COUNT = 2;
         private String tabTitles[] = new String[] { "DISHES", "MEALS" };
 
@@ -113,6 +114,7 @@ public class ChefFragment extends Fragment {
             }
         }
     }
+
 
 
 

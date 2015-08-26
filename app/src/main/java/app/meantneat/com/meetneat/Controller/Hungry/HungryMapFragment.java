@@ -325,7 +325,7 @@ import app.meantneat.com.meetneat.R;
                     @Override
                     public void onAnimationUpdate(ValueAnimator animation) {
                         marker.setAlpha((float) animation.getAnimatedValue());
-                        
+
                     }
                 });
                 ani.start();

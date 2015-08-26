@@ -9,11 +9,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +28,7 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,6 +40,8 @@ import android.widget.Toast;
 
 //import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
@@ -46,6 +52,7 @@ import com.melnykov.fab.FloatingActionButton;
 import com.rey.material.drawable.CheckBoxDrawable;
 import com.rey.material.widget.CheckBox;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,7 +88,6 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     private TextView noMoreEventsOverlay;
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
-    double latitude,longitude;
     private int startingYear,startingMonth,startingDay,startingHour,startingMinute;
     private int endingYear,endingMonth,endingDay,endingHour,endingMinute;
     private EditText eventTitleEditText,eventLocationEditText,eventApartmentNumberEditText;
@@ -249,7 +255,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                 .addOnConnectionFailedListener(this)
                 .build();
 
-        lAC = new LocationAutoComplete(getActivity(),mGoogleApiClient,2);
+        lAC  = new LocationAutoComplete(getActivity(),mGoogleApiClient,2);
         lAC.setChoosenLocationString(getArguments().getString("location"));
         lAC.setChoosenPlaceLatLng(new LatLng(getArguments().getDouble("latitude"), getArguments().getDouble("longitude")));
         lAC.setAutoCompleteTextView(location);
@@ -343,14 +349,14 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
         startingTimeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                timePickerDialog = new TimePickerDialog(getActivity(),new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         startingHour = hourOfDay;
-                        startingMinute = minute;
-                        ((TextView) v).setText(MeetnEatDates.getTimeString(hourOfDay, minute));
+                        startingMinute=minute;
+                        ((TextView) v).setText(MeetnEatDates.getTimeString(hourOfDay,minute));
                     }
-                }, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), true);
+                },calendar.get(Calendar.HOUR),calendar.get(Calendar.MINUTE),true);
                 timePickerDialog.show();
             }
         });
@@ -363,7 +369,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         endingHour = hourOfDay;
                         endingMinute = minute;
-                        ((TextView) v).setText(MeetnEatDates.getTimeString(hourOfDay, minute));
+                        ((TextView) v).setText(MeetnEatDates.getTimeString(hourOfDay,minute));
                     }
                 }, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), true);
                 timePickerDialog.show();
@@ -384,7 +390,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                         startingYear=year;
                         startingMonth=monthOfYear+1;
                         startingDay=dayOfMonth;
-                        ((TextView) v).setText(MeetnEatDates.getDateString(year, monthOfYear, dayOfMonth));
+                        ((TextView) v).setText(MeetnEatDates.getDateString(year,monthOfYear,dayOfMonth));
                     }
                 },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.show();
@@ -414,7 +420,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
             createEventButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    wrapAllDataToEventAndAddDishToServer();
+                    wrapAllDataToEventAndUpdateServer();
                 }
             });
         }
@@ -424,74 +430,48 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
             createEventButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                 wrapAllDataAndEditDishInServer();
+                    String title = eventTitleEditText.getText().toString();
+                    LatLng locationCoord = lAC.getChoosenCoordinates();
+                    String locationString = lAC.getChoosenLocationString();
+                    //To do: Get string ftom the autoComlete Label;
+                    //String locationStr =
+                    EventDishes event = new EventDishes(title
+                            ,startingHour
+                            ,startingMinute
+                            ,endingHour
+                            ,endingMinute,
+                            startingYear,
+                            startingMonth,
+                            startingDay,
+                            endingYear,
+                            endingMonth,
+                            endingDay,
+                            locationString,
+                            apartmentNumber,
+                            eventID,
+                            dishArrayList,
+                            locationCoord.longitude,
+                            locationCoord.latitude);
+                    event.setEventId(getArguments().getString(AppConstants.EVENT_ID));
+                    MyModel.getInstance().getModel().editEventDishes(event, new MyModel.EditEventCallback() {
+                        @Override
+                        public void eventHasBeenEdited() {
+                            //Toast.makeText(getActivity(), "Even has been edited", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    //Go back to chef Events
+                    Fragment f = getParentFragment();
+                    FragmentManager fm = f.getChildFragmentManager();
+                    fm.popBackStackImmediate();
                 }
             });
 
 
         }
     }
-
-    private void wrapAllDataAndEditDishInServer() {
-        String title = eventTitleEditText.getText().toString();
-        LatLng locationCoord = lAC.getChoosenCoordinates();
-        String locationString = lAC.getChoosenLocationString();
-        //To do: Get string ftom the autoComlete Label;
-        //String locationStr =
-        EventDishes event = new EventDishes();
-//        EventDishes event = new EventDishes(title
-//                ,startingHour
-//                ,startingMinute
-//                ,endingHour
-//                ,endingMinute,
-//                startingYear,
-//                startingMonth,
-//                startingDay,
-//                endingYear,
-//                endingMonth,
-//                endingDay,
-//                locationString,
-//                apartmentNumber,
-//                eventID,
-//                dishArrayList,
-//                locationCoord.longitude,
-//                locationCoord.latitude);
-        event.setTitle(title);
-        event.setStartingHour(startingHour);
-        event.setStartingMinute(startingMinute);
-        event.setEndingHour(endingHour);
-        event.setEndingMinute(endingMinute);
-        event.setStartingYear(startingYear);
-        event.setStartingMonth(startingMonth);
-        event.setStartingDay(startingDay);
-        event.setEndingYear(endingYear);
-        event.setEndingMonth(endingMonth);
-        event.setEndingDay(endingDay);
-        event.setApartmentNumber(apartmentNumber);
-        event.setEventId(eventID);
-        event.setEventsDishes(dishArrayList);
-        if(locationCoord==null)
-        {
-            event.setLatitude(latitude);
-            event.setLongitude(longitude);
-            event.setLocation(location);
-        }
-        else
-        {
-            event.setLatitude(locationCoord.latitude);
-            event.setLongitude(locationCoord.longitude);
-            event.setLocation(locationString);
-        }
-        event.setEventId(getArguments().getString(AppConstants.EVENT_ID));
-        MyModel.getInstance().getModel().editEventDishes(event, new MyModel.EditEventCallback() {
-            @Override
-            public void eventHasBeenEdited() {
-                Toast.makeText(getActivity(), "Even has been edited", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void getEventsDishes() {
+private void getEventsDishes()
+    {
         MyModel.getInstance().getModel().getEventsDishes(getArguments().getString("eventID"), new MyModel.DishesCallback() {
             @Override
             public void dishesAhBeenFetched(ArrayList<Dish> dishes) {
@@ -515,10 +495,12 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     }
 
 
+
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        inflater.inflate(R.menu.edit_dish_menu, menu);
+        inflater.inflate(R.menu.chef_fragment_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
     private void buildAddDishDiaglog()
@@ -804,17 +786,13 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                 //Toast.makeText(getActivity(), "Event Saved", Toast.LENGTH_SHORT).show();
             }
         });
-//        FragmentManager fm = getActivity()
-//                .getSupportFragmentManager();
-//        Fragment f = getParentFragment();
-//        FragmentManager fm = f.getChildFragmentManager();
-//        fm.popBackStack("addNewEventDish", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//        MyModel.getInstance().getModel().editEventDishes(event, new MyModel.EditEventCallback() {
-//            @Override
-//            public void eventHasBeenEdited() {
-//
-//            }
-//        });
+
+        //Go back to chef Events
+        Fragment f = getParentFragment();
+        FragmentManager fm = f.getChildFragmentManager();
+        fm.popBackStackImmediate();
+
+
     }
     public interface SaveToServerCallback
     {
