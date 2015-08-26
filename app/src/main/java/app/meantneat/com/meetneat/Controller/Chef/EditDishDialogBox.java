@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import app.meantneat.com.meetneat.Camera.CameraBasics;
 import app.meantneat.com.meetneat.Entities.Dish;
 import app.meantneat.com.meetneat.R;
 
@@ -20,8 +21,28 @@ public class EditDishDialogBox {
     private Context context;
     private Dialog dialogBox;
     private Dish dish;
+    private CameraBasics cameraBasics = new CameraBasics();
+
+    public CameraBasics getCameraBasics() {
+        return cameraBasics;
+    }
+
+    public void setCameraBasics(CameraBasics cameraBasics) {
+        this.cameraBasics = cameraBasics;
+    }
+
+
 
     private EditText priceEditText,quantityEditText,titleEditText,descriptionEditText;
+
+    public RoundedImageView getDishImageView() {
+        return dishImageView;
+    }
+
+    public void setDishImageView(RoundedImageView dishImageView) {
+        this.dishImageView = dishImageView;
+    }
+
     private RoundedImageView dishImageView;
     private Button editDishButton;
     private String title,price,quantity,description;
@@ -47,6 +68,7 @@ public class EditDishDialogBox {
 
     private void initDialogBox()
     {
+
         dialogBox = new Dialog(context);
         dialogBox.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialogBox.setContentView(R.layout.chef_edit_dish_dialog_box_layout);
@@ -68,6 +90,13 @@ public class EditDishDialogBox {
         dishImageView = (RoundedImageView)dialogBox.findViewById(R.id.chef_edit_dish_dialog_box_image_view);
         dishImageView.setImageBitmap(dish.getThumbnailImage());
         dishImageView.setScaleType(ImageView.ScaleType.CENTER);
+        dishImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchTakePictureIntent();
+
+            }
+        });
 
         editDishButton = (Button)dialogBox.findViewById(R.id.chef_edit_dish_dialog_box_edit_dish_button);
         editDishButton.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +106,7 @@ public class EditDishDialogBox {
                 dish.setDescriprion(descriptionEditText.getText().toString());
                 dish.setPrice(Double.parseDouble(priceEditText.getText().toString()));
                 dish.setQuantityLeft(Double.parseDouble(quantityEditText.getText().toString()));
+
                 dialogBox.dismiss();
             }
         });
@@ -85,5 +115,12 @@ public class EditDishDialogBox {
     public void show()
     {
         this.dialogBox.show();
+    }
+
+
+    private void dispatchTakePictureIntent() {
+        //cameraBasics.setFragment(EditEventDishesFragment.this); - sett on dialog initialize
+        cameraBasics.dispatchTakePictureIntent(context);
+
     }
 }

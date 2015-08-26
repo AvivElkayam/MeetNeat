@@ -13,7 +13,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.animation.Animation;
@@ -36,13 +35,13 @@ public class CameraBasics {
     static final int GALLERY = 3;
     Uri picUri;
     File image;
-    EditEventDishesFragment f;
+    EditEventDishesFragment fragment;
     Context context;
     String mCurrentPhotoPath;
 
 
-    public void setF(EditEventDishesFragment f) {
-        this.f = f;
+    public void setFragment(EditEventDishesFragment fragment) {
+        this.fragment = fragment;
     }
 
 
@@ -70,7 +69,7 @@ public class CameraBasics {
 
 
         if (takePictureIntent.resolveActivity(((Activity)context).getPackageManager()) != null) {
-            f.getParentFragment().startActivityForResult(takePictureIntent, 1);
+            fragment.getParentFragment().startActivityForResult(takePictureIntent, 1);
         }
     }
 

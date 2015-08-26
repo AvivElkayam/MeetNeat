@@ -9,9 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -39,8 +37,6 @@ import android.widget.Toast;
 
 //import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
@@ -48,10 +44,8 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.melnykov.fab.FloatingActionButton;
-import com.rey.material.drawable.CheckBoxDrawable;
 import com.rey.material.widget.CheckBox;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -110,6 +104,20 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     int dialogBoxIndex=1;
     private Dish newDish;
     private int currentPosition;
+    //*** Edit Dish
+    private EditDishDialogBox editDishDialogBox;
+    private Dish dishInEdit;
+
+    public boolean isEditDishDialogOpened() {
+        return isEditDishDialogOpened;
+    }
+
+    public void setIsEditDishDialogOpened(boolean isEditDishDialogOpened) {
+        this.isEditDishDialogOpened = isEditDishDialogOpened;
+    }
+
+    private boolean isEditDishDialogOpened;
+
     @Override
     public void onConnected(Bundle bundle) {
         //Log()
@@ -143,33 +151,33 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
             {
                 itemView = getActivity().getLayoutInflater().inflate(R.layout.chef_edit_event_dishes_fragment_dish_row,parent,false);
             }
-            final Dish dish = dishArrayList.get(position);
-            final String title = dish.getTitle();
-            String price = "Price: "+dish.getPrice();
-            String dishesLeft = Double.toString(dish.getQuantityLeft());
-            final String description = dish.getDescriprion();
-           // dishImageView = dish.getThumbnailImg();
+            dishInEdit = dishArrayList.get(position);
+            final String title = dishInEdit.getTitle();
+            String price = "Price: "+dishInEdit.getPrice();
+            String dishesLeft = Double.toString(dishInEdit.getQuantityLeft());
+            final String description = dishInEdit.getDescriprion();
+           // dishImageView = dishInEdit.getThumbnailImg();
 
 
             final TextView titleTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_title_text_view);
             titleTextView.setText(title);
 
             final TextView priceTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_price_text_view);
-            priceTextView.setText("$"+Double.toString(dish.getPrice()));
+            priceTextView.setText("$"+Double.toString(dishInEdit.getPrice()));
 
             final TextView quantityTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_quantity_text_view);
-            quantityTextView.setText(Double.toString(dish.getQuantityLeft()));
+            quantityTextView.setText(Double.toString(dishInEdit.getQuantityLeft()));
 
             //final ImageView imageView = (ImageView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_image_view);
             //final SelectableRoundedImageView imageView = (SelectableRoundedImageView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_image_view);
             final RoundedImageView imageView = (RoundedImageView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_image_view);
             //imageView.setCornerRadius(imageView.getLayoutParams().width/2);
-            if(dish.getThumbnailImg()==null)
+            if(dishInEdit.getThumbnailImg()==null)
             {
-                MyModel.getInstance().getModel().getDishPicture(dish.getDishID(),new MyModel.PictureCallback() {
+                MyModel.getInstance().getModel().getDishPicture(dishInEdit.getDishID(),new MyModel.PictureCallback() {
                     @Override
                     public void pictureHasBeenFetched(Bitmap bitmap) {
-                        dish.setThumbnailImage(bitmap);
+                        dishInEdit.setThumbnailImage(bitmap);
                        // imageView.setBackground(new BitmapDrawable(bitmap));
                         CameraBasics.setImageViewWithFadeAnimation(getActivity(),imageView,bitmap);
                         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -178,8 +186,8 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                 });
             }
             else {
-                //imageView.setBackground(new BitmapDrawable(BitmapFactory.decodeByteArray(dish.getThumbnailImg(), 0, dish.getThumbnailImg().length)));
-                imageView.setImageDrawable(new BitmapDrawable(BitmapFactory.decodeByteArray(dish.getThumbnailImg(), 0, dish.getThumbnailImg().length)));
+                //imageView.setBackground(new BitmapDrawable(BitmapFactory.decodeByteArray(dishInEdit.getThumbnailImg(), 0, dishInEdit.getThumbnailImg().length)));
+                imageView.setImageDrawable(new BitmapDrawable(BitmapFactory.decodeByteArray(dishInEdit.getThumbnailImg(), 0, dishInEdit.getThumbnailImg().length)));
             }
 
 
@@ -187,23 +195,30 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //edit specific dish
+                    //Edit specific dishInEdit
 
-                    dish.setDishIndex(position);
-                    final EditDishDialogBox editDishDialogBox = new EditDishDialogBox(getActivity(),dish);
+                    dishInEdit.setDishIndex(position);
+
+
+
+                    editDishDialogBox = new EditDishDialogBox(getActivity(),dishInEdit);
+                    editDishDialogBox.getCameraBasics().setFragment(EditEventDishesFragment.this);
+                    isEditDishDialogOpened = true;
                     editDishDialogBox.show();
+
                     editDishDialogBox.getDialogBox().setOnDismissListener(new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialog) {
-                            dish.setTitle(editDishDialogBox.getDish().getTitle());
-                            dish.setDescriprion(editDishDialogBox.getDish().getDescriprion());
-                            dish.setPrice(editDishDialogBox.getDish().getPrice());
-                            dish.setQuantityLeft(editDishDialogBox.getDish().getQuantityLeft());
-                            titleTextView.setText(dish.getTitle());
+                            dishInEdit.setTitle(editDishDialogBox.getDish().getTitle());
+                            dishInEdit.setDescriprion(editDishDialogBox.getDish().getDescriprion());
+                            dishInEdit.setPrice(editDishDialogBox.getDish().getPrice());
+                            dishInEdit.setQuantityLeft(editDishDialogBox.getDish().getQuantityLeft());
+                            titleTextView.setText(dishInEdit.getTitle());
 
-                            priceTextView.setText("$"+Double.toString(dish.getPrice()));
+                            priceTextView.setText("$"+Double.toString(dishInEdit.getPrice()));
 
-                            quantityTextView.setText(Double.toString(dish.getQuantityLeft()));
+                            quantityTextView.setText(Double.toString(dishInEdit.getQuantityLeft()));
+                            isEditDishDialogOpened = false;
 
                           //  dishRowListAdapter.notifyDataSetChanged();
                         }
@@ -464,6 +479,8 @@ private void getEventsDishes()
         inflater.inflate(R.menu.edit_dish_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
+
+    //
     private void buildAddDishDiaglog()
     {
         addDishDialog = new Dialog(getActivity());
@@ -481,16 +498,21 @@ private void getEventsDishes()
 //        addDishImageView = (ImageView)addDishDialog.findViewById(R.id.add_dish_dialog_image_view);
 
     }
+
+    //Add new dish phases
+    //3 views - 1 for each phase in the "add dish" part
     private void buildDialogBoxPhases()
     {
         dialogBoxIndex=1;
-        //3 vies - 1 for each phase in the "add dish" part
+
+
+        // V1 - Dish name and Dish description
         v1 = getActivity().getLayoutInflater().inflate(R.layout.chef_add_dish_phase_one,dialogBoxLayoutContainer,false);
         addDishTitleEditText = (EditText)v1.findViewById(R.id.add_dish_phase_one_title_edit_text_id);
         addDishDescriptionEditText = (EditText)v1.findViewById(R.id.add_dish_phase_one_description_edit_text_id);
         addDishTitleEditText.setText("");
         addDishDescriptionEditText.setText("");
-
+        // V2 - Dish price and Dish description + T\A & To seat
         v2 = getActivity().getLayoutInflater().inflate(R.layout.chef_add_dish_phase_two,dialogBoxLayoutContainer,false);
         addDishPriceEditText = (EditText)v2.findViewById(R.id.add_dish_phase_two_price_edit_text_id);
         addDishDishesLeftEditText = (EditText)v2.findViewById(R.id.add_dish_phase_two_quantity_edit_text_id);
@@ -499,23 +521,22 @@ private void getEventsDishes()
         addDishtaCheckBox = (CheckBox)v2.findViewById(R.id.add_dish_phase_two_ta_checkbox_id);
         addDishseatCheckBox = (CheckBox)v2.findViewById(R.id.add_dish_phase_two_seat_checkbox_id);
 
+        // V2 - Dish image
         v3 = getActivity().getLayoutInflater().inflate(R.layout.chef_add_dish_phase_three,dialogBoxLayoutContainer,false);
         addDishImageView = (ImageView)v3.findViewById(R.id.add_dish_phase_three_dish_image_view_id);
         addDishImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dispatchTakePictureIntent();
-//                Bitmap b = BitmapFactory.decodeResource(getResources(),R.drawable.logo1);
-//                addDishImageView.setImageBitmap(b);
-//                byte[] ba = bitmapToByteArr(b);
-//                newDish.setThumbnailImg(ba);
-//                newDish.setFullsizeImg(ba);
+
+
             }
         });
         dialogBoxLayoutContainer.addView(v1);
         dialogBoxLayoutContainer.addView(v2);
         dialogBoxLayoutContainer.addView(v3);
         newDish = new Dish();
+        //Next actions
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -545,8 +566,7 @@ private void getEventsDishes()
                     }
                     case 2:
                     {
-//                        dishPrice = addDishPriceEditText.getText().toString();
-//                        dishQuantity = addDishDishesLeftEditText.getText().toString();
+
 
                         if(addDishPriceEditText.getText().toString().equals("")|| addDishDishesLeftEditText.getText().toString().equals(""))
                         {
@@ -587,7 +607,7 @@ private void getEventsDishes()
                         break;
                     }
                 }
-                //hide key board
+
 
             }
         }
@@ -650,26 +670,40 @@ private void getEventsDishes()
     }
 
     private void dispatchTakePictureIntent() {
-        cameraBasics.setF(EditEventDishesFragment.this);
+        cameraBasics.setFragment(EditEventDishesFragment.this);
         cameraBasics.dispatchTakePictureIntent(getActivity());
 
+    }
+
+    //photo captured in EditDishDialogBox
+    public void onActivityResultEditDish(int requestCode, int resultCode, Intent data)
+    {
+            bitmapArray = editDishDialogBox.getCameraBasics().myOnActivityResult(requestCode, resultCode, data);
+
+            dishInEdit.setFullsizeImg(CameraBasics.bitmapToByteArr(bitmapArray[0]));
+            dishInEdit.setThumbnailImg(CameraBasics.bitmapToByteArr(bitmapArray[1]));
+
+
+            //Log.d("IMAGE_SIZE", String.format("%d ON %d", bitmapArray[0].getWidth(), bitmapArray[0].getHeight()));
+
+            editDishDialogBox.getDishImageView().setImageBitmap(bitmapArray[1]);
+            editDishDialogBox.getDishImageView().setScaleType(ImageView.ScaleType.CENTER);
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //New image for a dish
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-        File croppedImageFile = null;
-        try {
 
-             croppedImageFile = File.createTempFile("test",".jpg",storageDir);
-        } catch (IOException e) {
-            e.printStackTrace();
+        //revoked from edit dish dialog
+        if(isEditDishDialogOpened()==true && (requestCode == REQUEST_PICTURE)
+                && (resultCode == Activity.RESULT_OK))
+        {
+            onActivityResultEditDish(requestCode,resultCode,data);
         }
 
-        if ((requestCode == REQUEST_PICTURE) && (resultCode == Activity.RESULT_OK)) {
+
+        //Revoked from add dish dialog
+        if (isEditDishDialogOpened()==false && (requestCode == REQUEST_PICTURE) && (resultCode == Activity.RESULT_OK)) {
 
 
             bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
