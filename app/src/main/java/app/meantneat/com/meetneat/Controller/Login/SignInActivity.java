@@ -132,7 +132,7 @@ public class SignInActivity extends ActionBarActivity {
     }
 
 //    private void dispatchTakePictureIntent() {
-//        cameraBasics.setF(this);
+//        cameraBasics.setFragment(this);
 //
 //        cameraBasics.dispatchTakePictureIntent(this);
 ////        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
