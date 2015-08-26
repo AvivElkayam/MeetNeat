@@ -23,7 +23,8 @@
         app:met_primaryColor="@color/eat_black"
         app:met_errorColor="@color/eat_black"
         app:met_hideUnderline="false"
-
+        android:drawableLeft="@drawable/quote32"
+        android:drawablePadding="5dp"
 
         app:met_floatingLabel="highlight"
         app:met_singleLineEllipsis="true"
@@ -46,7 +47,8 @@
         android:paddingLeft="5dp"
         android:textColorHint="@color/eat_black"
         android:gravity="left|center_vertical"
-
+        android:drawableLeft="@drawable/location32"
+        android:drawablePadding="5dp"
         app:met_baseColor="@color/eat_black"
         app:met_primaryColor="@color/eat_black"
         app:met_errorColor="@color/eat_black"
@@ -69,7 +71,8 @@
         android:textColor="@color/eat_black"
         android:gravity="left|center_vertical"
 
-
+        android:drawableLeft="@drawable/home32"
+        android:drawablePadding="5dp"
         app:met_baseColor="@color/eat_black"
         app:met_primaryColor="@color/eat_black"
         app:met_errorColor="@color/eat_black"

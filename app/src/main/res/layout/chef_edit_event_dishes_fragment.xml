@@ -48,10 +48,12 @@
                         app:met_errorColor="@color/eat_black"
                         app:met_hideUnderline="false"
                         app:met_floatingLabel="none"
+                        android:drawableLeft="@drawable/quote32"
+                        android:drawablePadding="5dp"
                         android:hint="Event name:"
                         android:textSize="16sp"
                         android:layout_weight="1"
-                        android:gravity="left" />
+                        android:gravity="left|center_vertical" />
 
                     <LinearLayout
                         android:orientation="horizontal"
@@ -59,20 +61,14 @@
                         android:layout_height="fill_parent"
                         android:layout_weight="1">
 
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:id="@+id/imageView6"
-                            android:layout_gravity="center"
-                            android:background="@drawable/location"
-                            android:visibility="gone" />
 
                         <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:id="@+id/add_event_fragment_auto_location_label"
                             android:hint="Location"
-
+                            android:drawableLeft="@drawable/location32"
+                            android:drawablePadding="5dp"
                             android:focusable="true"
                             android:dropDownWidth="fill_parent"
                             android:completionThreshold="1"
@@ -82,7 +78,7 @@
                             android:background="@drawable/gray_text_field"
                             android:layout_marginRight="5dp"
                             android:textSize="15sp"
-                            android:gravity="left"
+                            android:gravity="left|center_vertical"
                             android:layout_marginLeft="5dp"
                             app:met_baseColor="@color/eat_black"
                             app:met_primaryColor="@color/eat_black"
@@ -108,9 +104,11 @@
                         app:met_errorColor="@color/eat_black"
                         app:met_hideUnderline="false"
                         app:met_floatingLabel="none"
+                        android:drawableLeft="@drawable/home32"
+                        android:drawablePadding="5dp"
                         android:hint="Appartment Number"
                         android:layout_weight="1"
-                        android:gravity="left" />
+                        android:gravity="left|center_vertical" />
 
                     <TextView
                         android:layout_width="fill_parent"
