@@ -28,7 +28,6 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -90,6 +89,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     private TimePickerDialog timePickerDialog;
     private int startingYear,startingMonth,startingDay,startingHour,startingMinute;
     private int endingYear,endingMonth,endingDay,endingHour,endingMinute;
+    private double latitude,longitude;
     private EditText eventTitleEditText,eventLocationEditText,eventApartmentNumberEditText;
     private Calendar calendar;
     private ListView dishesListView;
@@ -323,6 +323,8 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     eventTitleEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_title_edit_text_id);
     eventApartmentNumberEditText = (EditText)getActivity().findViewById(R.id.add_event_fragment_apartment_numebr_edit_text_id);
     addDishButton = (FloatingActionButton)getActivity().findViewById(R.id.chef_edit_events_dishes_floating_add_dish_button);
+    addDishButton.setColorNormal(getResources().getColor(R.color.eat_green));
+
     calendar=Calendar.getInstance();
 
     noMoreEventsOverlay = (TextView)getActivity().findViewById(R.id.add_event_fragment_no_more_events_overlay);
@@ -349,14 +351,14 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
         startingTimeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                timePickerDialog = new TimePickerDialog(getActivity(),new TimePickerDialog.OnTimeSetListener() {
+                timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         startingHour = hourOfDay;
-                        startingMinute=minute;
-                        ((TextView) v).setText(MeetnEatDates.getTimeString(hourOfDay,minute));
+                        startingMinute = minute;
+                        ((TextView) v).setText(MeetnEatDates.getTimeString(hourOfDay, minute));
                     }
-                },calendar.get(Calendar.HOUR),calendar.get(Calendar.MINUTE),true);
+                }, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), true);
                 timePickerDialog.show();
             }
         });
@@ -369,7 +371,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         endingHour = hourOfDay;
                         endingMinute = minute;
-                        ((TextView) v).setText(MeetnEatDates.getTimeString(hourOfDay,minute));
+                        ((TextView) v).setText(MeetnEatDates.getTimeString(hourOfDay, minute));
                     }
                 }, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), true);
                 timePickerDialog.show();
@@ -390,7 +392,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                         startingYear=year;
                         startingMonth=monthOfYear+1;
                         startingDay=dayOfMonth;
-                        ((TextView) v).setText(MeetnEatDates.getDateString(year,monthOfYear,dayOfMonth));
+                        ((TextView) v).setText(MeetnEatDates.getDateString(year, monthOfYear, dayOfMonth));
                     }
                 },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.show();
@@ -420,54 +422,13 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
             createEventButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    wrapAllDataToEventAndUpdateServer();
+                    wrapAllDataToEventAndAddDishToServer();
                 }
             });
         }
         else
         {
-            createEventButton.setText("Edit event");
-            createEventButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String title = eventTitleEditText.getText().toString();
-                    LatLng locationCoord = lAC.getChoosenCoordinates();
-                    String locationString = lAC.getChoosenLocationString();
-                    //To do: Get string ftom the autoComlete Label;
-                    //String locationStr =
-                    EventDishes event = new EventDishes(title
-                            ,startingHour
-                            ,startingMinute
-                            ,endingHour
-                            ,endingMinute,
-                            startingYear,
-                            startingMonth,
-                            startingDay,
-                            endingYear,
-                            endingMonth,
-                            endingDay,
-                            locationString,
-                            apartmentNumber,
-                            eventID,
-                            dishArrayList,
-                            locationCoord.longitude,
-                            locationCoord.latitude);
-                    event.setEventId(getArguments().getString(AppConstants.EVENT_ID));
-                    MyModel.getInstance().getModel().editEventDishes(event, new MyModel.EditEventCallback() {
-                        @Override
-                        public void eventHasBeenEdited() {
-                            //Toast.makeText(getActivity(), "Even has been edited", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                    //Go back to chef Events
-                    Fragment f = getParentFragment();
-                    FragmentManager fm = f.getChildFragmentManager();
-                    fm.popBackStackImmediate();
-                }
-            });
-
-
+                wrapAllDataAndEditDishInServer();
         }
     }
 private void getEventsDishes()
@@ -500,7 +461,7 @@ private void getEventsDishes()
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        inflater.inflate(R.menu.chef_fragment_menu, menu);
+        inflater.inflate(R.menu.edit_dish_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
     private void buildAddDishDiaglog()
@@ -791,6 +752,51 @@ private void getEventsDishes()
         Fragment f = getParentFragment();
         FragmentManager fm = f.getChildFragmentManager();
         fm.popBackStackImmediate();
+
+
+    }
+    private void wrapAllDataAndEditDishInServer()
+    {
+        createEventButton.setText("Edit event");
+        createEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = eventTitleEditText.getText().toString();
+                LatLng locationCoord = lAC.getChoosenCoordinates();
+                String locationString = lAC.getChoosenLocationString();
+                //To do: Get string ftom the autoComlete Label;
+                //String locationStr =
+                EventDishes event = new EventDishes(title
+                        ,startingHour
+                        ,startingMinute
+                        ,endingHour
+                        ,endingMinute,
+                        startingYear,
+                        startingMonth,
+                        startingDay,
+                        endingYear,
+                        endingMonth,
+                        endingDay,
+                        locationString,
+                        apartmentNumber,
+                        eventID,
+                        dishArrayList,
+                        locationCoord.longitude,
+                        locationCoord.latitude);
+                event.setEventId(getArguments().getString(AppConstants.EVENT_ID));
+                MyModel.getInstance().getModel().editEventDishes(event, new MyModel.EditEventCallback() {
+                    @Override
+                    public void eventHasBeenEdited() {
+                        //Toast.makeText(getActivity(), "Even has been edited", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                //Go back to chef Events
+                Fragment f = getParentFragment();
+                FragmentManager fm = f.getChildFragmentManager();
+                fm.popBackStackImmediate();
+            }
+        });
 
 
     }

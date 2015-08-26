@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.makeramen.roundedimageview.RoundedImageView;
+
 import app.meantneat.com.meetneat.Entities.Dish;
 import app.meantneat.com.meetneat.R;
 
@@ -20,7 +22,7 @@ public class EditDishDialogBox {
     private Dish dish;
 
     private EditText priceEditText,quantityEditText,titleEditText,descriptionEditText;
-    private ImageView dishImageView;
+    private RoundedImageView dishImageView;
     private Button editDishButton;
     private String title,price,quantity,description;
     public EditDishDialogBox(Context context,Dish dish) {
@@ -63,7 +65,7 @@ public class EditDishDialogBox {
         quantityEditText = (EditText)dialogBox.findViewById(R.id.chef_edit_dish_dialog_box_quantity_edit_text);
         quantityEditText.setText(Double.toString(dish.getQuantity()));
 
-        dishImageView = (ImageView)dialogBox.findViewById(R.id.chef_edit_dish_dialog_box_image_view);
+        dishImageView = (RoundedImageView)dialogBox.findViewById(R.id.chef_edit_dish_dialog_box_image_view);
         dishImageView.setImageBitmap(dish.getThumbnailImage());
         dishImageView.setScaleType(ImageView.ScaleType.CENTER);
 

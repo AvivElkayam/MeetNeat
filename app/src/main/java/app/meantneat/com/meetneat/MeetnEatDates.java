@@ -26,37 +26,37 @@ public class MeetnEatDates {
         {
             case Calendar.SUNDAY:
             {
-                dayString = "Sunday";
+                dayString = "Sun";
                 break;
             }
             case Calendar.MONDAY:
             {
-                dayString = "Monday";
+                dayString = "Mon";
                 break;
             }
             case Calendar.TUESDAY:
             {
-                dayString = "Tuesday";
+                dayString = "Tue";
                 break;
             }
             case Calendar.WEDNESDAY:
             {
-                dayString = "Wednesday";
+                dayString = "Wed";
                 break;
             }
             case Calendar.THURSDAY:
             {
-                dayString = "Thursday";
+                dayString = "Thu";
                 break;
             }
             case Calendar.FRIDAY:
             {
-                dayString = "Friday";
+                dayString = "Fri";
                 break;
             }
             case Calendar.SATURDAY:
             {
-                dayString = "Saturday";
+                dayString = "Sat";
                 break;
             }
         }
@@ -65,22 +65,22 @@ public class MeetnEatDates {
         {
             case Calendar.JANUARY:
             {
-                monthString = "January";
+                monthString = "Jan";
                 break;
             }
             case Calendar.FEBRUARY:
             {
-                monthString = "February";
+                monthString = "Feb";
                 break;
             }
             case Calendar.MARCH:
             {
-                monthString = "March";
+                monthString = "Mar";
                 break;
             }
             case Calendar.APRIL:
             {
-                monthString = "April";
+                monthString = "Apr";
                 break;
             }
             case Calendar.MAY:
@@ -90,45 +90,45 @@ public class MeetnEatDates {
             }
             case Calendar.JUNE:
             {
-                monthString = "June";
+                monthString = "Jun";
                 break;
             }
             case Calendar.JULY:
             {
-                monthString = "July";
+                monthString = "Jul";
                 break;
             }
             case Calendar.AUGUST:
             {
-                monthString = "August";
+                monthString = "Aug";
                 break;
             }
             case Calendar.SEPTEMBER:
             {
-                monthString = "September";
+                monthString = "Sep";
                 break;
             }
             case Calendar.OCTOBER:
             {
-                monthString = "October";
+                monthString = "Oct";
                 break;
             }
             case Calendar.NOVEMBER:
             {
-                monthString = "November";
+                monthString = "Nov";
                 break;
             }
             case Calendar.DECEMBER:
             {
-                monthString = "December";
+                monthString = "Dec";
                 break;
             }
 
         }
         s = dayString+", "+monthString+" "+Integer.toString(day)+" "+Integer.toString(year);
-        NumberFormat f = new DecimalFormat("00");//makes sure always number are displayed with two digits
+        //NumberFormat f = new DecimalFormat("00");//makes sure always number are displayed with two digits
 
-        s = f.format(day)+"."+f.format(month)+"."+Integer.toString(year);
+        //s = f.format(day)+"."+f.format(month)+"."+Integer.toString(year);
         return s;
     }
     public static String getTimeString(int hour, int minute)

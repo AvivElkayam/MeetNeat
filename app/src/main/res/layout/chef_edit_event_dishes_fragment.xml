@@ -302,10 +302,10 @@
         android:layout_height="64dp"
         android:layout_gravity="left|bottom"
         android:layout_marginBottom="10dp"
-    android:elevation="3dp"
+        android:elevation="3dp"
         android:textColor="@color/eat_black"
         android:layout_marginLeft="20dp"
-        android:background="@drawable/green_circle"
+        android:background="@drawable/yellow_circle"
         android:src="@drawable/fab_plus"
 
         />
@@ -329,6 +329,7 @@
         android:textColor="@color/eat_black"
         android:background="@drawable/green_button"
         android:layout_marginBottom="15dp"
-        android:layout_marginRight="20dp" />
+        android:layout_marginRight="20dp"
+        android:visibility="gone" />
 
 </FrameLayout>
