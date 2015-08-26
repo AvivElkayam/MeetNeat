@@ -332,7 +332,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     initDatePickers();
     initTimePickers();
     getEventDetailsFromBundle();
-    initCreateEventButton();
+    //initCreateEventButton();
     initListView();
 
     if(isNew==false)
@@ -757,33 +757,41 @@ private void getEventsDishes()
     }
     private void wrapAllDataAndEditDishInServer()
     {
-        createEventButton.setText("Edit event");
-        createEventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
                 String title = eventTitleEditText.getText().toString();
                 LatLng locationCoord = lAC.getChoosenCoordinates();
                 String locationString = lAC.getChoosenLocationString();
                 //To do: Get string ftom the autoComlete Label;
                 //String locationStr =
-                EventDishes event = new EventDishes(title
-                        ,startingHour
-                        ,startingMinute
-                        ,endingHour
-                        ,endingMinute,
-                        startingYear,
-                        startingMonth,
-                        startingDay,
-                        endingYear,
-                        endingMonth,
-                        endingDay,
-                        locationString,
-                        apartmentNumber,
-                        eventID,
-                        dishArrayList,
-                        locationCoord.longitude,
-                        locationCoord.latitude);
-                event.setEventId(getArguments().getString(AppConstants.EVENT_ID));
+        EventDishes event = new EventDishes();
+        event.setTitle(title);
+        event.setStartingYear(startingYear);
+        event.setStartingMonth(startingMonth);
+        event.setStartingDay(startingDay);
+        event.setStartingHour(startingHour);
+        event.setStartingMinute(startingMinute);
+        event.setEndingYear(endingYear);
+        event.setEndingMonth(endingMonth);
+        event.setEndingDay(endingDay);
+        event.setEndingHour(endingHour);
+        event.setEndingMinute(endingMinute);
+        event.setApartmentNumber(apartmentNumber);
+        event.setEventsDishes(dishArrayList);
+
+        if(locationCoord==null)
+        {
+            event.setLatitude(latitude);
+            event.setLongitude(longitude);
+            event.setLocation(location);
+        }
+        else
+        {
+            event.setLatitude(locationCoord.latitude);
+            event.setLongitude(locationCoord.longitude);
+            event.setLocation(locationString);
+        }
+
+        event.setEventId(eventID);
                 MyModel.getInstance().getModel().editEventDishes(event, new MyModel.EditEventCallback() {
                     @Override
                     public void eventHasBeenEdited() {
@@ -795,8 +803,7 @@ private void getEventsDishes()
                 Fragment f = getParentFragment();
                 FragmentManager fm = f.getChildFragmentManager();
                 fm.popBackStackImmediate();
-            }
-        });
+
 
 
     }
