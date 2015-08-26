@@ -207,7 +207,9 @@ public class ChefEventDishesFragment extends Fragment
         bundle.putInt(AppConstants.EVENT_ENDING_MINUTE, eventDishes.getEndingMinute());
 
         bundle.putString(AppConstants.EVENT_TITLE, eventDishes.getTitle());
-        bundle.putString(AppConstants.EVENT_LOCATION,eventDishes.getLocation());
+        bundle.putString(AppConstants.EVENT_LOCATION, eventDishes.getLocation());
+        bundle.putDouble(AppConstants.EVENT_LATITUDE, eventDishes.getLatitude());
+        bundle.putDouble(AppConstants.EVENT_LONGITUDE, eventDishes.getLongitude());
         bundle.putString(AppConstants.EVENT_APARTMENT_NUMBER, eventDishes.getApartmentNumber());
         bundle.putBoolean(AppConstants.IS_NEW, false);
         bundle.putString(AppConstants.EVENT_ID,eventDishes.getEventId());

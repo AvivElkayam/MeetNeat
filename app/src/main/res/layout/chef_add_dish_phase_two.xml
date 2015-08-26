@@ -84,23 +84,29 @@
         android:id="@+id/d"
         android:layout_marginTop="20dp">
 
-        <CheckBox
+        <com.rey.material.widget.CheckBox
             android:layout_width="fill_parent"
             android:layout_height="40dp"
+            style="@style/Material.Drawable.CheckBox"
             android:text="T.A"
             android:id="@+id/add_dish_phase_two_ta_checkbox_id"
             android:layout_weight="1"
             android:checked="false"
-            android:layout_gravity="bottom" />
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical" />
 
-        <CheckBox
+
+
+        <com.rey.material.widget.CheckBox
             android:layout_width="fill_parent"
             android:layout_height="40dp"
             android:text="Seat"
+            style="@style/Material.Drawable.CheckBox"
             android:id="@+id/add_dish_phase_two_seat_checkbox_id"
             android:layout_weight="1"
             android:checked="false"
-            android:layout_gravity="bottom" />
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical" />
 
     </LinearLayout>
 
