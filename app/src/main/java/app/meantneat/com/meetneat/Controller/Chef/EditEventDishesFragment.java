@@ -70,7 +70,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     private int PLACE_PICKER_REQUEST = 2;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static int REQUEST_PICTURE = 1;
-    private static int REQUEST_CROP_PICTURE = 2;
+    private static int REQUEST_LOAD_IMAGE = 3;
     LocationAutoComplete lAC;
     //FloatingActionButton addNewDishFloatingButton;
     FloatingActionButton addDishButton;
