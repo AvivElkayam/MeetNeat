@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -45,6 +46,8 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.melnykov.fab.FloatingActionButton;
 import com.rey.material.widget.CheckBox;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -105,6 +108,8 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     private EditDishDialogBox editDishDialogBox;
     private AddDishDialogBox addDishDialogBox;
     private Dish dishInEdit;
+    private boolean isAdddishDialogOpened;
+    private boolean isEditDishDialogOpened;
 
     public boolean isEditDishDialogOpened() {
         return isEditDishDialogOpened;
@@ -115,6 +120,17 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     }
 
     private boolean isEditDishDialogOpened;
+
+
+    public boolean isAdddishDialogOpened() {
+        return isAdddishDialogOpened;
+    }
+
+    public void setIsAdddishDialogOpened(boolean isAdddishDialogOpened) {
+        this.isAdddishDialogOpened = isAdddishDialogOpened;
+    }
+
+
 
     @Override
     public void onConnected(Bundle bundle) {
@@ -690,6 +706,22 @@ private void getEventsDishes()
     }
 
 
+    //photo captured in EditDishDialogBox
+    public void onActivityResultAddDish(int requestCode, int resultCode, Intent data)
+    {
+        bitmapArray = addDishDialogBox.getCameraBasics().myOnActivityResult(requestCode, resultCode, data);
+
+        addDishDialogBox.getDish().setFullsizeImg(CameraBasics.bitmapToByteArr(bitmapArray[0]));
+        addDishDialogBox.getDish().setThumbnailImg(CameraBasics.bitmapToByteArr(bitmapArray[1]));
+
+
+        //Log.d("IMAGE_SIZE", String.format("%d ON %d", bitmapArray[0].getWidth(), bitmapArray[0].getHeight()));
+
+        addDishDialogBox.getDishImageView().setImageBitmap(bitmapArray[1]);
+        addDishDialogBox.getDishImageView().setScaleType(ImageView.ScaleType.CENTER);
+    }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -700,10 +732,34 @@ private void getEventsDishes()
             onActivityResultEditDish(requestCode,resultCode,data);
         }
 
+        //revoked from add dish dialog
+        if(isAdddishDialogOpened()==true && (requestCode == REQUEST_PICTURE)
+                && (resultCode == Activity.RESULT_OK))
+        {
+            onActivityResultAddDish(requestCode, resultCode, data);
+        }
 
         //Revoked from add dish dialog
         if (isEditDishDialogOpened()==false && (requestCode == REQUEST_PICTURE) && (resultCode == Activity.RESULT_OK)) {
 
+//        //Revoked from add dish dialog
+//        if (isEditDishDialogOpened()==false && (requestCode == REQUEST_PICTURE) && (resultCode == Activity.RESULT_OK)) {
+//
+//
+//            bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
+//
+//            newDish.setFullsizeImg(CameraBasics.bitmapToByteArr(bitmapArray[0]));
+//            newDish.setThumbnailImg(CameraBasics.bitmapToByteArr(bitmapArray[1]));
+//
+//
+//            Log.d("IMAGE_SIZE", String.format("%d ON %d", bitmapArray[0].getWidth(), bitmapArray[0].getHeight()));
+//            addDishImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+//            addDishImageView.setImageBitmap(bitmapArray[1]);
+//
+//
+//
+//
+//        }
 
             bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
 
@@ -853,8 +909,8 @@ private void getEventsDishes()
 private void buildAddDishDialog()
 {
     addDishDialogBox = new AddDishDialogBox(getActivity());
-//    editDishDialogBox.getCameraBasics().setFragment(EditEventDishesFragment.this);
-//    isEditDishDialogOpened = true;
+    addDishDialogBox.getCameraBasics().setFragment(EditEventDishesFragment.this);
+    isAdddishDialogOpened = true;
     addDishDialogBox.show();
 
     addDishDialogBox.getDialogBox().setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -870,10 +926,10 @@ private void buildAddDishDialog()
                 newDish.setToSit(addDishDialogBox.getTempDish().isToSit());
                 dishArrayList.add(newDish);
                 dishRowListAdapter.notifyDataSetChanged();
+                isAdddishDialogOpened = false;
                 //isEditDishDialogOpened = false;
 
-                //  dishRowListAdapter.notifyDataSetChanged();
-            }
+            //  dishRowListAdapter.notifyDataSetChanged();
         }
     });
 }
