@@ -68,7 +68,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
 
 
     private int PLACE_PICKER_REQUEST = 2;
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
+
     private static int REQUEST_PICTURE = 1;
     private static int REQUEST_LOAD_IMAGE = 3;
     LocationAutoComplete lAC;
@@ -735,7 +735,7 @@ private void getEventsDishes()
         if(isAdddishDialogOpened()==true && (requestCode == REQUEST_PICTURE)
                 && (resultCode == Activity.RESULT_OK))
         {
-            onActivityResultAddDish(requestCode,resultCode,data);
+            onActivityResultAddDish(requestCode, resultCode, data);
         }
 
         //revoked from add dish dialog
@@ -898,6 +898,7 @@ private void buildAddDishDialog()
 {
     addDishDialogBox = new AddDishDialogBox(getActivity());
     addDishDialogBox.getCameraBasics().setFragment(EditEventDishesFragment.this);
+    addDishDialogBox.setFrag(EditEventDishesFragment.this);
     isAdddishDialogOpened = true;
     addDishDialogBox.show();
 
