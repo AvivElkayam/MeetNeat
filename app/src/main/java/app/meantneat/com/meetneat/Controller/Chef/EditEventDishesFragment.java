@@ -11,7 +11,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -46,8 +45,6 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.melnykov.fab.FloatingActionButton;
 import com.rey.material.widget.CheckBox;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -863,18 +860,20 @@ private void buildAddDishDialog()
     addDishDialogBox.getDialogBox().setOnDismissListener(new DialogInterface.OnDismissListener() {
         @Override
         public void onDismiss(DialogInterface dialog) {
-            Dish newDish = new Dish();
-            newDish.setTitle(addDishDialogBox.getDish().getTitle());
-            newDish.setDescriprion(addDishDialogBox.getDish().getDescriprion());
-            newDish.setPrice(addDishDialogBox.getDish().getPrice());
-            newDish.setQuantityLeft(addDishDialogBox.getDish().getQuantityLeft());
-            newDish.setTakeAway(addDishDialogBox.getDish().isTakeAway());
-            newDish.setToSit(addDishDialogBox.getDish().isToSit());
-            dishArrayList.add(newDish);
-            dishRowListAdapter.notifyDataSetChanged();
-            //isEditDishDialogOpened = false;
+            if(addDishDialogBox.getTempDish()!=null) {
+                Dish newDish = new Dish();
+                newDish.setTitle(addDishDialogBox.getTempDish().getTitle());
+                newDish.setDescriprion(addDishDialogBox.getTempDish().getDescriprion());
+                newDish.setPrice(addDishDialogBox.getTempDish().getPrice());
+                newDish.setQuantityLeft(addDishDialogBox.getTempDish().getQuantityLeft());
+                newDish.setTakeAway(addDishDialogBox.getTempDish().isTakeAway());
+                newDish.setToSit(addDishDialogBox.getTempDish().isToSit());
+                dishArrayList.add(newDish);
+                dishRowListAdapter.notifyDataSetChanged();
+                //isEditDishDialogOpened = false;
 
-            //  dishRowListAdapter.notifyDataSetChanged();
+                //  dishRowListAdapter.notifyDataSetChanged();
+            }
         }
     });
 }

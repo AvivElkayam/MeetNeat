@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.rey.material.widget.CheckBox;
 
 import app.meantneat.com.meetneat.Camera.CameraBasics;
 import app.meantneat.com.meetneat.Entities.Dish;
@@ -21,9 +22,9 @@ import app.meantneat.com.meetneat.R;
 public class AddDishDialogBox {
     private Context context;
     private Dialog dialogBox;
-    private Dish dish;
+    private Dish tempDish,finalDish;
     private CameraBasics cameraBasics = new CameraBasics();
-
+    private CheckBox taCheckBox,seatCheckBox;
     public CameraBasics getCameraBasics() {
         return cameraBasics;
     }
@@ -49,18 +50,18 @@ public class AddDishDialogBox {
     private String title,price,quantity,description;
     public AddDishDialogBox(Context context) {
         this.context = context;
-        this.dish = new Dish();
+        this.tempDish = new Dish();
         initDialogBox();
         initViews();
 
     }
 
-    public Dish getDish() {
-        return dish;
+    public Dish getTempDish() {
+        return finalDish;
     }
 
-    public void setDish(Dish dish) {
-        this.dish = dish;
+    public void setTempDish(Dish tempDish) {
+        this.tempDish = tempDish;
     }
 
     public Dialog getDialogBox() {
@@ -85,7 +86,7 @@ public class AddDishDialogBox {
         quantityEditText = (EditText)dialogBox.findViewById(R.id.chef_add_dish_dialog_box_quantity_edit_text);
 
         dishImageView = (RoundedImageView)dialogBox.findViewById(R.id.chef_add_dish_dialog_box_image_view);
-        dishImageView.setImageBitmap(dish.getThumbnailImage());
+        dishImageView.setImageBitmap(tempDish.getThumbnailImage());
         dishImageView.setScaleType(ImageView.ScaleType.CENTER);
         dishImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,16 +96,20 @@ public class AddDishDialogBox {
 
             }
         });
-
+        taCheckBox = (CheckBox)dialogBox.findViewById(R.id.chef_add_dish_dialog_box_ta_check_box);
+        seatCheckBox = (CheckBox)dialogBox.findViewById(R.id.chef_add_dish_dialog_box_to_seat_check_box);
         editDishButton = (Button)dialogBox.findViewById(R.id.chef_add_dish_dialog_box_add_dish_button);
         editDishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validateInputs()==true) {
-                    dish.setTitle(titleEditText.getText().toString());
-                    dish.setDescriprion(descriptionEditText.getText().toString());
-                    dish.setPrice(Double.parseDouble(priceEditText.getText().toString()));
-                    dish.setQuantityLeft(Double.parseDouble(quantityEditText.getText().toString()));
+                if (validateInputs() == true) {
+                    finalDish = new Dish();
+                    finalDish.setTitle(titleEditText.getText().toString());
+                    finalDish.setDescriprion(descriptionEditText.getText().toString());
+                    finalDish.setPrice(Double.parseDouble(priceEditText.getText().toString()));
+                    finalDish.setQuantityLeft(Double.parseDouble(quantityEditText.getText().toString()));
+                    finalDish.setTakeAway(taCheckBox.isChecked());
+                    finalDish.setToSit(seatCheckBox.isChecked());
 
                     dialogBox.dismiss();
                 }
