@@ -2,6 +2,7 @@ package app.meantneat.com.meetneat.Controller.Chef;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -24,6 +25,8 @@ public class EditDishDialogBox {
     private Dialog dialogBox;
     private Dish dish;
     private CheckBox taCheckBox,seatCheckBox;
+
+
 
     private CameraBasics cameraBasics = new CameraBasics();
 

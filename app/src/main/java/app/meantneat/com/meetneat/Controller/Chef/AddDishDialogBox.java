@@ -1,7 +1,14 @@
 package app.meantneat.com.meetneat.Controller.Chef;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -10,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+
+import java.io.File;
 
 import app.meantneat.com.meetneat.Camera.CameraBasics;
 import app.meantneat.com.meetneat.Entities.Dish;
@@ -27,6 +36,15 @@ public class AddDishDialogBox {
     public CameraBasics getCameraBasics() {
         return cameraBasics;
     }
+    public Fragment getFrag() {
+        return frag;
+    }
+
+    public void setFrag(Fragment frag) {
+        this.frag = frag;
+    }
+
+    private Fragment frag;
 
     public void setCameraBasics(CameraBasics cameraBasics) {
         this.cameraBasics = cameraBasics;
@@ -100,7 +118,7 @@ public class AddDishDialogBox {
         editDishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validateInputs()==true) {
+                if (validateInputs() == true) {
                     dish.setTitle(titleEditText.getText().toString());
                     dish.setDescriprion(descriptionEditText.getText().toString());
                     dish.setPrice(Double.parseDouble(priceEditText.getText().toString()));
@@ -120,7 +138,9 @@ public class AddDishDialogBox {
 
     private void dispatchTakePictureIntent() {
         //cameraBasics.setFragment(EditEventDishesFragment.this); - sett on dialog initialize
-        cameraBasics.dispatchTakePictureIntent(context);
+        //cameraBasics.dispatchTakePictureIntent(context);
+
+        selectImage();
 
     }
     private boolean validateInputs()
@@ -146,6 +166,36 @@ public class AddDishDialogBox {
             return false;
         }
         return true;
+    }
+
+    private void selectImage() {
+
+        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Add Photo!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take Photo"))
+                {
+                    cameraBasics.dispatchTakePictureIntent(context);
+
+
+                }
+                else if (options[item].equals("Choose from Gallery"))
+                {
+                    Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    cameraBasics.setContext(context);
+                    frag.getParentFragment().startActivityForResult(intent, 3);
+
+                }
+                else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
     }
 
 }
