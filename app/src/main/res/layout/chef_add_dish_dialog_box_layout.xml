@@ -10,7 +10,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="316dp"
-        android:layout_height="250dp">
+        android:layout_height="240dp">
 
         <LinearLayout
             android:orientation="vertical"
@@ -22,7 +22,7 @@
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:id="@+id/chef_edit_dish_dialog_box_title_edit_text"
+                android:id="@+id/chef_add_dish_dialog_box_title_edit_text"
                 android:hint="Title"
                 android:textColor="@color/eat_black"
                 android:maxLines="10"
@@ -31,8 +31,7 @@
                 app:met_errorColor="@color/eat_black"
                 app:met_hideUnderline="false"
                 app:met_floatingLabel="none"
-                android:text="Title"
-                android:singleLine="true"
+                android:singleLine="false"
                 app:met_singleLineEllipsis="false"
                 android:inputType="textCapSentences"
                 android:textSize="18sp"
@@ -41,17 +40,15 @@
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:id="@+id/chef_edit_dish_dialog_box_description_edit_text"
-                android:background="@drawable/gray_text_field"
+                android:id="@+id/chef_add_dish_dialog_box_description_edit_text"
                 android:hint="Description"
-                android:singleLine="true"
+                android:singleLine="false"
                 android:textColor="@color/eat_black"
                 app:met_baseColor="@color/eat_black"
                 app:met_primaryColor="@color/eat_green"
                 app:met_errorColor="@color/eat_black"
                 app:met_hideUnderline="false"
                 app:met_floatingLabel="none"
-                android:text="Description"
                 android:inputType="textCapSentences"
                 android:textSize="12sp"
                 android:layout_weight="1" />
@@ -60,28 +57,25 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:inputType="numberDecimal"
-                android:ems="10"
-                android:id="@+id/chef_edit_dish_dialog_box_price_edit_text"
-                android:background="@drawable/gray_text_field"
-                android:autoText="true"
+                android:id="@+id/chef_add_dish_dialog_box_price_edit_text"
                 android:hint="Price"
+                android:singleLine="false"
                 android:textColor="@color/eat_black"
                 app:met_baseColor="@color/eat_black"
                 app:met_primaryColor="@color/eat_green"
                 app:met_errorColor="@color/eat_black"
                 app:met_hideUnderline="false"
                 app:met_floatingLabel="none"
-                app:met_singleLineEllipsis="true"
-                android:text="Price"
                 android:textSize="12sp"
                 android:layout_weight="1" />
+            />
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/chef_edit_dish_dialog_box_quantity_edit_text"
+                android:id="@+id/chef_add_dish_dialog_box_quantity_edit_text"
                 android:background="@drawable/gray_text_field"
                 android:textColor="@color/eat_black"
                 android:hint="Dishes Left"
@@ -90,8 +84,6 @@
                 app:met_errorColor="@color/eat_black"
                 app:met_hideUnderline="false"
                 app:met_floatingLabel="none"
-                app:met_singleLineEllipsis="true"
-                android:text="Dishes Left"
                 android:textSize="12sp"
                 android:layout_weight="1" />
         </LinearLayout>
@@ -107,10 +99,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:scaleType="fitCenter"
-                android:id="@+id/chef_edit_dish_dialog_box_image_view"
+                android:id="@+id/chef_add_dish_dialog_box_image_view"
                 android:layout_weight="1"
                 app:riv_corner_radius="5dip"
-                app:riv_border_width="1dip"
+                app:riv_border_width="2dip"
                 app:riv_border_color="@color/eat_gray"
                 app:riv_mutate_background="true"
                 android:layout_gravity="center" />
@@ -138,7 +130,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TAKE AWAY"
-            android:id="@+id/chef_edit_dish_dialog_box_ta_check_box"
+            android:id="@+id/chef_add_dish_dialog_box_ta_check_box"
             style="@style/Material.Drawable.CheckBox"
             android:checked="false"
             android:textSize="10dp"
@@ -149,7 +141,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="EAT HERE"
-            android:id="@+id/chef_edit_dish_dialog_box_seat_check_box"
+            android:id="@+id/chef_add_dish_dialog_box_to_seat_check_box"
             style="@style/Material.Drawable.CheckBox"
             android:checked="false"
             android:textSize="10dp"
@@ -159,8 +151,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="EDIT DISH"
-        android:id="@+id/chef_edit_dish_dialog_box_edit_dish_button"
+        android:text="SAVE DISH"
+        android:id="@+id/chef_add_dish_dialog_box_add_dish_button"
         android:layout_gravity="bottom|right"
         android:textColor="@color/eat_green"
         android:layout_marginRight="10dp"

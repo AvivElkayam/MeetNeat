@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.rey.material.widget.CheckBox;
 
 import app.meantneat.com.meetneat.Camera.CameraBasics;
 import app.meantneat.com.meetneat.Entities.Dish;
@@ -19,12 +18,10 @@ import app.meantneat.com.meetneat.R;
 /**
  * Created by mac on 8/5/15.
  */
-public class EditDishDialogBox {
+public class AddDishDialogBox {
     private Context context;
     private Dialog dialogBox;
     private Dish dish;
-    private CheckBox taCheckBox,seatCheckBox;
-
     private CameraBasics cameraBasics = new CameraBasics();
 
     public CameraBasics getCameraBasics() {
@@ -50,9 +47,9 @@ public class EditDishDialogBox {
     private RoundedImageView dishImageView;
     private Button editDishButton;
     private String title,price,quantity,description;
-    public EditDishDialogBox(Context context,Dish dish) {
+    public AddDishDialogBox(Context context) {
         this.context = context;
-        this.dish = dish;
+        this.dish = new Dish();
         initDialogBox();
         initViews();
 
@@ -75,39 +72,31 @@ public class EditDishDialogBox {
 
         dialogBox = new Dialog(context);
         dialogBox.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialogBox.setContentView(R.layout.chef_edit_dish_dialog_box_layout);
+        dialogBox.setContentView(R.layout.chef_add_dish_dialog_box_layout);
     }
     private void initViews()
     {
-        titleEditText = (EditText)dialogBox.findViewById(R.id.chef_edit_dish_dialog_box_title_edit_text);
-        titleEditText.setText(dish.getTitle());
+        titleEditText = (EditText)dialogBox.findViewById(R.id.chef_add_dish_dialog_box_title_edit_text);
 
-        descriptionEditText = (EditText)dialogBox.findViewById(R.id.chef_edit_dish_dialog_box_description_edit_text);
-        descriptionEditText.setText(dish.getDescriprion());
+        descriptionEditText = (EditText)dialogBox.findViewById(R.id.chef_add_dish_dialog_box_description_edit_text);
 
-        priceEditText = (EditText)dialogBox.findViewById(R.id.chef_edit_dish_dialog_box_price_edit_text);
-        priceEditText.setText(Double.toString(dish.getPrice()));
+        priceEditText = (EditText)dialogBox.findViewById(R.id.chef_add_dish_dialog_box_price_edit_text);
 
-        quantityEditText = (EditText)dialogBox.findViewById(R.id.chef_edit_dish_dialog_box_quantity_edit_text);
-        quantityEditText.setText(Double.toString(dish.getQuantity()));
+        quantityEditText = (EditText)dialogBox.findViewById(R.id.chef_add_dish_dialog_box_quantity_edit_text);
 
-        taCheckBox = (CheckBox)dialogBox.findViewById(R.id.chef_edit_dish_dialog_box_ta_check_box);
-        taCheckBox.setChecked(dish.isTakeAway());
-
-        seatCheckBox = (CheckBox)dialogBox.findViewById(R.id.chef_edit_dish_dialog_box_seat_check_box);
-        seatCheckBox.setChecked(dish.isToSit());
-        dishImageView = (RoundedImageView)dialogBox.findViewById(R.id.chef_edit_dish_dialog_box_image_view);
+        dishImageView = (RoundedImageView)dialogBox.findViewById(R.id.chef_add_dish_dialog_box_image_view);
         dishImageView.setImageBitmap(dish.getThumbnailImage());
         dishImageView.setScaleType(ImageView.ScaleType.CENTER);
         dishImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dispatchTakePictureIntent();
+                //dispatchTakePictureIntent();
+                //cameraBasics.dispatchTakePictureIntent(context);
 
             }
         });
 
-        editDishButton = (Button)dialogBox.findViewById(R.id.chef_edit_dish_dialog_box_edit_dish_button);
+        editDishButton = (Button)dialogBox.findViewById(R.id.chef_add_dish_dialog_box_add_dish_button);
         editDishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,8 +105,7 @@ public class EditDishDialogBox {
                     dish.setDescriprion(descriptionEditText.getText().toString());
                     dish.setPrice(Double.parseDouble(priceEditText.getText().toString()));
                     dish.setQuantityLeft(Double.parseDouble(quantityEditText.getText().toString()));
-                    dish.setTakeAway(taCheckBox.isChecked());
-                    dish.setToSit(seatCheckBox.isChecked());
+
                     dialogBox.dismiss();
                 }
             }
@@ -139,7 +127,7 @@ public class EditDishDialogBox {
     {//true for good inputs, false for bad inputs
         if(titleEditText.getText().toString().isEmpty()==true)
         {
-            Toast.makeText(this.context, "Please fill in a title", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.context,"Please fill in a title",Toast.LENGTH_SHORT).show();
             return false;
         }
         if(descriptionEditText.getText().toString().isEmpty()==true)
@@ -159,4 +147,5 @@ public class EditDishDialogBox {
         }
         return true;
     }
+
 }

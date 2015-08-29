@@ -106,6 +106,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     private int currentPosition;
     //*** Edit Dish
     private EditDishDialogBox editDishDialogBox;
+    private AddDishDialogBox addDishDialogBox;
     private Dish dishInEdit;
 
     public boolean isEditDishDialogOpened() {
@@ -154,7 +155,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
             dishInEdit = dishArrayList.get(position);
             final String title = dishInEdit.getTitle();
             String price = "Price: "+dishInEdit.getPrice();
-            String dishesLeft = Double.toString(dishInEdit.getQuantityLeft());
+            final String dishesLeft = Double.toString(dishInEdit.getQuantityLeft());
             final String description = dishInEdit.getDescriprion();
            // dishImageView = dishInEdit.getThumbnailImg();
 
@@ -213,10 +214,10 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                             dishInEdit.setDescriprion(editDishDialogBox.getDish().getDescriprion());
                             dishInEdit.setPrice(editDishDialogBox.getDish().getPrice());
                             dishInEdit.setQuantityLeft(editDishDialogBox.getDish().getQuantityLeft());
+                            dishInEdit.setTakeAway(editDishDialogBox.getDish().isTakeAway());
+                            dishInEdit.setToSit(editDishDialogBox.getDish().isToSit());
                             titleTextView.setText(dishInEdit.getTitle());
-
                             priceTextView.setText("$"+Double.toString(dishInEdit.getPrice()));
-
                             quantityTextView.setText(Double.toString(dishInEdit.getQuantityLeft()));
                             isEditDishDialogOpened = false;
 
@@ -256,9 +257,10 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
         addDishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buildAddDishDiaglog();
-
-                addDishDialog.show();
+//                buildAddDishDiaglog();
+//
+//                addDishDialog.show();
+                buildAddDishDialog();
             }
         });
         addDishButton.attachToListView(dishesListView);
@@ -851,5 +853,29 @@ private void getEventsDishes()
         if(view!=null)
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+private void buildAddDishDialog()
+{
+    addDishDialogBox = new AddDishDialogBox(getActivity());
+//    editDishDialogBox.getCameraBasics().setFragment(EditEventDishesFragment.this);
+//    isEditDishDialogOpened = true;
+    addDishDialogBox.show();
 
+    addDishDialogBox.getDialogBox().setOnDismissListener(new DialogInterface.OnDismissListener() {
+        @Override
+        public void onDismiss(DialogInterface dialog) {
+            Dish newDish = new Dish();
+            newDish.setTitle(addDishDialogBox.getDish().getTitle());
+            newDish.setDescriprion(addDishDialogBox.getDish().getDescriprion());
+            newDish.setPrice(addDishDialogBox.getDish().getPrice());
+            newDish.setQuantityLeft(addDishDialogBox.getDish().getQuantityLeft());
+            newDish.setTakeAway(addDishDialogBox.getDish().isTakeAway());
+            newDish.setToSit(addDishDialogBox.getDish().isToSit());
+            dishArrayList.add(newDish);
+            dishRowListAdapter.notifyDataSetChanged();
+            //isEditDishDialogOpened = false;
+
+            //  dishRowListAdapter.notifyDataSetChanged();
+        }
+    });
+}
 }

@@ -644,6 +644,8 @@ private void saveEventsDishesToServer(EventDishes event,ParseObject eventObject)
             object.put(AppConstants.DISH_TITLE,dish.getTitle());
             object.put(AppConstants.DISH_DESCRIPTION,dish.getDescriprion());
             object.put(AppConstants.DISH_EVENT_ID,eventID);
+            object.put(AppConstants.DISH_IS_TAKE_AWAY,dish.isTakeAway());
+            object.put(AppConstants.DISH_IS_TO_SIT,dish.isToSit());
             if(dish.getFullsizeImg()!=null) {
                 ParseFile file = new ParseFile("aFull.jpeg", dish.getFullsizeImg());
 
