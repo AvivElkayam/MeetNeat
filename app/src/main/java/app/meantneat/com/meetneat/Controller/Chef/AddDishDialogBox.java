@@ -111,7 +111,7 @@ public class AddDishDialogBox {
         dishImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectImage();
+                selectImage(); //Gallery or camera
 
 
             }
