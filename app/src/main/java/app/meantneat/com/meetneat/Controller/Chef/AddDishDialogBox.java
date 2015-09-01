@@ -176,7 +176,7 @@ public class AddDishDialogBox {
     }
 
     private void selectImage() {
-
+    //
         final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
