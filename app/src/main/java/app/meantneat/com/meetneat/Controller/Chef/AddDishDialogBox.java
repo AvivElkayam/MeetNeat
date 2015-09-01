@@ -30,8 +30,26 @@ import app.meantneat.com.meetneat.R;
 public class AddDishDialogBox {
     private Context context;
     private Dialog dialogBox;
-    private Dish dish;
+
+    public Dish getFinalDish() {
+        return finalDish;
+    }
+
+    public void setFinalDish(Dish finalDish) {
+        this.finalDish = finalDish;
+    }
+
     private Dish finalDish;
+
+    public Dish getTempDish() {
+        return tempDish;
+    }
+
+    public void setTempDish(Dish tempDish) {
+        this.tempDish = tempDish;
+    }
+
+    private Dish tempDish;
     private CheckBox taCheckBox;
     private CheckBox seatCheckBox;
     public Fragment getFrag() {
@@ -70,19 +88,13 @@ public class AddDishDialogBox {
     private String title,price,quantity,description;
     public AddDishDialogBox(Context context) {
         this.context = context;
-        this.dish = new Dish();
+        this.tempDish = new Dish();
         initDialogBox();
         initViews();
 
     }
 
-    public Dish getDish() {
-        return dish;
-    }
 
-    public void setDish(Dish dish) {
-        this.dish = dish;
-    }
 
     public Dialog getDialogBox() {
         return dialogBox;
@@ -106,7 +118,7 @@ public class AddDishDialogBox {
         quantityEditText = (EditText)dialogBox.findViewById(R.id.chef_add_dish_dialog_box_quantity_edit_text);
 
         dishImageView = (RoundedImageView)dialogBox.findViewById(R.id.chef_add_dish_dialog_box_image_view);
-        dishImageView.setImageBitmap(dish.getThumbnailImage());
+        //dishImageView.setImageBitmap(dish.getThumbnailImage());
         dishImageView.setScaleType(ImageView.ScaleType.CENTER);
         dishImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +142,8 @@ public class AddDishDialogBox {
                     finalDish.setQuantityLeft(Double.parseDouble(quantityEditText.getText().toString()));
                     finalDish.setTakeAway(taCheckBox.isChecked());
                     finalDish.setToSit(seatCheckBox.isChecked());
+                    finalDish.setFullsizeImg(tempDish.getFullsizeImg());
+                    finalDish.setThumbnailImg(tempDish.getThumbnailImg());
 
                     dialogBox.dismiss();
                 }

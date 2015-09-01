@@ -741,7 +741,11 @@ private void getEventsDishes()
         }
 
         //Revoked from add dish dialog
-        if (isEditDishDialogOpened()==false && (requestCode == REQUEST_PICTURE) && (resultCode == Activity.RESULT_OK)) {
+        if (isAdddishDialogOpened()==true && (requestCode == REQUEST_LOAD_IMAGE) &&
+                (resultCode == Activity.RESULT_OK)) {
+            onActivityResultAddDish(requestCode,resultCode,data);
+
+        }
 
 //        //Revoked from add dish dialog
 //        if (isEditDishDialogOpened()==false && (requestCode == REQUEST_PICTURE) && (resultCode == Activity.RESULT_OK)) {
@@ -762,20 +766,20 @@ private void getEventsDishes()
 //
 //        }
 
-            bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
-
-            newDish.setFullsizeImg(CameraBasics.bitmapToByteArr(bitmapArray[0]));
-            newDish.setThumbnailImg(CameraBasics.bitmapToByteArr(bitmapArray[1]));
-
-
-            Log.d("IMAGE_SIZE", String.format("%d ON %d", bitmapArray[0].getWidth(), bitmapArray[0].getHeight()));
-            addDishImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            addDishImageView.setImageBitmap(bitmapArray[1]);
-
-
-
-
-        }
+//            bitmapArray = cameraBasics.myOnActivityResult(requestCode, resultCode, data);
+//
+//            newDish.setFullsizeImg(CameraBasics.bitmapToByteArr(bitmapArray[0]));
+//            newDish.setThumbnailImg(CameraBasics.bitmapToByteArr(bitmapArray[1]));
+//
+//
+//            Log.d("IMAGE_SIZE", String.format("%d ON %d", bitmapArray[0].getWidth(), bitmapArray[0].getHeight()));
+//            addDishImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+//            addDishImageView.setImageBitmap(bitmapArray[1]);
+//
+//
+//
+//
+//        }
 
 
 
@@ -911,6 +915,7 @@ private void buildAddDishDialog()
 {
     addDishDialogBox = new AddDishDialogBox(getActivity());
     addDishDialogBox.getCameraBasics().setFragment(EditEventDishesFragment.this);
+    addDishDialogBox.setFrag(EditEventDishesFragment.this);
     isAdddishDialogOpened = true;
     addDishDialogBox.show();
 
@@ -919,12 +924,15 @@ private void buildAddDishDialog()
         public void onDismiss(DialogInterface dialog) {
             if (addDishDialogBox.getFinalDish() != null) {
                 Dish newDish = new Dish();
-                newDish.setTitle(addDishDialogBox.getTempDish().getTitle());
-                newDish.setDescriprion(addDishDialogBox.getTempDish().getDescriprion());
-                newDish.setPrice(addDishDialogBox.getTempDish().getPrice());
-                newDish.setQuantityLeft(addDishDialogBox.getTempDish().getQuantityLeft());
-                newDish.setTakeAway(addDishDialogBox.getTempDish().isTakeAway());
-                newDish.setToSit(addDishDialogBox.getTempDish().isToSit());
+                Dish finalDish = addDishDialogBox.getFinalDish();
+                newDish.setTitle(finalDish.getTitle());
+                newDish.setDescriprion(finalDish.getDescriprion());
+                newDish.setPrice(finalDish.getPrice());
+                newDish.setQuantityLeft(finalDish.getQuantityLeft());
+                newDish.setTakeAway(finalDish.isTakeAway());
+                newDish.setToSit(finalDish.isToSit());
+                newDish.setThumbnailImg(finalDish.getThumbnailImg());
+                newDish.setFullsizeImg(finalDish.getFullsizeImg());
                 dishArrayList.add(newDish);
                 dishRowListAdapter.notifyDataSetChanged();
                 isAdddishDialogOpened = false;
