@@ -70,7 +70,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     private int PLACE_PICKER_REQUEST = 2;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static int REQUEST_PICTURE = 1;
-    private static int REQUEST_CROP_PICTURE = 2;
+    private static int REQUEST_LOAD_IMAGE = 3;
     LocationAutoComplete lAC;
     //FloatingActionButton addNewDishFloatingButton;
     FloatingActionButton addDishButton;
@@ -119,6 +119,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
         this.isEditDishDialogOpened = isEditDishDialogOpened;
     }
 
+    private boolean isEditDishDialogOpened;
 
 
     public boolean isAdddishDialogOpened() {
@@ -176,7 +177,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
             titleTextView.setText(title);
 
             final TextView priceTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_price_text_view);
-            priceTextView.setText("₪"+Double.toString(dishInEdit.getPrice()));
+            priceTextView.setText("$"+Double.toString(dishInEdit.getPrice()));
 
             final TextView quantityTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_quantity_text_view);
             quantityTextView.setText(Double.toString(dishInEdit.getQuantityLeft()));
@@ -229,7 +230,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                             dishInEdit.setTakeAway(editDishDialogBox.getDish().isTakeAway());
                             dishInEdit.setToSit(editDishDialogBox.getDish().isToSit());
                             titleTextView.setText(dishInEdit.getTitle());
-                            priceTextView.setText("₪"+Double.toString(dishInEdit.getPrice()));
+                            priceTextView.setText("$"+Double.toString(dishInEdit.getPrice()));
                             quantityTextView.setText(Double.toString(dishInEdit.getQuantityLeft()));
                             isEditDishDialogOpened = false;
 
@@ -710,8 +711,8 @@ private void getEventsDishes()
     {
         bitmapArray = addDishDialogBox.getCameraBasics().myOnActivityResult(requestCode, resultCode, data);
 
-        //addDishDialogBox.getTempDish().setFullsizeImg(CameraBasics.bitmapToByteArr(bitmapArray[0]));
-        //addDishDialogBox.getTempDish().setThumbnailImg(CameraBasics.bitmapToByteArr(bitmapArray[1]));
+        addDishDialogBox.getDish().setFullsizeImg(CameraBasics.bitmapToByteArr(bitmapArray[0]));
+        addDishDialogBox.getDish().setThumbnailImg(CameraBasics.bitmapToByteArr(bitmapArray[1]));
 
 
         //Log.d("IMAGE_SIZE", String.format("%d ON %d", bitmapArray[0].getWidth(), bitmapArray[0].getHeight()));
@@ -929,10 +930,7 @@ private void buildAddDishDialog()
                 //isEditDishDialogOpened = false;
 
             //  dishRowListAdapter.notifyDataSetChanged();
-        }}
+        }
     });
-
-
 }
 }
-

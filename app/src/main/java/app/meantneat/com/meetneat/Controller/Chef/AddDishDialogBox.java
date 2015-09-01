@@ -28,7 +28,7 @@ public class AddDishDialogBox {
     public CameraBasics getCameraBasics() {
         return cameraBasics;
     }
-    private byte[] fullSizeImage,thumbnailImage;
+
     public void setCameraBasics(CameraBasics cameraBasics) {
         this.cameraBasics = cameraBasics;
     }
@@ -114,8 +114,7 @@ public class AddDishDialogBox {
                     finalDish.setQuantityLeft(Double.parseDouble(quantityEditText.getText().toString()));
                     finalDish.setTakeAway(taCheckBox.isChecked());
                     finalDish.setToSit(seatCheckBox.isChecked());
-                    finalDish.setFullImage(tempDish.getFullImage());
-                    finalDish.setThumbnailImg(tempDish.getThumbnailImg());
+
                     dialogBox.dismiss();
                 }
             }

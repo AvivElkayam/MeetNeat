@@ -3,6 +3,7 @@ package app.meantneat.com.meetneat.Camera;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -17,6 +18,10 @@ import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -26,6 +31,7 @@ import java.io.File;
 import java.io.IOException;
 
 import app.meantneat.com.meetneat.Controller.Chef.EditEventDishesFragment;
+import app.meantneat.com.meetneat.R;
 
 /**
  * Created by DanltR on 09/06/2015.
@@ -33,11 +39,21 @@ import app.meantneat.com.meetneat.Controller.Chef.EditEventDishesFragment;
 public class CameraBasics {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    final int PIC_CROP = 2;
-    static final int GALLERY = 3;
+    final int REQUEST_LOAD_IMAGE = 3;
+
+    static final int CROP = 3;
     Uri picUri;
     File image;
     EditEventDishesFragment fragment;
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
     Context context;
     String mCurrentPhotoPath;
 
@@ -81,10 +97,6 @@ public class CameraBasics {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode==((Activity)context).RESULT_OK) {
 
 
-
-
-
-
                 //imageBitmaps[0] = MediaStore.Images.Media.getBitmap(context.getContentResolver(), Uri.fromFile(image));
                 imageBitmaps[0] = decodeSampledBitmapFromBitmap(image,400,400);
 
@@ -97,6 +109,32 @@ public class CameraBasics {
             image.delete();
 
         }
+
+
+
+
+        if (requestCode == REQUEST_LOAD_IMAGE && resultCode==((Activity)context).RESULT_OK) {
+            Uri selectedImage = data.getData();
+            picUri = selectedImage;
+            String[] filePath = {MediaStore.Images.Media.DATA};
+            Cursor c = context.getContentResolver().query(selectedImage, filePath, null, null, null);
+            c.moveToFirst();
+            int columnIndex = c.getColumnIndex(filePath[0]);
+            String picturePath = c.getString(columnIndex);
+            c.close();
+            Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+            Log.w("path of image from gallery......******************.........", picturePath + "");
+
+
+            imageBitmaps[0] = decodeSampledBitmapFromBitmap(new File(picturePath),400,400);
+
+            float width  =imageBitmaps[0].getWidth();
+            float height = imageBitmaps[0].getHeight();
+            float ratio = width/height;
+            imageBitmaps[1] = ThumbnailUtils.extractThumbnail(imageBitmaps[0], (int) (300 * ratio), 300);
+            //viewImage.setImageBitmap(thumbnail);
+        }
+
         return imageBitmaps;
     }
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
@@ -226,6 +264,8 @@ public class CameraBasics {
         img.recycle();
         return rotatedImg;
     }
+
+
 
 }
 
