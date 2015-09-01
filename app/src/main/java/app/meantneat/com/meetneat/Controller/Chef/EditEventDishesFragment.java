@@ -104,6 +104,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
     int dialogBoxIndex=1;
     private Dish newDish;
     private int currentPosition;
+
     //*** Edit Dish
     private EditDishDialogBox editDishDialogBox;
     private AddDishDialogBox addDishDialogBox;
@@ -119,7 +120,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
         this.isEditDishDialogOpened = isEditDishDialogOpened;
     }
 
-    private boolean isEditDishDialogOpened;
+
 
 
     public boolean isAdddishDialogOpened() {
@@ -706,13 +707,13 @@ private void getEventsDishes()
     }
 
 
-    //photo captured in EditDishDialogBox
+    //photo captured in AddDishDialogBox
     public void onActivityResultAddDish(int requestCode, int resultCode, Intent data)
     {
         bitmapArray = addDishDialogBox.getCameraBasics().myOnActivityResult(requestCode, resultCode, data);
 
-        addDishDialogBox.getDish().setFullsizeImg(CameraBasics.bitmapToByteArr(bitmapArray[0]));
-        addDishDialogBox.getDish().setThumbnailImg(CameraBasics.bitmapToByteArr(bitmapArray[1]));
+        addDishDialogBox.getTempDish().setFullsizeImg(CameraBasics.bitmapToByteArr(bitmapArray[0]));
+        addDishDialogBox.getTempDish().setThumbnailImg(CameraBasics.bitmapToByteArr(bitmapArray[1]));
 
 
         //Log.d("IMAGE_SIZE", String.format("%d ON %d", bitmapArray[0].getWidth(), bitmapArray[0].getHeight()));
@@ -916,7 +917,7 @@ private void buildAddDishDialog()
     addDishDialogBox.getDialogBox().setOnDismissListener(new DialogInterface.OnDismissListener() {
         @Override
         public void onDismiss(DialogInterface dialog) {
-            if(addDishDialogBox.getFinalDish()!=null) {
+            if (addDishDialogBox.getFinalDish() != null) {
                 Dish newDish = new Dish();
                 newDish.setTitle(addDishDialogBox.getTempDish().getTitle());
                 newDish.setDescriprion(addDishDialogBox.getTempDish().getDescriprion());
@@ -929,7 +930,8 @@ private void buildAddDishDialog()
                 isAdddishDialogOpened = false;
                 //isEditDishDialogOpened = false;
 
-            //  dishRowListAdapter.notifyDataSetChanged();
+                //  dishRowListAdapter.notifyDataSetChanged();
+            }
         }
     });
 }
