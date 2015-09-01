@@ -142,6 +142,7 @@
             style="@style/Material.Drawable.CheckBox"
             android:checked="false"
             android:textSize="10dp"
+
             android:gravity="center_vertical" />
 
 

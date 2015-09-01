@@ -119,7 +119,6 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
         this.isEditDishDialogOpened = isEditDishDialogOpened;
     }
 
-    private boolean isEditDishDialogOpened;
 
 
     public boolean isAdddishDialogOpened() {
@@ -177,7 +176,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
             titleTextView.setText(title);
 
             final TextView priceTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_price_text_view);
-            priceTextView.setText("$"+Double.toString(dishInEdit.getPrice()));
+            priceTextView.setText("₪"+Double.toString(dishInEdit.getPrice()));
 
             final TextView quantityTextView = (TextView)itemView.findViewById(R.id.add_fragment_fragment_dish_row_quantity_text_view);
             quantityTextView.setText(Double.toString(dishInEdit.getQuantityLeft()));
@@ -230,7 +229,7 @@ public class EditEventDishesFragment extends Fragment implements GoogleApiClient
                             dishInEdit.setTakeAway(editDishDialogBox.getDish().isTakeAway());
                             dishInEdit.setToSit(editDishDialogBox.getDish().isToSit());
                             titleTextView.setText(dishInEdit.getTitle());
-                            priceTextView.setText("$"+Double.toString(dishInEdit.getPrice()));
+                            priceTextView.setText("₪"+Double.toString(dishInEdit.getPrice()));
                             quantityTextView.setText(Double.toString(dishInEdit.getQuantityLeft()));
                             isEditDishDialogOpened = false;
 
@@ -711,8 +710,8 @@ private void getEventsDishes()
     {
         bitmapArray = addDishDialogBox.getCameraBasics().myOnActivityResult(requestCode, resultCode, data);
 
-        addDishDialogBox.getDish().setFullsizeImg(CameraBasics.bitmapToByteArr(bitmapArray[0]));
-        addDishDialogBox.getDish().setThumbnailImg(CameraBasics.bitmapToByteArr(bitmapArray[1]));
+        //addDishDialogBox.getTempDish().setFullsizeImg(CameraBasics.bitmapToByteArr(bitmapArray[0]));
+        //addDishDialogBox.getTempDish().setThumbnailImg(CameraBasics.bitmapToByteArr(bitmapArray[1]));
 
 
         //Log.d("IMAGE_SIZE", String.format("%d ON %d", bitmapArray[0].getWidth(), bitmapArray[0].getHeight()));
@@ -916,7 +915,7 @@ private void buildAddDishDialog()
     addDishDialogBox.getDialogBox().setOnDismissListener(new DialogInterface.OnDismissListener() {
         @Override
         public void onDismiss(DialogInterface dialog) {
-            if(addDishDialogBox.getTempDish()!=null) {
+            if(addDishDialogBox.getFinalDish()!=null) {
                 Dish newDish = new Dish();
                 newDish.setTitle(addDishDialogBox.getTempDish().getTitle());
                 newDish.setDescriprion(addDishDialogBox.getTempDish().getDescriprion());
@@ -930,7 +929,10 @@ private void buildAddDishDialog()
                 //isEditDishDialogOpened = false;
 
             //  dishRowListAdapter.notifyDataSetChanged();
-        }
+        }}
     });
+
+
 }
 }
+

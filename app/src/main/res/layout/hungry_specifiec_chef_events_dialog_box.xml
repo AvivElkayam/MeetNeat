@@ -16,7 +16,7 @@
     android:layout_height="96dp"
     android:layout_gravity="bottom">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+    <com.makeramen.roundedimageview.RoundedImageView
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:id="@+id/hungry_specifiec_chef_events_dialog_box_chef_image"
@@ -25,8 +25,12 @@
 
             xmlns:app="http://schemas.android.com/apk/res-auto"
 
-            app:border_width="2dp"
-            app:border_color="#FF000000"/>
+        app:riv_corner_radius="5dip"
+        app:riv_border_width="2dip"
+        app:riv_border_color="@color/eat_gray"
+        app:riv_mutate_background="true"
+
+        />
 
 </FrameLayout>
 

@@ -28,7 +28,7 @@ public class AddDishDialogBox {
     public CameraBasics getCameraBasics() {
         return cameraBasics;
     }
-
+    private byte[] fullSizeImage,thumbnailImage;
     public void setCameraBasics(CameraBasics cameraBasics) {
         this.cameraBasics = cameraBasics;
     }
@@ -57,6 +57,10 @@ public class AddDishDialogBox {
     }
 
     public Dish getTempDish() {
+        return tempDish;
+    }
+
+    public Dish getFinalDish() {
         return finalDish;
     }
 
@@ -86,7 +90,7 @@ public class AddDishDialogBox {
         quantityEditText = (EditText)dialogBox.findViewById(R.id.chef_add_dish_dialog_box_quantity_edit_text);
 
         dishImageView = (RoundedImageView)dialogBox.findViewById(R.id.chef_add_dish_dialog_box_image_view);
-        dishImageView.setImageBitmap(tempDish.getThumbnailImage());
+        //dishImageView.setImageBitmap(tempDish.getThumbnailImage());
         dishImageView.setScaleType(ImageView.ScaleType.CENTER);
         dishImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +114,8 @@ public class AddDishDialogBox {
                     finalDish.setQuantityLeft(Double.parseDouble(quantityEditText.getText().toString()));
                     finalDish.setTakeAway(taCheckBox.isChecked());
                     finalDish.setToSit(seatCheckBox.isChecked());
-
+                    finalDish.setFullImage(tempDish.getFullImage());
+                    finalDish.setThumbnailImg(tempDish.getThumbnailImg());
                     dialogBox.dismiss();
                 }
             }

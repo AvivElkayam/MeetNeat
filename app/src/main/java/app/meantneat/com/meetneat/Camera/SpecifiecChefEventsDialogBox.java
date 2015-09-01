@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 
@@ -61,12 +62,12 @@ public class SpecifiecChefEventsDialogBox {
         TextView chefNameTextView = (TextView)dialog.findViewById(R.id.hungry_specifiec_chef_events_dialog_box_chef_name_text);
         chefNameTextView.setText("Chef: "+ chefName);
 
-        final CircleImageView chefImageView  = (CircleImageView)dialog.findViewById(R.id.hungry_specifiec_chef_events_dialog_box_chef_image);
+        final RoundedImageView chefImageView  = (RoundedImageView)dialog.findViewById(R.id.hungry_specifiec_chef_events_dialog_box_chef_image);
         MyModel.getInstance().getModel().getChefPicture(chefId,new MyModel.PictureCallback() {
             @Override
             public void pictureHasBeenFetched(Bitmap bitmap) {
 
-                chefImageView.setBackground(new BitmapDrawable(bitmap));
+                chefImageView.setImageBitmap(bitmap);
             }
         });
         initEventDishesList(chefId, coordinates);
