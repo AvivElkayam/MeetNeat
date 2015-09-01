@@ -1,4 +1,4 @@
-package app.meantneat.com.meetneat.Camera;
+package app.meantneat.com.meetneat.Controller.Hungry;
 
 import android.app.Dialog;
 import android.content.Context;

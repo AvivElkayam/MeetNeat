@@ -6,8 +6,8 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
-import app.meantneat.com.meetneat.Camera.SpecificEventDishesDialogBox;
-import app.meantneat.com.meetneat.Camera.SpecifiecChefEventsDialogBox;
+import app.meantneat.com.meetneat.Controller.Hungry.SpecificEventDishesDialogBox;
+import app.meantneat.com.meetneat.Controller.Hungry.SpecifiecChefEventsDialogBox;
 import app.meantneat.com.meetneat.Controller.Chef.ChefEventDishesFragment;
 import app.meantneat.com.meetneat.Controller.Chef.ChefEventMealsFragment;
 import app.meantneat.com.meetneat.Controller.Chef.EditEventDishesFragment;

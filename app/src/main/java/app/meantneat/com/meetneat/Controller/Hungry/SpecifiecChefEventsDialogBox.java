@@ -1,10 +1,9 @@
-package app.meantneat.com.meetneat.Camera;
+package app.meantneat.com.meetneat.Controller.Hungry;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import app.meantneat.com.meetneat.Entities.EventDishes;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by mac on 6/24/15.

@@ -12,7 +12,6 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -21,8 +20,8 @@ import java.util.Date;
 import java.util.List;
 
 import app.meantneat.com.meetneat.AppConstants;
-import app.meantneat.com.meetneat.Camera.SpecificEventDishesDialogBox;
-import app.meantneat.com.meetneat.Camera.SpecifiecChefEventsDialogBox;
+import app.meantneat.com.meetneat.Controller.Hungry.SpecificEventDishesDialogBox;
+import app.meantneat.com.meetneat.Controller.Hungry.SpecifiecChefEventsDialogBox;
 import app.meantneat.com.meetneat.Controller.Chef.ChefEventDishesFragment;
 import app.meantneat.com.meetneat.Controller.Chef.ChefEventMealsFragment;
 import app.meantneat.com.meetneat.Controller.Chef.EditEventDishesFragment;
