@@ -189,7 +189,7 @@ public class AddDishDialogBox {
         return true;
     }
 
-    
+
     private void selectImage() {
     //Gallery or Camera
         final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };

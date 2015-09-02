@@ -8,7 +8,9 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -33,6 +35,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -71,11 +74,15 @@ import app.meantneat.com.meetneat.R;
     private ArrayList<LatLng> coordinatesArray = new ArrayList<>();
     private GoogleMap googleMapHungry;
     private GoogleApiClient mGoogleApiClient;
+
+    //locationClient = new LocationClient(this, this, this);
     LocationRequest mLocationRequest;
+
     ViewGroup fragmentViewGroup;
     public LatLng lastCenter;
     public static LatLng lastCenterStatic;
     boolean firstTime = true;
+    boolean firstTimeSelfLocation = true;
     Marker lastMarker;
     BitmapDescriptor chefMarker;
     @Override
@@ -108,12 +115,7 @@ import app.meantneat.com.meetneat.R;
 
         mGoogleApiClient.connect();
 
-        //set properties of location request - to run look in OnConnected
-//        mLocationRequest = new LocationRequest();
-//
-//        mLocationRequest.setInterval(10000);
-//        mLocationRequest.setFastestInterval(5000);
-//        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
     }
 
     @Override
@@ -123,7 +125,7 @@ import app.meantneat.com.meetneat.R;
                 .Builder(getActivity())
                 .addApi(Places.GEO_DATA_API)
                 .addApi(Places.PLACE_DETECTION_API)
-                .addApi(LocationServices.API)
+                .addApi(LocationServices.API) //Self location - check OnConnected
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
@@ -137,6 +139,9 @@ import app.meantneat.com.meetneat.R;
     public void onMapReady(GoogleMap googleMap) {
 
 
+
+
+
         this.googleMapHungry = googleMap;
         googleMapHungry.setMyLocationEnabled(true);
 
@@ -145,7 +150,32 @@ import app.meantneat.com.meetneat.R;
         final Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
         chefMarker = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 96, 96, true));
 
+                        //******Self-location****
+        // Get LocationManager object from System Service LOCATION_SERVICE
+        LocationManager locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
 
+        // Create a criteria object to retrieve provider
+        Criteria criteria = new Criteria();
+
+        // Get the name of the best provider
+        String provider = locationManager.getBestProvider(criteria, true);
+
+        // Get Current Location
+        Location myLocation = locationManager.getLastKnownLocation(provider);
+
+//        googleMapHungry.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+//            @Override
+//            public void onMyLocationChange(Location location) {
+//                if(firstTimeSelfLocation) {
+//                    firstTimeSelfLocation = false;
+//                    CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
+//                    CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
+//                    googleMapHungry.moveCamera(center);
+//                    googleMapHungry.animateCamera(zoom);
+//                }
+//
+//            }
+//        });
         googleMapHungry.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
 
             //TO DO:: check best practice to identify camera stopped changing
@@ -200,10 +230,14 @@ import app.meantneat.com.meetneat.R;
             }
         });
 
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(32.073776, 34.781890), 16));
+        //
 
 
-    }
+//        else//Tel aviv
+//
+//            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(32.073776, 34.781890), 16));
+
+        }
 
     private void getClosestCoordinatesFromServer() {
 
@@ -271,7 +305,8 @@ import app.meantneat.com.meetneat.R;
         LatLng coordinate = new LatLng(event.getLatitude(), event.getLongitude());
         final Marker m = googleMapHungry.addMarker(new MarkerOptions()
                             .position(coordinate)
-                            .title("Marker")
+
+
                              .alpha(0)
                             //.rotation((float) 90.0)
                             .icon(chefMarker)
@@ -344,9 +379,16 @@ import app.meantneat.com.meetneat.R;
     public void onConnected(Bundle bundle) {
         Log.e("LNGLTD", "Connected");
 
-        // on location update by time - (listener in the class)
-        //LocationServices.FusedLocationApi.requestLocationUpdates(
-           //    mGoogleApiClient, mLocationRequest, this);
+
+        //Animate camera to self location [only on first start]
+        Location currLoc = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (currLoc != null) {
+
+            googleMapHungry.animateCamera(CameraUpdateFactory.newLatLngZoom
+                    (new LatLng(currLoc.getLatitude(),currLoc.getLongitude()),16));}
+
+
     }
 
     @Override
@@ -362,34 +404,9 @@ import app.meantneat.com.meetneat.R;
     @Override
     public void onLocationChanged(Location location) {
         Toast.makeText(getActivity(),"Location Updated",Toast.LENGTH_SHORT).show();
-        googleMapHungry.clear();
-        getClosestCoordinatesFromServer();
-        //googleMapHungry.clear();
+
+
     }
-//        @Override
-//        public void onCreate(Bundle savedInstanceState) {
-//
-//            super.onCreate(savedInstanceState);
-//            setContentView(R.layout.map_activity);
-//
-//            MapFragment mapFragment = (MapFragment) getFragmentManager()
-//                    .findFragmentById(R.id.map);
-//            mapFragment.getMapAsync(this);
-//        }
-//
-//        @Override
-//        public void onMapReady(GoogleMap map) {
-//            LatLng sydney = new LatLng(-33.867, 151.206);
-//
-//            map.setMyLocationEnabled(true);
-//            map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-//
-//            map.addMarker(new MarkerOptions()
-//                    .title("Sydney")
-//                    .snippet("The most populous city in Australia.")
-//                    .position(sydney));
-//        }
-//    }
 
 
 private Bitmap createChefTemplate(Bitmap chefImage)
