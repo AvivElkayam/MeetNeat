@@ -22,7 +22,7 @@ import app.meantneat.com.meetneat.R;
 /**
  * Created by mac on 6/24/15.
  */
-public class SpecifiecChefEventsDialogBox {
+public class SpecificChefEventsDialogBox {
 
     private Context context;
     private Dialog dialog;
@@ -39,7 +39,7 @@ public class SpecifiecChefEventsDialogBox {
 
 
 
-    public SpecifiecChefEventsDialogBox(Context context,String chefId,String chefName,LatLng coordinates) {
+    public SpecificChefEventsDialogBox(Context context, String chefId, String chefName, LatLng coordinates) {
 
         eventDishesArr = new ArrayList<>();
         this.context=context;
@@ -68,7 +68,7 @@ public class SpecifiecChefEventsDialogBox {
                 chefImageView.setImageBitmap(bitmap);
             }
         });
-        initEventDishesList(chefId, coordinates);
+        //initEventDishesList(chefId, coordinates);
         initEventMealsList();
         initImagesCollection();
 
@@ -127,28 +127,28 @@ public class SpecifiecChefEventsDialogBox {
 
     }
 
-    private void initEventDishesList(String chefId,LatLng coordinates) {
-
-
-        getEventsByType<EventDishes> callback = new getEventsByType<EventDishes>() {
-            @Override
-            public void done(ArrayList<EventDishes> arr) {
-                eventDishesArr = arr;
-                int i;
-                for(i=0;i<eventDishesArr.size();i++)
-                {
-                    eventDishesLayout.addView(addEventDishtoList(eventDishesArr.get(i)));
-
-                }
-            }
-        };
-
-
-        MyModel.getInstance().getModel().getSpecifiecChefsEventFromServer(chefId,coordinates,callback);
-
-
-
-    }
+//    private void initEventDishesList(String chefId,LatLng coordinates) {
+//
+//
+//        getEventsByType<EventDishes> callback = new getEventsByType<EventDishes>() {
+//            @Override
+//            public void done(ArrayList<EventDishes> arr) {
+//                eventDishesArr = arr;
+//                int i;
+//                for(i=0;i<eventDishesArr.size();i++)
+//                {
+//                    eventDishesLayout.addView(addEventDishtoList(eventDishesArr.get(i)));
+//
+//                }
+//            }
+//        };
+//
+//
+//        MyModel.getInstance().getModel().getSpecifiecChefsEventFromServer(chefId,coordinates,callback);
+//
+//
+//
+//    }
 
     public void show()
     {

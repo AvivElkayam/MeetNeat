@@ -19,12 +19,17 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.etsy.android.grid.StaggeredGridView;
+import com.makeramen.roundedimageview.RoundedImageView;
+
 import java.util.ArrayList;
 
 import app.meantneat.com.meetneat.Entities.Dish;
 import app.meantneat.com.meetneat.Entities.EventDishes;
+import app.meantneat.com.meetneat.MeetnEatDates;
 import app.meantneat.com.meetneat.Model.MyModel;
 import app.meantneat.com.meetneat.R;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by mac on 6/24/15.
@@ -37,7 +42,7 @@ public class SpecificEventDishesDialogBox {
     private String eventTitle;
     private String eventID;
     private TextView chefNameTextView,dateTextView,titleTextView;
-    private ImageView chefImageView;
+    private RoundedImageView chefImageView;
     private ArrayList<Dish> dishArrayList;
     private DishAdapter dishAdapter;
     private EventDishes eventDishes;
@@ -61,7 +66,7 @@ public class SpecificEventDishesDialogBox {
     {
         dialogBox.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialogBox.setContentView(R.layout.hungry_specifiec_event_dishes_details_dialog_box);
-        GridView gridview = (GridView) dialogBox.findViewById(R.id.hungry_fragment_dialog_box_grid_view);
+        StaggeredGridView gridview = (StaggeredGridView) dialogBox.findViewById(R.id.hungry_fragment_dialog_box_grid_view);
         dishAdapter = new DishAdapter(context);
         gridview.setAdapter(dishAdapter);
         dishAdapter.notifyDataSetChanged();
@@ -70,34 +75,32 @@ public class SpecificEventDishesDialogBox {
          chefNameTextView = (TextView)dialogBox.findViewById(R.id.speceific_event_dialog_box_chef_text_view);
         chefNameTextView.setText("Chef: "+eventDishes.getChefName());
 
-        chefImageView = (ImageView)dialogBox.findViewById(R.id.events_dialog_box_chef_image_view);
-        MyModel.getInstance().getModel().getChefPicture(eventDishes.getChefID(),new MyModel.PictureCallback() {
+        chefImageView = (RoundedImageView)dialogBox.findViewById(R.id.events_dialog_box_chef_image_view);
+        chefImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        MyModel.getInstance().getModel().getChefPicture(eventDishes.getChefID(), new MyModel.PictureCallback() {
             @Override
             public void pictureHasBeenFetched(Bitmap bitmap) {
-                if(bitmap!=null
+                if (bitmap != null
                         )
                     chefImageView.setBackground(new BitmapDrawable(bitmap));
             }
         });
         TextView titleTextView = (TextView)dialogBox.findViewById(R.id.speceific_event_dialog_box_title_text_view);
         titleTextView.setText(eventDishes.getTitle());
-        TextView dateTextView = (TextView)dialogBox.findViewById(R.id.speceific_event_dialog_box_date_text_view);
-        dateTextView.setText(eventDishes.getStartingYear()
-                        +"."
-                        +eventDishes.getStartingMonth()
-                        + "."
-                        +eventDishes.getStartingDay()
-                        +" | "
-                        +eventDishes.getStartingHour()
-                        +":"
-                        +eventDishes.getStartingMinute()
-                        +"-"
-                        +eventDishes.getEndingHour()
-                        +":"
-                        +eventDishes.getEndingMinute()
+        TextView startingDateTextView = (TextView)dialogBox.findViewById(R.id.speceific_event_dialog_box_starting_date_text_view);
+        startingDateTextView.setText(MeetnEatDates.getDateString(eventDishes.getStartingYear(),
+                        eventDishes.getStartingMonth()
+                        , eventDishes.getStartingDay()) + ", " + MeetnEatDates.getTimeString(eventDishes.getStartingHour(),
+                        eventDishes.getStartingMinute())
 
         );
+        TextView endingDateTextView = (TextView)dialogBox.findViewById(R.id.speceific_event_dialog_box_ending_date_text_view);
+        endingDateTextView.setText(MeetnEatDates.getDateString(eventDishes.getEndingYear(),
+                        eventDishes.getEndingMonth()
+                        , eventDishes.getEndingDay()) + ", " + MeetnEatDates.getTimeString(eventDishes.getEndingHour(),
+                        eventDishes.getEndingMinute())
 
+        );
         getEventFromserver();
 
 
@@ -155,7 +158,7 @@ public class SpecificEventDishesDialogBox {
             MyModel.getInstance().getModel().getDishPicture(dish.getDishID(),new MyModel.PictureCallback() {
                 @Override
                 public void pictureHasBeenFetched(Bitmap bitmap) {
-                    dishImageView.setBackground(new BitmapDrawable(getRoundedCornerBitmap(bitmap,20)));
+                    dishImageView.setImageBitmap(bitmap);
                 }
             });
             itemView.setOnClickListener(new View.OnClickListener() {

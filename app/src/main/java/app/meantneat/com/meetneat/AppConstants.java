@@ -33,7 +33,7 @@ public class AppConstants {
     public static String EVENT_MEALS_START_DATE = "start_date";
     public static String EVENT_MEALS_END_DATE = "end_date";
     public static String EVENT_MEALS_CHEF_ID = "chef_id";
-    public static String EVENT_MEALS_CHEF_NAME = "chef_name";
+    public static String EVENT_MEALS_CHEF_NAME = "nick_name";
     public static String EVENT_MEALS_LOCATION = "location";
     public static String EVENT_MEALS_PRICE = "price";
     public static String EVENT_MEALS_QUANTITY = "quantity";

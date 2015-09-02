@@ -25,6 +25,7 @@ repositories {
     maven {
         url 'http://lorenzo.villani.me/android-cropimage/'
     }
+
 }
 
 dependencies {
@@ -44,10 +45,9 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.1.2'
     compile 'com.android.support:cardview-v7:21.0.+'
     compile 'com.squareup.picasso:picasso:2.5.2'
-
+    compile 'com.etsy.android.grid:library:1.0.5' //Asymetric grid view - api: https://github.com/etsy/AndroidStaggeredGrid
     compile "com.android.support:appcompat-v7:21.0.+"
     compile 'com.github.rey5137:material:1.2.1'//material design widgets
-
     compile 'com.rengwuxian.materialedittext:library:2.1.4'// material edit text - api: https://github.com/rengwuxian/MaterialEditText
     compile 'info.hoang8f:fbutton:1.0.5'//material button - api: https://github.com/hoang8f/android-flat-button
     //compile fileTree(dir: 'libs', include: 'Parse-*.jar')

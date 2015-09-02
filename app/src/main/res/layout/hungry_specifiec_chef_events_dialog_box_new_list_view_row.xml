@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="256dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="160dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Yaman Friday"
+                android:id="@+id/hungry_specifiec_chef_events_dialog_box_new_list_view_row_title"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:textColor="@color/eat_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="STARTS AT"
+                android:id="@+id/textView17"
+                android:layout_weight="1.1"
+                android:textSize="15sp"
+                android:textColor="@color/eat_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="sd"
+                android:id="@+id/hungry_specifiec_chef_events_dialog_box_new_list_view_row_starting_date"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:textColor="@color/eat_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="ENDS AT"
+                android:id="@+id/textView18"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1.1"
+                android:textSize="15sp"
+                android:textColor="@color/eat_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="New Text"
+                android:id="@+id/hungry_specifiec_chef_events_dialog_box_new_list_view_row_ending_date"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:textColor="@color/eat_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="2"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:id="@+id/hungry_specifiec_chef_events_dialog_box_new_list_view_row_is_active_image_view"
+                android:background="@drawable/chef_48_green" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:id="@+id/hungry_specifiec_chef_events_dialog_box_new_list_view_row_images_layout"
+        android:layout_gravity="center_horizontal"
+        android:fillViewport="false" >
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:id="@+id/hungry_specifiec_chef_events_dialog_box_Images_layout"
+            android:layout_height="match_parent"></LinearLayout>
+    </HorizontalScrollView>
+</LinearLayout>

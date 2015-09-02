@@ -20,8 +20,9 @@ import java.util.Date;
 import java.util.List;
 
 import app.meantneat.com.meetneat.AppConstants;
+import app.meantneat.com.meetneat.Controller.Hungry.SpecificChefEventsDialogBoxNew;
 import app.meantneat.com.meetneat.Controller.Hungry.SpecificEventDishesDialogBox;
-import app.meantneat.com.meetneat.Controller.Hungry.SpecifiecChefEventsDialogBox;
+import app.meantneat.com.meetneat.Controller.Hungry.SpecificChefEventsDialogBox;
 import app.meantneat.com.meetneat.Controller.Chef.ChefEventDishesFragment;
 import app.meantneat.com.meetneat.Controller.Chef.ChefEventMealsFragment;
 import app.meantneat.com.meetneat.Controller.Chef.EditEventDishesFragment;
@@ -691,7 +692,7 @@ private void saveEventsDishesToServer(EventDishes event,ParseObject eventObject)
     }
 
     @Override
-    public void getSpecifiecChefsEventFromServer(final String chefId, final LatLng coordinates, final SpecifiecChefEventsDialogBox.getEventsByType callback) {
+    public void getSpecifiecChefsEventFromServer(final String chefId, final LatLng coordinates, final SpecificChefEventsDialogBoxNew.GetEventsCallback callback) {
         //Get by ChefId + Coordinates
         new AsyncTask<Void, Void, Void>() {
             ArrayList<EventDishes> eventDishesArrayList = new ArrayList<>();

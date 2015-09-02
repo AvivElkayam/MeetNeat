@@ -191,7 +191,7 @@ import app.meantneat.com.meetneat.R;
 
 
                 EventDishes eventByMarker = allMarkersMap.get(marker);
-                final SpecifiecChefEventsDialogBox dialogBox = new SpecifiecChefEventsDialogBox(
+                final SpecificChefEventsDialogBoxNew dialogBox = new SpecificChefEventsDialogBoxNew(
                         getActivity(), eventByMarker.getChefID(), eventByMarker.getChefName(), marker.getPosition());
 
 

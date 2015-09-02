@@ -50,7 +50,6 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:hint="E-mail"
-            android:background="@drawable/gray_text_field"
             android:layout_marginTop="20dp"
             android:paddingLeft="5dp" />
 
@@ -63,7 +62,6 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:hint="Password"
-            android:background="@drawable/gray_text_field"
             android:layout_marginTop="5dp"
             android:paddingLeft="5dp" />
 
@@ -77,7 +75,6 @@
             android:hint="Nick name"
             android:layout_below="@+id/sign_in_activity_email_text_field_id"
             android:layout_alignStart="@+id/sign_in_activity_password_field_id"
-            android:background="@drawable/gray_text_field"
             android:layout_marginTop="5dp"
             android:paddingLeft="5dp" />
 
@@ -88,9 +85,9 @@
             android:id="@+id/sign_in_activity_sign_in_button_id"
             android:layout_alignParentBottom="true"
             android:layout_alignStart="@+id/sign_in_activity_password_field_id"
-            android:textColor="@color/eat_black"
-            android:background="@drawable/green_button"
-            android:layout_marginTop="20dp" />
+            android:textColor="@color/eat_green"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/transparent" />
 
         <TextView
             android:layout_width="wrap_content"

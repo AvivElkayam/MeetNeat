@@ -265,7 +265,14 @@ public class CameraBasics {
         return rotatedImg;
     }
 
+    public static int dpToPX(Context context,int dp)
+    {
 
+
+        float density = context.getResources().getDisplayMetrics().density;
+        float px = 96 * density;
+        return (int)px;
+    }
 
 }
 

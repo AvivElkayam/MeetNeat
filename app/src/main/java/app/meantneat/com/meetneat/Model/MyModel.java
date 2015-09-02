@@ -6,8 +6,9 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
+import app.meantneat.com.meetneat.Controller.Hungry.SpecificChefEventsDialogBoxNew;
 import app.meantneat.com.meetneat.Controller.Hungry.SpecificEventDishesDialogBox;
-import app.meantneat.com.meetneat.Controller.Hungry.SpecifiecChefEventsDialogBox;
+import app.meantneat.com.meetneat.Controller.Hungry.SpecificChefEventsDialogBox;
 import app.meantneat.com.meetneat.Controller.Chef.ChefEventDishesFragment;
 import app.meantneat.com.meetneat.Controller.Chef.ChefEventMealsFragment;
 import app.meantneat.com.meetneat.Controller.Chef.EditEventDishesFragment;
@@ -59,7 +60,7 @@ public class MyModel {
         public boolean currentUserConnected();
         //Hungry - OnClick chef-Map
         public void getSpecifiecChefsEventFromServer(String chefId, LatLng coordinates,
-                                                     SpecifiecChefEventsDialogBox.getEventsByType callback);
+                                                     SpecificChefEventsDialogBoxNew.GetEventsCallback callback);
 }
 //***************************Callbacks***************************
     public interface EditEventCallback

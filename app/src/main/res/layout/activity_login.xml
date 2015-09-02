@@ -16,7 +16,6 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/login_activity_email_text_field"
-        android:background="@drawable/gray_text_field"
         android:hint="Email address"
         android:paddingLeft="5dp" />
 
@@ -26,7 +25,6 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/login_activity_password_text_field"
-        android:background="@drawable/gray_text_field"
         android:hint="Password"
         android:layout_marginTop="5dp"
         android:paddingLeft="5dp" />
@@ -36,9 +34,9 @@
         android:layout_height="40dp"
         android:text="LogIn"
         android:id="@+id/login_activity_login_button"
-        android:textColor="@color/eat_black"
-        android:background="@drawable/green_button"
-        android:layout_marginTop="10dp" />
+        android:textColor="@color/eat_green"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/transparent" />
 
     <TextView
         android:layout_width="wrap_content"

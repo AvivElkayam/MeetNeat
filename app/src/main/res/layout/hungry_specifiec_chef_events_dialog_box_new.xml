@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="300dp"
-    android:layout_height="450dp">
-
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="500dp"
+    android:divider="@color/eat_white"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    >
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="196dp"
         android:layout_gravity="top"
         android:layout_marginBottom="10dp">
 
@@ -25,7 +28,7 @@
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:layout_width="96dp"
                     android:layout_height="96dp"
-                    android:id="@+id/events_dialog_box_chef_image_view"
+                    android:id="@+id/hungry_specifiec_chef_events_dialog_box_chef_image"
                     android:layout_gravity="bottom"
 
                     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -34,6 +37,7 @@
                     app:riv_border_width="1dip"
                     app:riv_border_color="@color/eat_gray"
                     app:riv_mutate_background="true"
+
                     />
 
             </FrameLayout>
@@ -50,7 +54,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Chef: Dan Later"
                     android:layout_gravity="center_vertical"
-                    android:id="@+id/speceific_event_dialog_box_chef_text_view"
+                    android:id="@+id/hungry_specifiec_chef_events_dialog_box_chef_name_text"
                     android:layout_weight="1"
                     android:textColor="@color/eat_white"
                     android:gravity="bottom"
@@ -109,71 +113,24 @@
             </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="120dp">
-
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Yaman friday"
-            android:id="@+id/speceific_event_dialog_box_title_text_view"
+            android:text="xecutive Chef at Mitzpe Alumot, Ceo And Founder at Pure Intentions LLC, Camp Director at Ekar Farm"
+            android:id="@+id/textView16"
             android:layout_weight="1.5"
-            android:textSize="20dp"
-            android:textColor="@color/eat_orange"
-            android:gravity="left|center_vertical"
-            android:layout_marginLeft="10dp" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="31.8.2015-15.9.2015"
-                android:id="@+id/speceific_event_dialog_box_starting_date_text_view"
-                android:layout_weight="1"
-                android:textColor="@color/eat_white"
-                android:layout_marginLeft="10dp"
-                android:gravity="left|center_vertical"
-                android:textSize="15sp" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="31.8.2015-15.9.2015"
-                android:id="@+id/speceific_event_dialog_box_ending_date_text_view"
-                android:layout_weight="1"
-                android:textColor="@color/eat_white"
-                android:layout_marginLeft="10dp"
-                android:gravity="left|center_vertical"
-                android:textSize="15sp" />
-        </LinearLayout>
+            android:textSize="16sp"
+            android:textColor="@color/eat_white"
+            android:background="@color/eat_black_semi_transparent"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
 
     </LinearLayout>
 
-    <com.etsy.android.grid.StaggeredGridView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:item_margin="2dp"
-        app:column_count="2"
-        android:id="@+id/hungry_fragment_dialog_box_grid_view"
-        android:verticalSpacing="2dp"
-        android:horizontalSpacing="2dp"
-        android:stretchMode="columnWidth"
-        android:numColumns="2"
-        android:layout_marginTop="10dp" />
-
-
+        android:layout_height="fill_parent"
+        android:id="@+id/hungry_specifiec_chef_events_dialog_box_List_view"
+        android:layout_gravity="center_horizontal"
+        android:divider="@color/eat_white" />
 </LinearLayout>
