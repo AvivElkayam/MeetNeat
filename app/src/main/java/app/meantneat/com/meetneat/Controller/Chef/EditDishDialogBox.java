@@ -2,7 +2,10 @@ package app.meantneat.com.meetneat.Controller.Chef;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -25,6 +28,15 @@ public class EditDishDialogBox {
     private Dialog dialogBox;
     private Dish dish;
     private CheckBox taCheckBox,seatCheckBox;
+    public Fragment getFrag() {
+        return frag;
+    }
+
+    public void setFrag(Fragment frag) {
+        this.frag = frag;
+    }
+
+    private Fragment frag;
 
 
 
@@ -105,7 +117,7 @@ public class EditDishDialogBox {
         dishImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dispatchTakePictureIntent();
+                selectImage();
 
             }
         });
@@ -161,5 +173,33 @@ public class EditDishDialogBox {
             return false;
         }
         return true;
+    }
+
+    private void selectImage() {
+        //Gallery or Camera
+        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Add Photo!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take Photo"))
+                {
+                    dispatchTakePictureIntent();
+                }
+                else if (options[item].equals("Choose from Gallery"))
+                {
+                    Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    cameraBasics.setContext(context);
+                    frag.getParentFragment().startActivityForResult(intent, 3);
+
+                }
+                else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
     }
 }

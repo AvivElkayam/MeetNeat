@@ -80,6 +80,7 @@ public class ChefEventDishesFragment extends Fragment
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    floatingAddButton.hide();
                 packDataToBundleAndPassToEditScreen(position);
 
                 }
